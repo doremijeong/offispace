@@ -1,0 +1,12 @@
+package kr.co.offispace.service.mail;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import kr.co.offispace.dto.MailVO;
+
+public interface MailService {
+	
+	public List<MailVO> getAllMailList() throws SQLException;
+	
+}

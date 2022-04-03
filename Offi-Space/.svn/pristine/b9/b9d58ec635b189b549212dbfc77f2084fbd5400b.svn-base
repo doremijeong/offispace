@@ -1,0 +1,64 @@
+@charset "UTF-8";
+
+
+.off-title-box{
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+}
+.offi-title{
+	font-size: 90px;
+	color: white;
+	margin: 0px;
+	/* font-weight: bold; */
+}
+.offi-sub-title{
+	color: white;
+	font-size: 20px;
+}
+.offi-login-container{
+	width: 1280px;
+	height: 1024px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+}
+.offi-login-box{
+	width: 1000px;
+	height: 500px;
+	display: flex;
+	flex-direction: row;
+}
+.offi-left-box{
+	width: 600px;
+	height: 500px;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+}
+.offi-right-box{
+	width: 400px;
+	height: 500px;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+}
+.login_find_box{
+	display: flex;
+	justify-content: center;
+}
+.find_font{
+	text-decoration : none;
+	color: white;
+}
+
+
+
+
+
+
+
+
+

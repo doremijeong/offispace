@@ -1,0 +1,68 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/main.css">
+<title>Insert title here</title>
+<style>
+body{
+	background-size:100% 100%;
+	background-image: url("<%=request.getContextPath() %>/resources/css/login_background1.png");
+	background-repeat: no-repeat;
+}
+</style>
+</head>
+<body>
+	<div class="offi-login-container">
+		<div class="offi-login-box">
+			<div class="offi-left-box">
+				<div class="off-title-box">
+					<p class="offi-title">Offi-Space</p>
+					<p class="offi-sub-title">당신이 있는 곳이 곧 사무실이 됩니다.</p>
+				</div>
+			</div>
+			<div class="offi-right-box">
+			
+				<div class="offi-login-form">
+					<form action="../../index3.html" method="post">
+				        <div class="input-group mb-3">
+				          <input type="email" class="form-control" placeholder="ID">
+				          <div class="input-group-append">
+				            <div class="input-group-text">
+				              <span class="fas fa-envelope"></span>
+				            </div>
+				          </div>
+				        </div>
+				        <div class="input-group mb-3">
+				          <input type="password" class="form-control" placeholder="Password">
+				          <div class="input-group-append">
+				            <div class="input-group-text">
+				              <span class="fas fa-lock"></span>
+				            </div>
+				          </div>
+				        </div>
+				      </form>
+				  </div>
+				  
+				  <div class="social-auth-links text-center mt-2 mb-3">
+			        <a href="#" class="btn btn-block btn-default">Sign in</a>
+			      </div>
+			
+				  <div class="login_find_box">
+				  	  <p class="mb-1">
+				        <a class="find_font" href="forgot-password.html">아이디 찾기 &nbsp;&nbsp; | &nbsp;&nbsp;</a>
+				      </p>
+				      <p class="mb-1 find_font">
+				        <a class="find_font" href="forgot-password.html"> 비밀번호 찾기</a>
+				      </p> 
+				  </div>
+				  
+				  
+				  
+			</div>
+		</div>
+	</div>
+</body>
+</html>

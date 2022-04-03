@@ -1,0 +1,23 @@
+package kr.co.offispace.service.mail;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import kr.co.offispace.dao.mail.MailDAO;
+import kr.co.offispace.dto.MailVO;
+
+public class MailServiceImpl implements MailService{
+
+	private MailDAO mailDAO;
+	
+	public void setMailDAO(MailDAO mailDAO) {
+		this.mailDAO = mailDAO;
+	}
+
+	@Override
+	public List<MailVO> getAllMailList() throws SQLException {
+		return mailDAO.selectAllMailList();
+	}
+	
+	
+}

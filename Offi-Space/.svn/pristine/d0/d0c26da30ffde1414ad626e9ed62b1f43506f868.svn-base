@@ -1,0 +1,11 @@
+package kr.co.offispace.service.employee;
+
+import java.sql.SQLException;
+
+import kr.co.offispace.command.RegisterEmployeeCommand;
+
+public interface EmployeeService {
+	
+	public void registerEmployee (RegisterEmployeeCommand registerEmployeeCommand) throws SQLException;
+
+}

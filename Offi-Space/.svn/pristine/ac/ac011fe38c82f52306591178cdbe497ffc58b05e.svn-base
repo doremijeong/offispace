@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- Repository -->
+	<bean id="employeeDAO" 
+		  class="kr.co.offispace.dao.employee.EmployeeDAOImpl"
+		  p:sqlSession-ref="sqlSession"
+	/>
+	<bean id="mailDAO" 
+	      class="kr.co.offispace.dao.mail.MailDAOImpl"
+		  p:sqlSession-ref="sqlSession"
+	/>
+	<bean id="menuDAO" 
+	      class="kr.co.offispace.dao.menu.MenuDAOImpl"
+		  p:sqlSession-ref="sqlSession"
+	/>
+	<bean id="messageDAO" 
+	      class="kr.co.offispace.dao.message.MessageDAOImpl"
+		  p:sqlSession-ref="sqlSession" 
+	/>
+	<bean id="schedulerDAO" 
+	      class="kr.co.offispace.dao.scheduler.SchedulerDAOImpl"
+		  p:sqlSession-ref="sqlSession"
+	/>			
+	
+	
+	<!-- Service -->
+	<bean id="employeeService" 
+	      class="kr.co.offispace.service.employee.EmployeeServiceImpl"
+		  p:employeeDAO-ref="employeeDAO"
+		  p:commonCodeDAO-ref="commonCodeDAO"
+	/>
+	<bean id="mailService" 
+	      class="kr.co.offispace.service.mail.MailServiceImpl"
+		  p:mailDAO-ref="mailDAO" 
+		  p:employeeService-ref="employeeService"
+	/>
+	<bean id="messageService" 
+	      class="kr.co.offispace.service.message.MessageServiceImpl"
+		  p:messageDAO-ref="messageDAO"
+	/>
+	<bean id="menuService" 
+	      class="kr.co.offispace.service.menu.MenuServiceImpl"
+		  p:menuDAOBean-ref="menuDAO"
+	/>
+	<bean id="schedulerService" 
+	      class="kr.co.offispace.service.scheduler.SchedulerServiceImpl"
+		  p:schedulerDAO-ref="schedulerDAO"
+	/>
+	
+</beans>

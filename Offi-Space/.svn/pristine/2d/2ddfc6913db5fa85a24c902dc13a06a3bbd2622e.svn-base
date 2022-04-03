@@ -1,0 +1,29 @@
+package kr.co.offispace.service.scheduler;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import kr.co.offispace.dao.scheduler.SchedulerDAO;
+import kr.co.offispace.dto.SchedulerVO;
+
+public class SchedulerServiceImpl implements SchedulerSerivce {
+
+	private SchedulerDAO schedulerDAO;
+	public void setSchedulerDAO(SchedulerDAO schedulerDAO) {
+		this.schedulerDAO = schedulerDAO;
+	}
+
+	@Override
+	public List<SchedulerVO> getScherdulerList(String empCode) throws SQLException {
+		
+		SchedulerVO schedulerVO = schedulerDAO.selectSchedulerColorList(empCode);
+		
+		List<SchedulerVO> schedulerList = schedulerDAO.SelectSchedulerList(empCode);
+		for (SchedulerVO scheduler : schedulerList) {
+			scheduler.setScdColor(schedulerVO.getScdColor());
+		}
+		return schedulerList;
+	}
+
+
+}

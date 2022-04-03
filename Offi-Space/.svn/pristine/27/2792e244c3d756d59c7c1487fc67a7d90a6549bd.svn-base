@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- String -->
+	<bean id="employeeImagesPath" class="java.lang.String">
+		<constructor-arg value="${employee.images.path}"/>
+	</bean>
+
+	<bean id="fileDocumentPath" class="java.lang.String">
+		<constructor-arg value="${fileDocument.path}"/>
+	</bean>
+
+	<bean id="logErrorsPath" class="java.lang.String">
+		<constructor-arg value="${log.errors.path}"/>
+	</bean>
+
+	<bean id="logLoginsPath" class="java.lang.String">
+		<constructor-arg value="${log.logins.path}"/>
+	</bean>
+	
+	<bean id="logApprovalsPath" class="java.lang.String">
+		<constructor-arg value="${log.approvals.path}"/>
+	</bean>
+	
+	<bean id="logReportsPath" class="java.lang.String">
+		<constructor-arg value="${log.reports.path}"/>
+	</bean>
+	
+	<bean id="logJobsPath" class="java.lang.String">
+		<constructor-arg value="${log.jobs.path}"/>
+	</bean>
+	
+	<bean id="mailFilesPath" class="java.lang.String">
+	 	<constructor-arg value="${mail.files.path}"/>
+	</bean>
+
+	<bean id="summernoteImagesPath" class="java.lang.String">
+	 	<constructor-arg value="${summernote.images.path}"/>
+	</bean>
+
+	<bean id="jobFilesPath" class="java.lang.String">
+ 		<constructor-arg value="${job.files.path}"/>
+	</bean>
+
+	<bean id="noticeFilesPath" class="java.lang.String">
+ 		<constructor-arg value="${notice.files.path}"/>
+	</bean>
+
+	<bean id="apvFilesPath" class="java.lang.String">
+ 		<constructor-arg value="${apv.files.path}"/>
+	</bean>
+
+
+
+
+	<!-- Repository -->
+	<bean id="attachmentDAO"
+		  class="kr.co.offispace.dao.attach.AttachmentDAOImpl"
+		  p:sqlSession-ref="sqlSession"
+	/>
+	<bean id="employeeDAO"
+		  class="kr.co.offispace.dao.employee.EmployeeDAOImpl"
+		  p:sqlSession-ref="sqlSession"
+	/>
+	<bean id="mailDAO"
+	      class="kr.co.offispace.dao.mail.MailDAOImpl"
+		  p:sqlSession-ref="sqlSession"
+	/>
+	<bean id="menuDAO"
+	      class="kr.co.offispace.dao.menu.MenuDAOImpl"
+		  p:sqlSession-ref="sqlSession"
+	/>
+	<bean id="messageDAO"
+	      class="kr.co.offispace.dao.message.MessageDAOImpl"
+		  p:sqlSession-ref="sqlSession"
+	/>
+	<bean id="schedulerDAO"
+	      class="kr.co.offispace.dao.scheduler.SchedulerDAOImpl"
+		  p:sqlSession-ref="sqlSession"
+	/>
+	<bean id="approvalDAO"
+		  class="kr.co.offispace.dao.approval.ApprovalDAOImpl"
+		  p:sqlSession-ref="sqlSession"
+	/>
+	<bean id="attendDAO"
+		  class="kr.co.offispace.dao.attend.AttendDAOImpl"
+		  p:sqlSession-ref="sqlSession"
+	/>
+	<bean id="commonCodeDAO"
+		  class="kr.co.offispace.dao.commonCode.CommonCodeDAOImpl"
+		  p:sqlSession-ref="sqlSession"
+	/>
+	<bean id="IPDAO"
+		  class="kr.co.offispace.dao.ip.IPDAOImpl"
+		  p:sqlSession-ref="sqlSession"
+	/>
+		<bean id="noticeDAO"
+		  class="kr.co.offispace.dao.notice.NoticeDAOImpl"
+		  p:sqlSession-ref="sqlSession"
+	/>
+	<bean id="teamNoticeDAO"
+		  class="kr.co.offispace.dao.notice.TeamNoticeDAOImpl"
+		  p:sqlSession-ref="sqlSession"
+	/>
+	
+	<bean id="scheduledDAO"
+		  class="kr.co.offispace.dao.task.ScheduledDAOImpl"
+		  p:sqlSessionMaria-ref="sqlSessionMaria"
+	/>
+
+
+
+
+	<!-- Service -->
+	<bean id="attachmentService"
+	      class="kr.co.offispace.service.attach.AttachmentServiceImpl"
+	      p:attachmentDAO-ref="attachmentDAO"
+	/>
+	<bean id="employeeService"
+	      class="kr.co.offispace.service.employee.EmployeeServiceImpl"
+		  p:employeeDAO-ref="employeeDAO"
+		  p:commonCodeDAO-ref="commonCodeDAO"
+		  p:attachDAO-ref="attachmentDAO"
+	/>
+	<bean id="mailService"
+	      class="kr.co.offispace.service.mail.MailServiceImpl"
+		  p:mailDAO-ref="mailDAO"
+		  p:attachService-ref="attachmentService"
+		  p:employeeService-ref="employeeService"
+		  p:notificationService-ref="notificationService"
+	/>
+	<bean id="messageService"
+	      class="kr.co.offispace.service.message.MessageServiceImpl"
+		  p:messageDAO-ref="messageDAO"
+		  p:employDAO-ref="employeeDAO"
+		  p:notificationService-ref="notificationService"
+	/>
+	<bean id="menuService"
+	      class="kr.co.offispace.service.menu.MenuServiceImpl"
+		  p:menuDAOBean-ref="menuDAO"
+	/>
+	<bean id="schedulerService"
+	      class="kr.co.offispace.service.scheduler.SchedulerServiceImpl"
+		  p:schedulerDAO-ref="schedulerDAO"
+	/>
+	<bean id="approvalService"
+		  class="kr.co.offispace.service.approval.ApprovalServiceImpl"
+		  p:approvalDAO-ref="approvalDAO"
+		  p:attachService-ref="attachmentService"
+		  p:employeeService-ref="employeeService"
+		  p:notificationService-ref="notificationService"
+	/>
+	<bean id="attendService"
+		  class="kr.co.offispace.service.attend.AttendServiceImpl"
+		  p:attendDAO-ref="attendDAO"
+		  p:notificationService-ref="notificationService"
+		  p:attachDAO-ref="attachmentDAO"
+	/>
+	<bean id="commonCodeService"
+		  class="kr.co.offispace.service.commonCode.CommonCodeServiceImpl"
+		  p:commonCodeDAO-ref="commonCodeDAO"
+	/>
+	<bean id="IPService"
+		  class="kr.co.offispace.service.ip.IPServiceImpl"
+		  p:IPDAO-ref="IPDAO"
+	/>
+	<bean id="noticeService"
+	    class="kr.co.offispace.service.notice.NoticeServiceImpl"
+		  p:noticeDAO-ref="noticeDAO"
+		  p:employeeService-ref="employeeService"
+		  p:attachService-ref="attachmentService"
+		  p:notificationService-ref="notificationService"
+	/>
+	<bean id="teamNoticeService"
+	    class="kr.co.offispace.service.notice.TeamNoticeServiceImpl"
+		  p:teamNoticeDAO-ref="teamNoticeDAO"
+		  p:employeeService-ref="employeeService"
+		  p:attachService-ref="attachmentService"
+		  p:notificationService-ref="notificationService"
+	/>
+	<bean id="scheduledService"
+		  class="kr.co.offispace.service.task.ScheduledServiceImpl"
+		  p:scheduledDAO-ref="scheduledDAO"
+	/>
+
+
+</beans>

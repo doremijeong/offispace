@@ -1,0 +1,93 @@
+package kr.co.offispace.controller;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import kr.co.offispace.command.Criteria;
+import kr.co.offispace.dto.CommonCodeVO;
+import kr.co.offispace.dto.MenuVO;
+import kr.co.offispace.service.commonCode.CommonCodeService;
+import kr.co.offispace.service.menu.MenuService;
+
+
+@Controller
+public class CommonController {
+
+	@Autowired
+	private MenuService menuService;
+
+	//로그인 성공 후 처음 보이는 화면 (마이페이지)
+	@RequestMapping("/index")
+	public String index(@RequestParam(defaultValue="M000000")String mCode,Model model) throws SQLException
+	{
+		String url="common/indexPage";
+		try {
+			List<MenuVO> allMenuList = menuService.getAllMenuList();
+			List<MenuVO> mainMenuList = menuService.getMainMenuList();
+			MenuVO menu = menuService.getMenuByMcode(mCode); //window.onload를 위한 menu.
+
+			model.addAttribute("allMenuList",allMenuList);
+			model.addAttribute("mainMenuList",mainMenuList); 
+			model.addAttribute("menu",menu);
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+			throw e;
+		}
+
+		return url;
+	}
+
+
+	//로그인 폼
+	@RequestMapping(value="/common/loginForm",method=RequestMethod.GET)
+	public String loginForm(@RequestParam(defaultValue="") String error, HttpServletResponse response)
+	{
+		String url="common/loginForm";
+
+		return url;
+	}
+
+
+	@RequestMapping(value="/main",method=RequestMethod.GET)
+	public String main() throws Exception	{
+		String url="common/main";
+
+		return url;
+	}
+	
+	@Autowired
+	private CommonCodeService commonCodeService;
+
+	@RequestMapping(value="/common/getCommonCodeList/{searchType}/{keyword}",method=RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<List<CommonCodeVO>> getCommonCodeList(@PathVariable("searchType")String searchType,
+																@PathVariable("keyword")String keyword) throws SQLException{
+		ResponseEntity<List<CommonCodeVO>> entity = null;
+
+		
+		Criteria cri = new Criteria();
+		cri.setSearchType(searchType);
+		cri.setKeyword(keyword);
+		
+		List<CommonCodeVO> commonCodeList = commonCodeService.getCommonCodeList(cri);
+	
+		entity = new ResponseEntity<List<CommonCodeVO>>(commonCodeList,HttpStatus.OK);
+		
+		return entity;
+	}
+
+}

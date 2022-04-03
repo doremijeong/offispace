@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="CommonCode-Mapper">
+
+<sql id="search">
+	<if test="searchType == 'headOffice'.toString()">
+		and COM_CODE_GR = 'D1'
+	</if>
+	<if test="searchType == 'groupInHeadOffice'.toString()">
+		and COM_CODE_GR = 'D2'
+		and COM_CODE2 = #{keyword}
+	</if>
+	<if test="searchType == 'teamInGroup'.toString()">
+		and COM_CODE_GR = 'D3'
+		and COM_CODE3 = #{keyword}
+	</if>
+</sql>
+
+<select id="selectCommonCodeList" resultType="commonCode">
+
+
+	SELECT 	 COM_CODE 
+			,COM_CODE_GR 
+			,COM_CODE_GR_NAME 
+			,COM_CODE1 
+			,COM_CODE2 
+			,COM_CODE3 
+			,COM_OPTION1 
+			,COM_OPTION2 
+			,COM_OPTION3 
+			,COM_USED 
+	FROM 	COMMON_CODE
+	WHERE   1 = 1
+
+	<include refid="search" />
+</select>
+
+
+<select id="selectHeadOfficeList" resultType="commonCode">
+
+
+	SELECT 	 COM_CODE 
+			,COM_CODE_GR 
+			,COM_CODE_GR_NAME 
+			,COM_CODE1 
+			,COM_CODE2 
+			,COM_CODE3 
+			,COM_OPTION1 
+			,COM_OPTION2 
+			,COM_OPTION3 
+			,COM_USED 
+	FROM 	COMMON_CODE
+	WHERE   COM_CODE_GR = 'D1'
+
+
+</select>
+
+<select id="selectGroupList" resultType="commonCode">
+
+
+	SELECT 	 COM_CODE 
+			,COM_CODE_GR 
+			,COM_CODE_GR_NAME 
+			,COM_CODE1 
+			,COM_CODE2 
+			,COM_CODE3 
+			,COM_OPTION1 
+			,COM_OPTION2 
+			,COM_OPTION3 
+			,COM_USED
+	FROM 	COMMON_CODE 
+	WHERE   COM_CODE_GR = 'D2'
+
+</select>
+
+<select id="selectTeamList" resultType="commonCode">
+
+
+	SELECT 	 COM_CODE 
+			,COM_CODE_GR 
+			,COM_CODE_GR_NAME 
+			,COM_CODE1 
+			,COM_CODE2 
+			,COM_CODE3 
+			,COM_OPTION1 
+			,COM_OPTION2 
+			,COM_OPTION3 
+			,COM_USED
+	FROM 	COMMON_CODE 
+	WHERE   COM_CODE_GR = 'D3'
+
+
+</select>
+
+<select id="selectPositionList" resultType="commonCode">
+
+
+	SELECT 	 COM_CODE 
+			,COM_CODE_GR 
+			,COM_CODE_GR_NAME 
+			,COM_CODE1 
+			,COM_CODE2 
+			,COM_CODE3 
+			,COM_OPTION1 
+			,COM_OPTION2 
+			,COM_OPTION3 
+			,COM_USED
+	FROM 	COMMON_CODE 
+	WHERE   COM_CODE_GR = 'P1'
+
+
+</select>
+
+<select id="selectChargeList" resultType="commonCode">
+
+
+	SELECT 	 COM_CODE 
+			,COM_CODE_GR 
+			,COM_CODE_GR_NAME 
+			,COM_CODE1 
+			,COM_CODE2 
+			,COM_CODE3 
+			,COM_OPTION1 
+			,COM_OPTION2 
+			,COM_OPTION3 
+			,COM_USED 
+	FROM 	COMMON_CODE
+	WHERE   COM_CODE_GR = 'R1'
+
+
+</select>
+
+<select id="selectStatusList" resultType="commonCode">
+
+
+	SELECT 	 COM_CODE 
+			,COM_CODE_GR 
+			,COM_CODE_GR_NAME 
+			,COM_CODE1 
+			,COM_CODE2 
+			,COM_CODE3 
+			,COM_OPTION1 
+			,COM_OPTION2 
+			,COM_OPTION3 
+			,COM_USED 
+	FROM 	COMMON_CODE
+	WHERE   COM_CODE_GR = 'S1'
+
+
+</select>
+
+<select id="selectAuthorityList" resultType="commonCode">
+
+	SELECT 	 COM_CODE 
+			,COM_CODE_GR 
+			,COM_CODE_GR_NAME 
+			,COM_CODE1 
+			,COM_CODE2 
+			,COM_CODE3 
+			,COM_OPTION1 
+			,COM_OPTION2 
+			,COM_OPTION3 
+			,COM_USED 
+	FROM 	COMMON_CODE
+	WHERE   COM_CODE_GR = 'A1'
+
+
+</select>
+
+<select id="selectComCode1" resultType="str">
+
+	SELECT COM_CODE1
+	  FROM COMMON_CODE
+	 WHERE COM_CODE = #{comCode}
+
+</select>
+
+<select id="selectCommonCodeByComCode" resultType="commonCode">
+
+	SELECT 	 COM_CODE 
+			,COM_CODE_GR 
+			,COM_CODE_GR_NAME 
+			,COM_CODE1 
+			,COM_CODE2 
+			,COM_CODE3 
+			,COM_OPTION1 
+			,COM_OPTION2 
+			,COM_OPTION3 
+			,COM_USED 
+	FROM 	COMMON_CODE
+	WHERE   COM_CODE = #{comCode}
+
+</select>
+
+<select id="selectVideoSeq" resultType="str">
+	SELECT 
+		'VC'||LPAD(VIDEO_SEQ.NEXTVAL,4,0)
+	FROM 
+		DUAL
+</select>
+
+</mapper>

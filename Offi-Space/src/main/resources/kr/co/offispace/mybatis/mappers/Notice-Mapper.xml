@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Notice-Mapper">
+
+	<sql id="search">
+		<if test="searchType == 'title'.toString()">
+			AND NOTICE_TITLE LIKE '%'||#{keyword}||'%'
+		</if>
+		<if test="searchType == 'content'.toString()">
+			AND NOTICE_CONTENT LIKE '%'||#{keyword}||'%'
+		</if>
+		<if test="searchType == 'tc'.toString()">
+			AND
+			(
+				NOTICE_TITLE LIKE '%'||#{keyword}||'%'
+			OR
+				NOTICE_CONTENT LIKE '%'||#{keyword}||'%'
+			)
+		</if>
+		<if test="searchType == 'writer'.toString()">
+			AND NOTICE_WRITER = (SELECT
+									EMP_CODE
+								FROM
+									EMPLOYEE
+								WHERE
+									EMP_NAME LIKE '%'||#{keyword}||'%')
+		</if>
+	</sql>
+
+
+	<!-- 공지 코드 가져오는 쿼리 -->
+	<select id="selectNoticeCode" resultType="str">
+		SELECT 'WN'||LPAD(NOTICE_SEQ.NEXTVAL,4,0) FROM DUAL
+	</select>
+
+	<!-- 공지 등록 -->
+	<update id="insertNotice" parameterType="notice">
+		INSERT
+			INTO
+			NOTICE
+		(
+			NOTICE_CODE,
+			NOTICE_TITLE,
+			NOTICE_CONTENT,
+			NOTICE_WRITER,
+			NOTICE_DATE,
+			NOTICE_SDATE,
+			NOTICE_EDATE,
+			NOTICE_IMPORTANCE
+		)
+		VALUES(
+			#{noticeCode},
+			#{noticeTitle},
+			#{noticeContent},
+			#{noticeWriter},
+			SYSDATE,
+			#{noticeSdate},
+			#{noticeEdate},
+			#{noticeImportance}
+		)
+	</update>
+
+	<!-- 공지 수정 -->
+	<update id="updateNotice" parameterType="notice">
+		UPDATE
+			NOTICE
+		SET
+			NOTICE_TITLE = #{noticeTitle},
+			NOTICE_CONTENT = #{noticeContent},
+			NOTICE_WRITER = #{noticeWriter},
+			NOTICE_UPDATE = SYSDATE,
+			NOTICE_SDATE = #{noticeSdate},
+			NOTICE_EDATE = #{noticeEdate},
+			NOTICE_IMPORTANCE = #{noticeImportance}
+		WHERE
+			NOTICE_CODE = #{noticeCode}
+	</update>
+
+	<!-- 공지 삭제 -->
+	<update id="deleteNotice" parameterType="str">
+
+		DELETE
+		FROM
+			NOTICE
+		WHERE NOTICE_CODE = #{noticeCode}
+
+	</update>
+
+	<!-- 공지 리스트 -->
+	<select id="selectNoticeList" resultType="notice">
+<![CDATA[
+		SELECT
+			NOTICE_CODE,
+			NOTICE_TITLE,
+			NOTICE_CONTENT,
+			NOTICE_WRITER,
+			NOTICE_DATE,
+			NOTICE_UPDATE,
+			NOTICE_SDATE,
+			NOTICE_EDATE,
+			NOTICE_IMPORTANCE,
+			NOTICE_VIEWCNT
+		FROM
+			NOTICE
+		WHERE
+			((NOTICE_SDATE <= SYSDATE
+		AND
+			(NOTICE_EDATE >= SYSDATE
+		OR
+			NOTICE_EDATE IS NULL))
+		OR
+			(TO_CHAR(NOTICE_SDATE, 'yyyy-MM-dd') LIKE '%'||TO_CHAR(SYSDATE, 'yyyy-MM-dd')||'%'
+		AND
+			TO_CHAR(NOTICE_EDATE, 'yyyy-MM-dd') LIKE '%'||TO_CHAR(SYSDATE, 'yyyy-MM-dd')||'%'))
+]]>
+		<include refid="search"></include>
+		ORDER BY
+			NOTICE_DATE DESC
+	</select>
+
+
+	<select id="selectNoticeImptList" resultType="notice">
+	<![CDATA[
+		SELECT
+			NOTICE_CODE,
+			NOTICE_TITLE,
+			NOTICE_CONTENT,
+			NOTICE_WRITER,
+			NOTICE_DATE,
+			NOTICE_UPDATE,
+			NOTICE_SDATE,
+			NOTICE_EDATE,
+			NOTICE_IMPORTANCE,
+			NOTICE_VIEWCNT
+		FROM
+			NOTICE
+    WHERE
+    	NOTICE_SDATE <= SYSDATE
+   	AND
+    	(NOTICE_EDATE >= SYSDATE
+    OR
+    	NOTICE_EDATE IS NULL)
+   	AND
+   	 NOTICE_IMPORTANCE = 'Y'
+   ]]>
+   	<include refid="search"></include>
+		ORDER BY
+			NOTICE_DATE DESC
+	</select>
+
+		<!-- 공지 리스트 -->
+	<select id="selectNoticeListCount" resultType="int">
+<![CDATA[
+		SELECT
+			COUNT(*)
+		FROM
+			NOTICE
+		WHERE
+			(NOTICE_SDATE <= SYSDATE
+		AND
+			(NOTICE_EDATE >= SYSDATE
+		OR
+			NOTICE_EDATE IS NULL))
+		OR
+			(TO_CHAR(NOTICE_SDATE, 'yyyy-MM-dd') LIKE '%'||TO_CHAR(SYSDATE, 'yyyy-MM-dd')||'%'
+		AND
+			TO_CHAR(NOTICE_EDATE, 'yyyy-MM-dd') LIKE '%'||TO_CHAR(SYSDATE, 'yyyy-MM-dd')||'%')
+]]>
+		<include refid="search"></include>
+		ORDER BY
+			NOTICE_DATE DESC
+	</select>
+
+	<!-- 공지 상세 조회 -->
+	<select id="selectNoticeByNoticeCode" resultType="notice">
+		SELECT
+			NOTICE_CODE,
+			NOTICE_TITLE,
+			NOTICE_CONTENT,
+			NOTICE_WRITER,
+			NOTICE_DATE,
+			NOTICE_UPDATE,
+			NOTICE_SDATE,
+			NOTICE_EDATE,
+			NOTICE_IMPORTANCE,
+			NOTICE_VIEWCNT
+		FROM
+			NOTICE
+		WHERE
+			NOTICE_CODE = #{noticeCode}
+	</select>
+
+	<!-- 공지 조회수 수정 -->
+	<update id="increaseViewCnt" parameterType="str">
+		UPDATE
+			NOTICE
+		SET
+			NOTICE_VIEWCNT = NOTICE_VIEWCNT + 1
+		WHERE
+			NOTICE_CODE = #{noticeCode}
+	</update>
+
+</mapper>

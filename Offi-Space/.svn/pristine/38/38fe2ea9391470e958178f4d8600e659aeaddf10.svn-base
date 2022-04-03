@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="menuDAO" class="kr.co.offispace.dao.menu.MenuDAOImpl"/>
+
+	<bean id="menuDAOBean" class="kr.co.offispace.dao.menu.MenuDAOImplTemplate"
+		p:menuDAO-ref="menuDAO"
+		p:session-ref="sqlSession"
+	/>
+	<bean id="mailDAO" class="kr.co.offispace.dao.mail.MailDAOImpl"
+		p:session-ref="sqlSession"
+	/>
+	
+	<bean id="menuService" class="kr.co.offispace.service.menu.MenuServiceImpl"
+		p:menuDAOBean-ref="menuDAOBean"
+	/>
+	<bean id="mailService" class="kr.co.offispace.service.mail.MailServiceImpl"
+		p:mailDAO-ref="mailDAO" 
+	/>
+	
+</beans>

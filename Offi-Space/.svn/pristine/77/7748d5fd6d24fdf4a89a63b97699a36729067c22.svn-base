@@ -1,0 +1,168 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ page trimDirectiveWhitespaces="true"%>
+<!DOCTYPE html>
+<body>
+	<div class="content-wrapper">
+
+		<section class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1>개인근태</h1>
+					</div>
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item"><a href="#">Home</a></li>
+							<li class="breadcrumb-item active">개인근태</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+
+		<section class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-12">
+						<div class="card card-info card-outline">
+
+							<div>
+								<h2 class="title" style="text-align: center; margin-top: 2%;">
+									<a href="#"><i class="fas fa-chevron-left"></i></a>&nbsp;&nbsp;&nbsp;2021.01&nbsp;&nbsp;&nbsp;<a
+										href="#"><i class="fas fa-chevron-right"></i></a>
+								</h2>
+							</div>
+							<!-- ./card-header -->
+
+							<div class="card-body">
+								<div class="row">
+									<div class="col-12">
+										<div class="row">
+											<div class="col-md-3 col-sm-6 col-12">
+												<div class="info-box bg-success">
+													<!-- <span class="info-box-icon"><i class="far fa-bookmark"></i></span> -->
+													<div class="info-box-content">
+														<span class="info-box-number text-center"><h3
+																style="margin: 0px;">30시간</h3></span> <span
+															class="info-box-text text-center text-bold">이번달 총
+															근무</span>
+													</div>
+													<!-- /.info-box-content -->
+												</div>
+												<!-- /.info-box -->
+											</div>
+											<!-- /.col -->
+											<div class="col-md-3 col-sm-6 col-12">
+												<div class="info-box bg-warning">
+													<div class="info-box-content">
+														<span class="info-box-number text-center"><h3
+																style="margin: 0px;">1</h3></span> <span
+															class="info-box-text text-center text-bold">지각</span>
+													</div>
+													<!-- /.info-box-content -->
+												</div>
+												<!-- /.info-box -->
+											</div>
+											<!-- /.col -->
+											<div class="col-md-3 col-sm-6 col-12">
+												<div class="info-box bg-info">
+													<div class="info-box-content">
+														<span class="info-box-number text-center"><h3
+																style="margin: 0px;">0</h3></span> <span
+															class="info-box-text text-center text-bold">조퇴</span>
+													</div>
+													<!-- /.info-box-content -->
+												</div>
+												<!-- /.info-box -->
+											</div>
+											<!-- /.col -->
+											<div class="col-md-3 col-sm-6 col-12">
+												<div class="info-box bg-danger">
+													<div class="info-box-content">
+														<span class="info-box-number text-center"><h3
+																style="margin: 0px;">0</h3></span> <span
+															class="info-box-text text-center text-bold">결근</span>
+													</div>
+													<!-- /.info-box-content -->
+												</div>
+												<!-- /.info-box -->
+											</div>
+											<!-- /.col -->
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- /.card-body -->
+
+
+
+
+							<!-- /.card -->
+						</div>
+						<div class="card">
+							<div class="card-body p-0">
+								<div class="col-12 d-flex justify-content-between">
+									<div style="margin-top: 2%;">
+										<p>(근무타입)A형</p>
+									</div>
+									<div class="row" style="margin-top: 2%;">
+										<span><a href="#"><i class="far fa-file-alt"></i>선택적근무신청서</a></span>&nbsp;&nbsp;
+										<span><a href="#"><i class="far fa-file-alt"></i>재택근무신청서</a></span>&nbsp;&nbsp;
+									</div>
+								</div>
+								<table class="table table-hover">
+									<tbody>
+
+										<tr data-widget="expandable-table" aria-expanded="false">
+											<th>
+												<div>
+													<i class="expandable-table-caret fas fa-caret-right fa-fw"></i>
+													1주차
+													<div class="float-right">
+														<span class="badge badge-info">조퇴</span>
+														<span class="badge badge-warning">지각</span>
+														<span class="badge badge-danger">결근</span>
+													</div>
+												</div>
+
+											</th>
+										</tr>
+										<tr class="expandable-body d-none">
+											<td>
+												<div class="p-0" style="display: none;">
+													<table class="table table-hover">
+														<tbody>
+															<tr>
+																<th>일자</th>
+																<th>업무시작</th>
+																<th>업무종료</th>
+																<th>초과시간</th>
+																<th>총 근무시간</th>
+																<th>근태</th>
+															</tr>
+															<tr>
+																<td>03일 &nbsp;&nbsp;&nbsp;월요일</td>
+																<td>08:40:39</td>
+																<td>19:01:10</td>
+																<td>02:00:00</td>
+																<td>10:00:00</td>
+																<td><span class="badge badge-warning">지각</span></td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<!-- /.card-body -->
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+</body>

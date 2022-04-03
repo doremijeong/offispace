@@ -1,0 +1,14 @@
+package kr.co.offispace.service.mail;
+
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
+
+import kr.co.offispace.command.Criteria;
+import kr.co.offispace.dto.MailVO;
+
+public interface MailService {
+	
+	public Map<String, Object> getAllMailList(Criteria cri) throws SQLException;
+	
+}

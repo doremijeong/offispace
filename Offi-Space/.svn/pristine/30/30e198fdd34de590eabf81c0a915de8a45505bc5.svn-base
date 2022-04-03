@@ -1,0 +1,14 @@
+package test;
+
+public class team2 {
+	public static void main(String[] args) {
+		System.out.println("하이하이 미희 쓰 노트북");
+		System.out.println("이것음 미희 학언 노트북");
+		System.out.println("꺄아아아아아아 꺄아아아ㅏ아ㅏ");
+		
+		System.out.println("지윤쓰 컴퓨터 입니당");
+		System.out.println("나느천재다다다다다다ㅏ");
+		
+		int a=2;
+	}
+}

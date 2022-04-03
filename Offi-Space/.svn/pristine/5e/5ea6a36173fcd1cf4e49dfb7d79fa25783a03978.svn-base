@@ -1,0 +1,103 @@
+package kr.co.offispace.service.employee;
+
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import kr.co.offispace.command.ContactCriteria;
+import kr.co.offispace.command.ContactPageMaker;
+import kr.co.offispace.command.PageMaker;
+import kr.co.offispace.command.RegisterEmployeeCommand;
+import kr.co.offispace.dao.commonCode.CommonCodeDAO;
+import kr.co.offispace.dao.employee.EmployeeDAO;
+import kr.co.offispace.dto.EmployeeVO;
+
+public class EmployeeServiceImpl implements EmployeeService {
+
+	private EmployeeDAO employeeDAO;
+	public void setEmployeeDAO(EmployeeDAO employeeDAO) {
+		this.employeeDAO = employeeDAO;
+	}
+	private CommonCodeDAO commonCodeDAO;	
+	public void setCommonCodeDAO(CommonCodeDAO commonCodeDAO) {
+		this.commonCodeDAO = commonCodeDAO;
+	}
+
+	@Override
+	public void registerEmployee(RegisterEmployeeCommand registerEmployeeCommand) throws SQLException {
+		String empCode = employeeDAO.selectEmpCodeToRegister(); //OP0033 lpad 사용해서 시퀀스 적용
+		registerEmployeeCommand.setEmpCode(empCode); //세팅
+		
+		registerEmployeeCommand.setEmpHireDt(registerEmployeeCommand.getEmpHireDt().replaceAll("-", ""));
+		
+		String empId = "EMP"+registerEmployeeCommand.getEmpHireDt()+empCode.substring(3); // EMP20220112 033
+		registerEmployeeCommand.setEmpId(empId);
+		String empPassword = empCode+registerEmployeeCommand.getEmpReginum().substring(0,6); // OP0033 121212
+		registerEmployeeCommand.setEmpPassword(empPassword);
+		
+		System.out.println(empCode +"/" +empId +"/"+ empPassword); //OP0033/EMP20220112033/OP0033121212
+		employeeDAO.insertEmployee(registerEmployeeCommand);
+	}
+
+	@Override
+	public List<EmployeeVO> getEmployeeList() throws SQLException {
+		
+		List<EmployeeVO> employeeList = employeeDAO.selectEmployeeList();
+		
+		for(EmployeeVO employee : employeeList ) {
+			employeeSetCommonName(employee);
+		}
+		
+		return employeeList;
+	}
+
+	@Override
+	public EmployeeVO getEmployee(String empId) throws SQLException {
+		
+		EmployeeVO employee = employeeDAO.selectEmployeeById(empId);
+		
+		employeeSetCommonName(employee);
+		
+		return employee;
+		
+	}
+
+	@Override
+	public Map<String, Object> getMemberListPage(ContactCriteria cri) throws Exception {
+		
+		Map<String, Object> dataMap = null;
+		
+		List<EmployeeVO> employeeList = null;
+		ContactPageMaker pageMaker = null;
+			
+		employeeList=employeeDAO.selectEmployeeList(cri);
+		
+		for(EmployeeVO employee : employeeList) {
+			employeeSetCommonName(employee);
+		}
+		
+		pageMaker = new ContactPageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(employeeDAO.selectEmployeeListCount(cri));
+			
+		dataMap=new HashMap<String,Object>();
+		dataMap.put("employeeList", employeeList);
+		dataMap.put("pageMaker",pageMaker);
+			
+		return dataMap;
+	}
+	
+	private void employeeSetCommonName(EmployeeVO employee) throws SQLException
+	{
+		employee.setStatusCode(commonCodeDAO.selectComCode1(employee.getStatusCode()));
+		employee.setHeadOfficeValue(commonCodeDAO.selectComCode1(employee.getHeadOfficeCode()));
+		employee.setGroupValue(commonCodeDAO.selectComCode1(employee.getGroupCode()));
+		employee.setTeamValue(commonCodeDAO.selectComCode1(employee.getTeamCode()));
+		employee.setPositionValue(commonCodeDAO.selectComCode1(employee.getPositionCode()));
+		employee.setChargeValue(commonCodeDAO.selectComCode1(employee.getChargeCode()));
+		employee.setAuthorityValue(commonCodeDAO.selectComCode1(employee.getAuthorityCode()));
+	}
+	
+
+}

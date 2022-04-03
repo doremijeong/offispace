@@ -1,0 +1,28 @@
+package kr.co.offispace.dao.employee;
+
+import java.sql.SQLException;
+
+import org.apache.ibatis.session.SqlSession;
+
+import kr.co.offispace.command.RegisterEmployeeCommand;
+
+public class EmployeeDAOImpl implements EmployeeDAO {
+	
+	private SqlSession sqlSession;
+	public void setSqlSession(SqlSession sqlSession) {
+		this.sqlSession = sqlSession;
+	}
+	
+	@Override
+	public String selectEmpCodeToRegister() throws SQLException {
+		String empCode = sqlSession.selectOne("Employee-Mapper.selectEmpCodeToRegister");
+		return empCode;
+	}
+
+	@Override
+	public void insertEmployee(RegisterEmployeeCommand registerEmployeeCommand) throws SQLException {
+		sqlSession.insert("Employee-Mapper.insertEmployee", registerEmployeeCommand);
+
+	}
+
+}

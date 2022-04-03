@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Reply-Mapper">
+
+	<!-- 댓글 등록 -->
+	<update id="insertReply" parameterType="reply">
+		INSERT
+			INTO
+			REPLY
+		(
+			REPLY_CODE,
+			REPLY_WRITE,
+			REPLY_CONTENT,
+			REPLY_WRITE_DT,
+			BOARD_CODE
+		)
+		VALUES(
+			'RE'||LPAD(REPLY_SEQ.NEXTVAL,4,0),
+			#{replyWrite},
+			#{replyContent},
+			SYSDATE,
+			#{boardCode}
+		)
+	</update>
+
+	<!-- 댓글 수정 -->
+	<update id="updateReply" parameterType="reply">
+		UPDATE
+			REPLY
+		SET
+			REPLY_CONTENT = #{replyContent},
+			REPLY_MODIFY_DT = SYSDTAE
+		WHERE
+			REPLY_CODE = #{replyCode}
+	</update>
+
+	<!-- 댓글 삭제 -->
+	<update id="deleteReply" parameterType="str">
+		DELETE
+		  FROM
+		 	REPLY
+		 WHERE
+		 	REPLY_CODE = #{replyCode}
+	</update>
+
+	<!-- 댓글 리스트 -->
+	<select id="selectReplyList" resultType="reply" parameterType="str">
+		SELECT
+			REPLY_CODE,
+			REPLY_WRITE,
+			REPLY_CONTENT,
+			REPLY_WRITE_DT,
+			REPLY_MODIFY_DT,
+			BOARD_CODE
+		FROM
+			REPLY
+		WHERE
+			BOARD_CODE = #{code}
+	</select>
+
+	<select id="selectReplyListCount" resultType="int" parameterType="str">
+		SELECT
+			COUNT(*)
+		FROM
+			REPLY
+		WHERE
+			BOARD_CODE = #{code}
+	</select>
+</mapper>

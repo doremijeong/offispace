@@ -1,0 +1,348 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<head></head>
+
+<body>
+
+    <div class="content-wrapper" style="min-height: 1602px;">
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1>개인 보관함</h1>
+            </div>
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="#">쪽지</a></li>
+                <li class="breadcrumb-item active">받은 쪽지함</li>
+              </ol>
+            </div>
+          </div>
+      </section>
+
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <!-- 마진을 위한 div -->
+          <div style="height: 3px;"></div>
+
+          <!-- 쪽지목록-->
+          <div class="column">
+            <!-- 검색줄-->
+            <div class="card card-info card-outline">
+              <div class="card-header">
+                <div class="float-left">
+                	<!-- 전체 쪽지 개수 표시 -->
+              	    전체 <p class="text-danger" style="display: inline-block; margin: 0;">132</p>
+                </div>
+                <div class="card-tools col-sm-7">
+                  <div class="input-group input-group-sm">
+                    <select class="custom-select col-sm-2" id="inputGroupSelect01">
+                      <option>15개씩</option>
+                      <option>20개씩</option>
+                      <option>30개씩</option>
+                    </select>
+                    &nbsp;
+                    <select class="custom-select col-sm-3" id="inputGroupSelect01">
+                      <option>제목</option>
+                      <option>보낸사람</option>
+                      <option>받는사람</option>
+                    </select>
+                    &nbsp;
+                    <input type="text" class="form-control" placeholder="검색">
+                    <div class="input-group-append">
+                      <div class="btn btn-primary">
+                        <i class="fas fa-search"></i>
+                      </div>
+                    </div>
+
+                  </div> <!-- input-group input-group-sm -->
+                </div> <!-- /.card-tools -->
+              </div> <!-- /.card-header -->
+
+
+              <div class="card-body p-0">
+                <div class="mailbox-controls">
+                  <!--전체 선택 체크박스-->
+                  &nbsp;
+                  <button type="button" class="btn btn-default btn-sm checkbox-toggle">
+                    <i class="far fa-square"></i>
+                  </button>
+                  <button type="button" class="btn btn-default btn-sm msg-modal" data-toggle="modal" data-target="#modal-default">
+            	         쪽지쓰기
+                  </button>
+                  <button type="button" class="btn btn-default btn-sm">
+                    <i class="far fa-trash-alt"></i> 삭제
+                  </button>
+
+                  <div class="float-right">
+                    <!-- 중요한 쪽지만 보기 -->
+                    <button type="button" class="btn btn-default btn-sm checkbox-toggle2">
+                      <i class="far fa-square"></i>&nbsp;<i class="fas fa-exclamation text-danger"></i>
+                    </button>
+                    <!-- 안 읽은 쪽지만 보기 -->
+                    <button type="button" class="btn btn-default btn-sm checkbox-toggle3">
+                      <i class="far fa-square"></i>&nbsp;<i class="fas fa-envelope text-gray"></i>
+                    </button> &nbsp;&nbsp;
+                  </div>
+                </div> <!-- mailbox-controls -->
+
+
+                <!-- 쪽지 목록 테이블-->
+                <div class="table-responsive mailbox-messages">
+                  <table class="table table-hover table-sm">
+                    <thead>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td>보낸사람</td>
+                      <td>내용</td>
+                      <td>날짜</td>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <div class="icheck-primary">
+                            <input type="checkbox" value="" id="check1">
+                            <label for="check1"></label>
+                          </div>
+                        </td>
+                        <td class="mailbox-star"><a href="#"><i class="fas fa-exclamation text-danger"></i></a></td>
+                        <td class="mailbox-star"><a href="#"><i class="far fa-envelope-open text-gray"></i></a></td>
+                        <td class="mailbox-name"><a href="read-mail.html">알렉스</a></td>
+                        <td class="mailbox-subject">
+                          <a href="" data-toggle="modal" data-target="#modal-from">
+                            [구내식당] 중식이용시간 변경 안내(02.15일 부터)...
+                          </a>
+                        </td>
+                        <td class="mailbox-date">2022.01.01. 09:29</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="icheck-primary">
+                            <input type="checkbox" value="" id="check1">
+                            <label for="check1"></label>
+                          </div>
+                        </td>
+                        <td class="mailbox-star"><a href="#"><i class="fas fa-exclamation text-danger"></i></a></td>
+                        <td class="mailbox-star"><a href="#"><i class="fas fa-envelope text-gray"></i></a></td>
+                        <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td>
+                        <td class="mailbox-subject">
+                          AdminLTE 3.0 Issue - Trying to find a solution to this...
+                        </td>
+                        </a>
+                        <td class="mailbox-date">2022.01.01. 09:28</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="icheck-primary">
+                            <input type="checkbox" value="" id="check1">
+                            <label for="check1"></label>
+                          </div>
+                        </td>
+                        <td class="mailbox-star"></i></a></td>
+                        <td class="mailbox-star"><a href="#"><i class="far fa-envelope-open text-gray"></i></a></td>
+                        <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td>
+                        <td class="mailbox-subject">AdminLTE 3.0 Issue - Trying to find a solution to this...</td>
+
+                        <td class="mailbox-date">2021.11.16.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="icheck-primary">
+                            <input type="checkbox" value="" id="check1">
+                            <label for="check1"></label>
+                          </div>
+                        </td>
+                        <td class="mailbox-star"></i></a></td>
+                        <td class="mailbox-star"><a href="#"><i class="far fa-envelope-open text-gray"></i></a></td>
+                        <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td>
+                        <td class="mailbox-subject">AdminLTE 3.0 Issue - Trying to find a solution to this...</td>
+
+                        <td class="mailbox-date">2021.11.12.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="icheck-primary">
+                            <input type="checkbox" value="" id="check1">
+                            <label for="check1"></label>
+                          </div>
+                        </td>
+                        <td class="mailbox-star"><a href="#"><i class="fas fa-exclamation text-danger"></i></a></td>
+                        <td class="mailbox-star"><a href="#"><i class="far fa-envelope-open text-gray"></i></a></td>
+                        <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td>
+                        <td class="mailbox-subject">AdminLTE 3.0 Issue - Trying to find a solution to this...</td>
+
+                        <td class="mailbox-date">2021.11.05.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="icheck-primary">
+                            <input type="checkbox" value="" id="check1">
+                            <label for="check1"></label>
+                          </div>
+                        </td>
+                        <td class="mailbox-star"><a href="#"></i></a></td>
+                        <td class="mailbox-star"><a href="#"><i class="far fa-envelope-open text-gray"></i></a></td>
+                        <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td>
+                        <td class="mailbox-subject">AdminLTE 3.0 Issue - Trying to find a solution to this...</td>
+
+                        <td class="mailbox-date">2021.11.04.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="icheck-primary">
+                            <input type="checkbox" value="" id="check1">
+                            <label for="check1"></label>
+                          </div>
+                        </td>
+                        <td class="mailbox-star"><a href="#"><i class="fas fa-exclamation text-danger"></i></a></td>
+                        <td class="mailbox-star"><a href="#"><i class="far fa-envelope-open text-gray"></i></a></td>
+                        <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td>
+                        <td class="mailbox-subject">AdminLTE 3.0 Issue - Trying to find a solution to this...</td>
+
+                        <td class="mailbox-date">2021.10.15.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="icheck-primary">
+                            <input type="checkbox" value="" id="check1">
+                            <label for="check1"></label>
+                          </div>
+                        </td>
+                        <td class="mailbox-star"><a href="#"></i></a></td>
+                        <td class="mailbox-star"><a href="#"><i class="fas fa-envelope text-gray"></i></a></td>
+                        <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td>
+                        <td class="mailbox-subject">AdminLTE 3.0 Issue - Trying to find a solution to this...</td>
+
+                        <td class="mailbox-date">2021.10.15.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="icheck-primary">
+                            <input type="checkbox" value="" id="check1">
+                            <label for="check1"></label>
+                          </div>
+                        </td>
+                        <td class="mailbox-star"><a href="#"><i class="fas fa-exclamation text-danger"></i></a></td>
+                        <td class="mailbox-star"><a href="#"><i class="far fa-envelope-open text-gray"></i></a></td>
+                        <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td>
+                        <td class="mailbox-subject">AdminLTE 3.0 Issue - Trying to find a solution to this...</td>
+
+                        <td class="mailbox-date">2021.10.12.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="icheck-primary">
+                            <input type="checkbox" value="" id="check1">
+                            <label for="check1"></label>
+                          </div>
+                        </td>
+                        <td class="mailbox-star"><a href="#"><i class="fas fa-exclamation text-danger"></i></a></td>
+                        <td class="mailbox-star"><a href="#"><i class="far fa-envelope-open text-gray"></i></a></td>
+                        <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td>
+                        <td class="mailbox-subject">AdminLTE 3.0 Issue - Trying to find a solution to this...</td>
+
+                        <td class="mailbox-date">2021.10.07.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="icheck-primary">
+                            <input type="checkbox" value="" id="check1">
+                            <label for="check1"></label>
+                          </div>
+                        </td>
+                        <td class="mailbox-star"><a href="#"></i></a></td>
+                        <td class="mailbox-star"><a href="#"><i class="far fa-envelope-open text-gray"></i></a></td>
+                        <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td>
+                        <td class="mailbox-subject">AdminLTE 3.0 Issue - Trying to find a solution to this...</td>
+
+                        <td class="mailbox-date">2021.09.25.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="icheck-primary">
+                            <input type="checkbox" value="" id="check1">
+                            <label for="check1"></label>
+                          </div>
+                        </td>
+                        <td class="mailbox-star"><a href="#"></i></a></td>
+                        <td class="mailbox-star"><a href="#"><i class="fas fa-envelope text-gray"></i></a></td>
+                        <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td>
+                        <td class="mailbox-subject">AdminLTE 3.0 Issue - Trying to find a solution to this...</td>
+
+                        <td class="mailbox-date">2021.09.21.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="icheck-primary">
+                            <input type="checkbox" value="" id="check1">
+                            <label for="check1"></label>
+                          </div>
+                        </td>
+                        <td class="mailbox-star"><a href="#"></i></a></td>
+                        <td class="mailbox-star"><a href="#"><i class="far fa-envelope-open text-gray"></i></a></td>
+                        <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td>
+                        <td class="mailbox-subject">AdminLTE 3.0 Issue - Trying to find a solution to this...</td>
+
+                        <td class="mailbox-date">2021.09.15.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="icheck-primary">
+                            <input type="checkbox" value="" id="check1">
+                            <label for="check1"></label>
+                          </div>
+                        </td>
+                        <td class="mailbox-star"><a href="#"><i class="fas fa-exclamation text-danger"></i></a></td>
+                        <td class="mailbox-star"><a href="#"><i class="far fa-envelope-open text-gray"></i></a></td>
+                        <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td>
+                        <td class="mailbox-subject">AdminLTE 3.0 Issue - Trying to find a solution to this...</td>
+
+                        <td class="mailbox-date">2021.09.08.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="icheck-primary">
+                            <input type="checkbox" value="" id="check1">
+                            <label for="check1"></label>
+                          </div>
+                        </td>
+                        <td class="mailbox-star"><a href="#"></a></td>
+                        <td class="mailbox-star"><a href="#"><i class="far fa-envelope-open text-gray"></i></a></td>
+                        <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td>
+                        <td class="mailbox-subject">AdminLTE 3.0 Issue - Trying to find a solution to this...</td>
+
+                        <td class="mailbox-date">2021.09.04.</td>
+                      </tr>
+                    </tbody>
+                  </table> <!-- /.table -->
+                </div> <!-- /.mail-box-messages -->
+              </div> <!-- /.card-body-->
+
+              <!--페이징-->
+              <div class="card-footer p-0 d-flex justify-content-center">
+                <ul class="pagination pagination-sm m-0">
+                  <li class="page-item"><a class="page-link" href="#">«</a></li>
+                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item"><a class="page-link" href="#">4</a></li>
+                  <li class="page-item"><a class="page-link" href="#">5</a></li>
+                  <li class="page-item"><a class="page-link" href="#">6</a></li>
+                  <li class="page-item"><a class="page-link" href="#">7</a></li>
+                  <li class="page-item"><a class="page-link" href="#">8</a></li>
+                  <li class="page-item"><a class="page-link" href="#">9</a></li>
+                  <li class="page-item"><a class="page-link" href="#">10</a></li>
+                  <li class="page-item"><a class="page-link" href="#">»</a></li>
+                </ul>
+              </div>
+              <!--페이징-->
+
+            </div> <!-- card -->
+          </div> <!-- ./column -->
+        </div> <!-- /.container-fluid -->
+      </section> <!-- /.content -->
+    </div> <!-- content-wrapper -->
+
+</body>

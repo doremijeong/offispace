@@ -1,0 +1,47 @@
+$(function() {
+
+	//쪽지 전체 선택 체크 박스
+	$('.checkbox-toggle').click(
+			function() {
+				var clicks = $(this).data('clicks')
+				if (clicks) {
+					//Uncheck all checkboxes
+					$('.mailbox-messages input[type=\'checkbox\']').prop('checked', false)
+					$('.checkbox-toggle .far.fa-check-square').removeClass('fa-check-square').addClass('fa-square')
+				} else {
+					//Check all checkboxes
+					$('.mailbox-messages input[type=\'checkbox\']').prop('checked', true)
+					$('.checkbox-toggle .far.fa-square').removeClass('fa-square').addClass('fa-check-square')
+				}
+				$(this).data('clicks', !clicks)
+			})
+
+	//중요한 쪽지만 보기 버튼
+	$('.checkbox-toggle2').click(
+			function() {
+				var clicks = $(this).data('clicks')
+				if (clicks) {
+					//Uncheck all checkboxes
+					$('.checkbox-toggle2 .far.fa-check-square').removeClass('fa-check-square').addClass('fa-square')
+				} else {
+					//Check all checkboxes
+					$('.checkbox-toggle2 .far.fa-square').removeClass('fa-square').addClass('fa-check-square')
+				}
+				$(this).data('clicks', !clicks)
+			})
+
+	//안 읽은 쪽지만 보기 버튼
+	$('.checkbox-toggle3').click(
+			function() {
+				var clicks = $(this).data('clicks')
+				if (clicks) {
+					//Uncheck all checkboxes
+					$('.checkbox-toggle3 .far.fa-check-square').removeClass('fa-check-square').addClass('fa-square')
+				} else {
+					//Check all checkboxes
+					$('.checkbox-toggle3 .far.fa-square').removeClass('fa-square').addClass('fa-check-square')
+				}
+				$(this).data('clicks', !clicks)
+			})
+
+}) //function

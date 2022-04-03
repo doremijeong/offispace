@@ -1,0 +1,117 @@
+package kr.co.offispace.dto;
+
+import java.util.Date;
+import java.util.List;
+
+public class MaillVO {
+
+	private String mailTo;
+	private String mailStore;
+	private String mailEnabled;
+	private String mailTitle;
+	private String mailContent;
+	private String mailCode;
+	private String mailFrom;
+	private String mailStatus;
+	private String mailTemporary;
+	private String mailImportance;
+	private Date mailDt;
+	private List<AttachmentVO> attachList;
+
+	public void setMailTo(String mailTo) {
+		this.mailTo = mailTo;
+	}
+
+	public String getMailTo() {
+		return mailTo;
+	}
+
+	public void setMailStore(String mailStore) {
+		this.mailStore = mailStore;
+	}
+
+	public String getMailStore() {
+		return mailStore;
+	}
+
+	public void setMailEnabled(String mailEnabled) {
+		this.mailEnabled = mailEnabled;
+	}
+
+	public String getMailEnabled() {
+		return mailEnabled;
+	}
+
+	public void setMailTitle(String mailTitle) {
+		this.mailTitle = mailTitle;
+	}
+
+	public String getMailTitle() {
+		return mailTitle;
+	}
+
+	public void setMailContent(String mailContent) {
+		this.mailContent = mailContent;
+	}
+
+	public String getMailContent() {
+		return mailContent;
+	}
+
+	public void setMailCode(String mailCode) {
+		this.mailCode = mailCode;
+	}
+
+	public String getMailCode() {
+		return mailCode;
+	}
+
+	public void setMailFrom(String mailFrom) {
+		this.mailFrom = mailFrom;
+	}
+
+	public String getMailFrom() {
+		return mailFrom;
+	}
+
+	public void setMailStatus(String mailStatus) {
+		this.mailStatus = mailStatus;
+	}
+
+	public String getMailStatus() {
+		return mailStatus;
+	}
+
+	public void setMailTemporary(String mailTemporary) {
+		this.mailTemporary = mailTemporary;
+	}
+
+	public String getMailTemporary() {
+		return mailTemporary;
+	}
+
+	public void setMailImportance(String mailImportance) {
+		this.mailImportance = mailImportance;
+	}
+
+	public String getMailImportance() {
+		return mailImportance;
+	}
+
+	public Date getMailDt() {
+		return mailDt;
+	}
+
+	public void setMailDt(Date mailDt) {
+		this.mailDt = mailDt;
+	}
+
+	public List<AttachmentVO> getAttachList() {
+		return attachList;
+	}
+
+	public void setAttachList(List<AttachmentVO> attachList) {
+		this.attachList = attachList;
+	}
+	
+}

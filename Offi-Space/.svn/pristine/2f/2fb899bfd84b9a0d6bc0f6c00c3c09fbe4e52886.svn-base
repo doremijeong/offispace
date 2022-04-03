@@ -1,0 +1,45 @@
+package kr.co.offispace.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import kr.co.offispace.dto.SchedulerVO;
+import kr.co.offispace.service.scheduler.SchedulerSerivce;
+
+@Controller
+@RequestMapping("/scheduler")
+public class SchedulerController {
+	
+	@Autowired
+	private SchedulerSerivce schedulerService;
+	
+	@RequestMapping("/personalScheduler")
+	public ModelAndView personalSCD(ModelAndView mnv, String empCode) throws Exception{
+		String url = "scheduler/personalScheduler";
+		
+		List<SchedulerVO> schedulerList = schedulerService.getScherdulerList(empCode);
+		
+		mnv.addObject("schedulerList",schedulerList);
+		mnv.setViewName(url);
+		
+		return mnv;
+	} 
+	
+	@RequestMapping("/departmentScheduler")
+	public String departmentSCD()throws Exception{
+		String url = "scheduler/departmentScheduler";
+		
+		return url;
+	}
+	
+	@RequestMapping("/companyScheduler")
+	public String companySCD() throws Exception{
+		String url = "scheduler/companyScheduler";
+		
+		return url;
+	}
+}

@@ -1,0 +1,12 @@
+package kr.co.offispace.service.scheduler;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import kr.co.offispace.dto.SchedulerVO;
+
+public interface SchedulerSerivce {
+
+	public List<SchedulerVO> getScherdulerList(String empCode) throws SQLException;
+	
+}

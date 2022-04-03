@@ -1,0 +1,296 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<!-- 쪽지 쓰기 Modal -->
+<div class="modal" id="modal-default" tabindex="-1" role="dialog"
+	aria-labelledby="exampleModalLabel" aria-hidden="true"
+	data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<div class="row d-flex justify-content-end">
+					<div class="mailbox-controls">
+						&nbsp; <input type="checkbox" value="" id="check1"> <label
+							for="radio-two" style="margin: 0;">중요</label> &nbsp;
+						<!-- <div class="" style="display: inline-block;">
+                <input type="radio" id="radio-two" name="notaswitch-two" value="personal" checked />
+                <label for="radio-two" style="margin: 0;">개인</label> &nbsp;
+                <input type="radio" id="radio-three" name="notaswitch-two" value="work" />
+                <label for="radio-three" style="margin: 0;">업무</label>
+              </div> -->
+						<button type="button" class="btn btn-default btn-xs">임시보관</button>
+					</div>
+					<!--mailbox-controls-->
+				</div>
+				<!--row-->
+			</div>
+			<!--header-->
+
+			<div class="modal-body">
+				<div class="input-group input-group-sm">
+					<b>&nbsp;받는사람 :</b>&nbsp; <input type="text" class="form-control">
+					<span class="input-group-append">
+						<button type="button" class="btn btn-primary btn-flat">조회</button>
+					</span>
+				</div>
+				<textarea class="form-control" rows="8"
+					style="resize: none; margin-top: 8px;"></textarea>
+			</div>
+			<div class="modal-footer d-flex justify-content-end">
+				<button type="button" class="btn btn-default" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">닫기</span>
+				</button>
+				<button type="button" class="btn btn-primary">보내기</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!--modal -->
+
+
+<!-- 받은 쪽지 Modal -->
+<div class="modal" id="modal-from" tabindex="-1" role="dialog"
+	aria-labelledby="exampleModalLabel" aria-hidden="true"
+	data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+
+				<div class="row d-flex justify-content-end">
+					<div class="">
+						<div class="mailbox-controls">
+							<div class="">
+								&nbsp;
+								<c:if test="${from.msgImpt eq 1}">
+									<label for="radio-two" style="margin: 0;">
+										<i class="fas fa-exclamation text-danger"></i>&nbsp;중요
+									</label>
+								</c:if>
+					 			&nbsp;&nbsp;/ &nbsp;
+					 			
+								<div class="" style="display: inline-block;">
+									<label for="radio-two" style="margin: 0;">개인</label>
+									&nbsp;&nbsp; <span class="mailbox-read-time"
+										style="margin-top: 6px;"> <i class="far fa-clock mr-1"></i>2022.01.01.
+										09:29
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--header-->
+			
+			<div class="modal-body">
+				<div class="input-group input-group-sm">
+					<b>&nbsp;보낸사람 :</b>&nbsp; 알렉스 사원 [총무팀] &nbsp;&nbsp;&nbsp;&nbsp;
+				</div>
+				<div
+					style="border: 1px solid lightgray; margin-top: 10px; height: 250px; border-radius: 5px; padding: 10px;">
+					[구내식당] 중식이용시간 변경 안내(02.15일 부터) <br> 02월 15일부터 11:30부터 중식을
+					제공하오니 유의하여 주시기 바랍니다. <br> 감사합니다.
+				</div>
+			</div>
+			<!--modal-body-->
+			
+			<div class="modal-footer d-flex justify-content-center">
+				<button type="button" class="btn btn-default btn-md">
+					<i class="far fa-trash-alt"></i>
+				</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">닫기</span>
+				</button>
+				<button type="button" class="btn btn-primary">답장</button>
+				<button type="button" class="btn btn-primary">보관</button>
+				<button type="button" class="btn btn-primary" data-toggle="modal"	data-target="#modal-history">히스토리</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!--modal -->
+
+
+<!-- 보낸 쪽지 Modal -->
+<div class="modal" id="modal-to" tabindex="-1" role="dialog"
+	aria-labelledby="exampleModalLabel" aria-hidden="true"
+	data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+
+				<div class="row d-flex justify-content-end">
+					<div class="">
+						<div class="mailbox-controls">
+							<div class="">
+								&nbsp; <label for="radio-two" style="margin: 0;"><i
+									class="fas fa-exclamation text-danger"></i>&nbsp;중요</label> &nbsp;
+								&nbsp;/ &nbsp;
+								<div class="" style="display: inline-block;">
+									<label for="radio-two" style="margin: 0;">개인</label> &nbsp;
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--header-->
+			
+			<div class="modal-body">
+				<div class="input-group input-group-sm">
+					<b>&nbsp;받는사람 :</b>&nbsp; 알렉산더 외 5명 &nbsp; <b>
+						<p class="text-primary" style="display: inline-block; margin: 0;">></p>
+					</b> &nbsp;&nbsp;&nbsp;&nbsp; <span class="mailbox-read-time"
+						style="margin-top: 6px;"> <i class="far fa-clock mr-1"></i>2022.01.01.
+						09:29
+					</span>
+				</div>
+				<div
+					style="border: 1px solid lightgray; margin-top: 8px; height: 250px; border-radius: 5px; padding: 10px;">
+					내가 보낸 쪽지 양식입니다.~~</div>
+			</div>
+			<!--modal-body-->
+			
+			<div class="modal-footer d-flex justify-content-end">
+				<button type="button" class="btn btn-default">
+					<i class="far fa-trash-alt"></i>
+				</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">닫기</span>
+				</button>
+
+				<button type="button" class="btn btn-primary" data-toggle="modal"
+					data-target="#modal-history">히스토리</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!--modal -->
+
+
+<!-- 쪽지 히스토리 -->
+<div class="modal" id="modal-history" tabindex="-1" role="dialog"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-body direct-chat direct-chat-primary"
+				style="overflow-y: scroll; height: 500px;">
+				<section class="content">
+					<div class="container-fluid">
+
+						<div class="row d-flex justify-content-center">
+							<div class="col-md-12">
+
+								<div class="col-md-12">
+									<!-- /.card-header -->
+									<div class="card-body">
+
+										<!-- 대화창 -->
+										<!-- Message. Default to the left -->
+										<div class="direct-chat-msg">
+											<div class="direct-chat-infos clearfix">
+												<span class="direct-chat-name float-left">알렉산더</span> <span
+													class="direct-chat-timestamp float-right">2022.01.01.
+													09:22</span>
+											</div>
+											<!-- /.direct-chat-infos -->
+											<img class="direct-chat-img"
+												src="./resources/bootstrap/dist/img/user1-128x128.jpg"
+												alt="Message User Image">
+											<!-- /.direct-chat-img -->
+											<div class="direct-chat-text">
+												[구내식당] 중식이용시간 변경 안내(02.15일 부터) 02월 15일부터 11:30부터 중식을 제공하오니
+												유의하여 주시기 바랍니다. <br> 감사합니다.
+											</div>
+											<!-- /.direct-chat-text -->
+										</div>
+										<!-- /.direct-chat-msg -->
+
+										<!-- Message to the right -->
+										<div class="direct-chat-msg right">
+											<div class="direct-chat-infos clearfix">
+												<span class="direct-chat-name float-right">임나리</span> <span
+													class="direct-chat-timestamp float-left">2022.01.01.
+													09:25</span>
+											</div>
+											<!-- /.direct-chat-infos -->
+											<img class="direct-chat-img" src="./images/01.jpg"
+												alt="Message User Image">
+											<!-- /.direct-chat-img -->
+											<div class="direct-chat-text">석식은 몇시부터인가요?</div>
+											<!-- /.direct-chat-text -->
+										</div>
+										<!-- /.direct-chat-msg -->
+
+										<div class="direct-chat-msg">
+											<div class="direct-chat-infos clearfix">
+												<span class="direct-chat-name float-left">알렉산더</span> <span
+													class="direct-chat-timestamp float-right">2022.01.01.
+													09:28</span>
+											</div>
+											<!-- /.direct-chat-infos -->
+											<img class="direct-chat-img"
+												src="./resources/bootstrap/dist/img/user1-128x128.jpg"
+												alt="Message User Image">
+											<!-- /.direct-chat-img -->
+											<div class="direct-chat-text">5시반부터 제공합니다.</div>
+											<!-- /.direct-chat-text -->
+										</div>
+
+										<!-- Message to the right -->
+										<div class="direct-chat-msg right">
+											<div class="direct-chat-infos clearfix">
+												<span class="direct-chat-name float-right">임나리</span> <span
+													class="direct-chat-timestamp float-left">2022.01.01.
+													09:31</span>
+											</div>
+											<!-- /.direct-chat-infos -->
+											<img class="direct-chat-img" src="./images/01.jpg"
+												alt="Message User Image">
+											<!-- /.direct-chat-img -->
+											<div class="direct-chat-text">감사합니다. 좋은 하루 되세요.</div>
+											<!-- /.direct-chat-text -->
+										</div>
+										<!-- /.direct-chat-msg -->
+
+										<div class="direct-chat-msg">
+											<div class="direct-chat-infos clearfix">
+												<span class="direct-chat-name float-left">알렉산더</span> <span
+													class="direct-chat-timestamp float-right">2022.01.01.
+													09:29</span>
+											</div>
+											<!-- /.direct-chat-infos -->
+											<img class="direct-chat-img"
+												src="./resources/bootstrap/dist/img/user1-128x128.jpg"
+												alt="Message User Image">
+											<!-- /.direct-chat-img -->
+											<div class="direct-chat-text">네 ^^</div>
+											<!-- /.direct-chat-text -->
+										</div>
+									</div>
+									<!-- /.card-body -->
+								</div>
+							</div>
+							<!-- /.col -->
+						</div>
+						<!-- /.row -->
+					</div>
+					<!-- /.container-fluid -->
+				</section>
+			</div>
+			<!--modal-body-->
+
+			<div class="modal-footer d-flex justify-content-end">
+				<button type="button" class="btn btn-default" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">닫기</span>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!--modal -->

@@ -1,0 +1,42 @@
+package kr.co.offispace.controller;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+
+@Controller
+public class CommonController {
+	
+	@RequestMapping("/index")
+	public String index(@RequestParam(defaultValue="M000000")String mCode,Model model) throws SQLException
+	{
+		String url="common/indexPage";
+		
+		return url;
+	}
+	
+	@RequestMapping(value="/common/loginForm",method=RequestMethod.GET)
+	public String loginForm(@RequestParam(defaultValue="") String error, HttpServletResponse response) 
+	{
+		String url="common/login";
+		
+		return url;
+	}
+	
+	
+	@RequestMapping(value="/main",method=RequestMethod.GET)
+	public String main() throws Exception	{
+		String url="common/main";
+		
+		return url;
+	}
+	
+}

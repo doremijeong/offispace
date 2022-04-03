@@ -1,0 +1,6 @@
+package kr.co.offispace.dao.scheduler;
+
+public interface SchedulerDAO {
+
+	
+}

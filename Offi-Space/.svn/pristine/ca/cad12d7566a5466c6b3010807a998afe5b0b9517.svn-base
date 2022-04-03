@@ -1,0 +1,72 @@
+package kr.co.offispace.controller;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import kr.co.offispace.command.RegisterEmployeeCommand;
+import kr.co.offispace.dto.CommonCodeVO;
+import kr.co.offispace.service.commonCode.CommonCodeService;
+
+@Controller
+@RequestMapping("/admin")
+public class AdminController {
+
+	@Autowired
+	private CommonCodeService commonCodeService;
+	
+	@RequestMapping("/main")
+	public String main() {
+		String url = "admin/main";
+		return url;
+	}
+
+	@RequestMapping("/HRManager")
+	public String HRManager() {
+		String url= "admin/HRManager";
+		return url;
+	}
+	
+	@RequestMapping("/registerEmployeeForm")
+	public ModelAndView registerEmployeeForm(ModelAndView mnv) throws SQLException {
+		String url = "admin/registerEmployeeForm";
+
+		List<CommonCodeVO> headOfficeList = commonCodeService.getHeadOfficeList();
+		List<CommonCodeVO> positionList = commonCodeService.getPositionList();
+		List<CommonCodeVO> chargeList = commonCodeService.getChargeList();
+		List<CommonCodeVO> authorityList = commonCodeService.getAuthorityList();
+
+		mnv.addObject("headOfficeList", headOfficeList);
+		mnv.addObject("positionList", positionList);
+		mnv.addObject("chargeList", chargeList);
+		mnv.addObject("authorityList", authorityList);
+
+		mnv.setViewName(url);
+
+		return mnv;
+	}
+
+	@RequestMapping("/registerEmployee") 
+	public String registerEmployee( RegisterEmployeeCommand command,
+									HttpServletRequest request, 
+									HttpServletResponse response,
+									ModelAndView mnv) throws Exception {
+	
+		System.out.println("come");
+		String name = command.getEmpName();
+		System.out.println(name);
+
+	
+		String url = "admin/main";
+		return url;
+		
+	}
+
+}

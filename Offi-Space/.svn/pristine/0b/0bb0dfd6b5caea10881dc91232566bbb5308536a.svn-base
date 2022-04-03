@@ -1,0 +1,280 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page trimDirectiveWhitespaces="true"%>
+
+<title>  업무메인 </title>    
+<body>
+    <!-- Content Header (Page header) -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1>보고서</h1>
+            </div>
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active">보고서 메인</li>
+              </ol>
+            </div>
+          </div>
+        </div><!-- /.container-fluid -->
+      </section>
+      
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div id="toastsContainerTopRight" class="toasts-top-right fixed">
+            
+          </div>
+          <!-- 마진을 위한 div -->
+          <div style="height: 20px;"></div>
+          
+          <!-- 퀵메뉴슬라이드 -->
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="card" style="background-color:hsla(9, 100%, 64%, 0)">
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <div id="carouselExampleIndicators" class="carousel slide"  data-ride="carousel">
+                    <ol class="carousel-indicators">
+                      <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                      <li data-target="#carouselExampleIndicators" data-slide-to="1" class=""></li>
+                    </ol>
+                    <div class="carousel-inner" style="height: 256.95px;">
+                      <div class="carousel-item active">
+                        <!-- row -->
+                        <div class="row" alt="First slide">
+                          <!-- Quick Card with Ribbon -->
+                          <div class="col-lg-3">
+                            <div class="position-relative " style="height: 180px">
+                              <div class="ribbon-wrapper">
+                                <div class="ribbon bg-danger">
+                                  긴급
+                                </div>
+                              </div>
+                              <div class="card card-info card-outline">           
+                                <div class="card-body">
+                                  <div class="row" style="justify-content: space-between; align-items: baseline;">
+                                    <h6>2021</h6>
+                                  </div>
+                                  <h2>01/07(금)</h2>
+                                  <h5>주간 업무 계획 보고</h5>
+                                  <p style="font-size:0.8em;">보고현황 : 보고 5인 미보고 21인<br/>운영자 : 임나리 부장</p>
+                                  <a href="#" class="btn btn-outline-primary btn-block"><b>보고하기</b></a>
+                                </div>
+                                <!-- ./card-body -->
+                              </div>
+                              <!-- ./card -->
+                            </div> 
+                          </div>
+                          <!-- ./col-lg-3 ./Quick Card with Ribbon-->
+                          <!-- Quick Card -->
+                          <div class="col-lg-3">
+                            <div class="card card-info card-outline">           
+                              <div class="card-body">
+                                <div class="row" style="justify-content: space-between; align-items: baseline;">
+                                  <h6>2021</h6><span class="badge badge-danger">중요</span>
+                                </div>
+                                <h2>01/07(금)</h2>
+                                <h5>일간 업무 계획 보고</h5>
+                                <p style="font-size:0.8em;">보고현황 : 보고 20인 미보고 6인<br/>운영자 : 임나리 부장</p>
+                                <a href="#" class="btn btn-outline-primary btn-block"><b>보고하기</b></a>
+                              </div>
+                              <!-- ./card-body -->
+                            </div>
+                            <!-- ./card -->
+                          </div>
+                          <!-- ./col-lg-3 ./Quick Card-->                      
+                          <!-- Quick Card -->
+                          <div class="col-lg-3">
+                            <div class="card card-info card-outline">           
+                              <div class="card-body">
+                                <div class="row" style="justify-content: space-between; align-items: baseline;">
+                                  <h6>2021</h6><span class="badge badge-danger">중요</span>
+                                </div>
+                                <h2>01/07(금)</h2>
+                                <h5>선택적 근무 현황 보고</h5>
+                                <p style="font-size:0.8em;">보고현황 : 보고 5인 미보고 21인<br/>운영자 : 임나리 부장</p>
+                                <a href="#" class="btn btn-outline-primary btn-block"><b>보고하기</b></a>
+                              </div>
+                              <!-- ./card-body -->
+                            </div>
+                            <!-- ./card -->
+                          </div>
+                          <!-- ./col-lg-3 ./Quick Card-->
+                          <!-- Quick Card -->
+                          <div class="col-lg-3">
+                            <div class="card card-info card-outline">           
+                              <div class="card-body">
+                                <div class="row" style="justify-content: space-between; align-items: baseline;">
+                                  <h6>2021</h6><span class="badge badge-danger">중요</span>
+                                </div>
+                                <h2>01/10(월)</h2>
+                                <h5>거래선 관리 보고</h5>
+                                <p style="font-size:0.8em;">보고현황 : 보고 3인 미보고 2인<br/>운영자 : 임나리 부장</p>
+                                <a href="#" class="btn btn-outline-primary btn-block"><b>보고하기</b></a>
+                              </div>
+                              <!-- ./card-body -->
+                            </div>
+                            <!-- ./card -->
+                          </div>
+                          <!-- ./col-lg-3 ./Quick Card-->
+                        </div>
+                        <!-- ./row -->
+                      </div>
+                      <div class="carousel-item">
+                        <div class="row" alt="Second slide">
+                          <!-- Quick Card -->
+                          <div class="col-lg-3">
+                            <div class="card card-info card-outline">           
+                              <div class="card-body">
+                                <div class="row" style="justify-content: space-between; align-items: baseline;">
+                                  <h6>2021</h6>
+                                </div>
+                                <h2>01/10(월)</h2>
+                                <h5>일간 업무 계획 보고</h5>
+                                <p style="font-size:0.8em;">보고현황 : 보고 0인 미보고 24인<br/>운영자 : 임나리 부장</p>
+                                <a href="#" class="btn btn-outline-primary btn-block"><b>보고하기</b></a>
+                              </div>
+                              <!-- ./card-body -->
+                            </div>
+                            <!-- ./card -->
+                          </div>
+                          <!-- ./col-lg-3 ./Quick Card-->
+                          
+                          <!-- Quick Card  -->
+                          <div class="col-lg-3">
+                            <div class="card card-info card-outline">           
+                              <div class="card-body">
+                                <div class="row" style="justify-content: space-between; align-items: baseline;">
+                                  <h6>2021</h6>
+                                </div>
+                                <h2>01/11(화))</h2>
+                                <h5>일간 업무 계획 보고</h5>
+                                <p style="font-size:0.8em;">보고현황 : 보고 0인 미보고 21인<br/>운영자 : 임나리 부장</p>
+                                <a href="#" class="btn btn-outline-primary btn-block"><b>보고하기</b></a>
+                              </div>
+                              <!-- ./card-body -->
+                            </div>
+                            <!-- ./card -->
+                          </div>
+                          <!-- ./col-lg-3 ./Quick Card -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <a class="carousel-control-prev" style="margin-left:5px; width:15px; color:lightgray; " href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <span class="carousel-control-custom-icon" aria-hidden="true">
+                      <i class="fas fa-chevron-left" data-slide="prev"></i>
+                    </span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                  <a class="carousel-control-next" style="margin-right:10px; width: 15px; color:lightgray; " href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <span class="carousel-control-custom-icon" aria-hidden="true">
+                      <i class="fas fa-chevron-right"></i>
+                    </span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                  
+                  
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->        
+            </div>
+            <!-- ./col=lg-12 -->
+          </div>
+          <!-- ./row -->
+          <!-- ./퀵메뉴슬라이드 -->
+          
+          <!-- 마진을 위한 div -->
+          <div style="height: 60px;"></div>
+          
+          <!-- row -->
+          <div class="row">
+            <!-- list -->
+            <div class="col-lg-12">
+              <div class="card card-info card-outline">
+                <div class="card-header">
+                  <h3 class="card-title">
+                    <i class="fas fa-edit"></i>
+                    최근 생성된 보고서 
+                  </h3>
+                  <div class="float-right">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-default btn-sm">
+                        <i class="fas fa-sync-alt"></i>
+                      </button>      
+                    </div>
+                    <!-- /.btn-group -->
+                  </div>
+                  <!-- /.float-right --> 
+                </div>
+                <div class="card-body"> 
+                  <table class="table table-sm">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>보고일</th>
+                        <th>보고서</th>
+                        <th>제목</th>
+                        <th>부서</th>
+                        <th>보고자</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>1.</td>
+                        <td>2021-01-04(월)</td>
+                        <td>실적보고</td>
+                        <td>제5회 실적보고</td>
+                        <td>마케팅부</td>
+                        <td>김혜윤 차장</td>
+                      </tr>
+                      <tr>
+                        <td>2.</td>
+                        <td>2021-01-04(월)</td>
+                        <td>실적보고</td>
+                        <td>제5회 실적보고</td>
+                        <td>마케팅부</td>
+                        <td>김혜윤 차장</td>
+                      </tr>
+                      <tr>
+                        <td>3.</td>
+                        <td>2021-01-04(월)</td>
+                        <td>실적보고</td>
+                        <td>제5회 실적보고</td>
+                        <td>마케팅부</td>
+                        <td>김혜윤 차장</td>
+                      </tr>
+                      <tr>
+                        <td>4.</td>
+                        <td>2021-01-04(월)</td>
+                        <td>실적보고</td>
+                        <td>제5회 실적보고</td>
+                        <td>마케팅부</td>
+                        <td>김혜윤 차장</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.card-body -->
+              </div> 
+              <!-- /.card -->
+            </div>
+            <!-- ./list -->
+          </div>
+          <!-- ./row -->
+          
+          
+          
+        </div><!-- /.container-fluid -->
+      </section>
+      <!-- /.content -->
+    </div>
+   </body>
+        

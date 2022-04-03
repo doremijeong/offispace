@@ -1,0 +1,25 @@
+package kr.co.offispace.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+@Controller
+public class AttendanceController {
+	
+
+	@RequestMapping(value="/dclz/teamAttendance", method=RequestMethod.GET)
+	public String attend() throws Exception{
+		String url = "dclz/teamAttendance";
+		
+		return url;
+	}
+	
+	@RequestMapping(value="/dclz/yearlyVacation")
+	public String yearly() throws Exception{
+		String url = "dclz/yearlyVacation";
+		
+		return url;
+	}
+	
+}

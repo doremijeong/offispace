@@ -1,0 +1,80 @@
+package kr.co.offispace.dto;
+
+import java.util.Date;
+
+public class MessageVO {
+	
+	private String msgCode;		//쪽지 코드
+	private String msgImpt;		//쪽지 중요도
+	private String msgContent;	//쪽지 내용
+	private Date msgDt;			//쪽지 날짜
+	private String msgFrom;		//보낸 사람
+	private String msgTo;		//받는 사람
+	private String msgBin;		//휴지통
+	private String msgTemp;		//임시보관
+	private String msgRead;		//읽음 여부
+	private String msgClass;	//개인,업무 분류
+	
+	
+	public String getMsgCode() {
+		return msgCode;
+	}
+	public void setMsgCode(String msgCode) {
+		this.msgCode = msgCode;
+	}
+	public String getMsgImpt() {
+		return msgImpt;
+	}
+	public void setMsgImpt(String msgImpt) {
+		this.msgImpt = msgImpt;
+	}
+	public String getMsgContent() {
+		return msgContent;
+	}
+	public void setMsgContent(String msgContent) {
+		this.msgContent = msgContent;
+	}
+	public Date getMsgDt() {
+		return msgDt;
+	}
+	public void setMsgDt(Date msgDt) {
+		this.msgDt = msgDt;
+	}
+	public String getMsgFrom() {
+		return msgFrom;
+	}
+	public void setMsgFrom(String msgFrom) {
+		this.msgFrom = msgFrom;
+	}
+	public String getMsgTo() {
+		return msgTo;
+	}
+	public void setMsgTo(String msgTo) {
+		this.msgTo = msgTo;
+	}
+	public String getMsgBin() {
+		return msgBin;
+	}
+	public void setMsgBin(String msgBin) {
+		this.msgBin = msgBin;
+	}
+	public String getMsgTemp() {
+		return msgTemp;
+	}
+	public void setMsgTemp(String msgTemp) {
+		this.msgTemp = msgTemp;
+	}
+	public String getMsgRead() {
+		return msgRead;
+	}
+	public void setMsgRead(String msgRead) {
+		this.msgRead = msgRead;
+	}
+	public String getMsgClass() {
+		return msgClass;
+	}
+	public void setMsgClass(String msgClass) {
+		this.msgClass = msgClass;
+	}
+	
+}

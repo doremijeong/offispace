@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Attachment-Mapper">
+<!-- 
+	<select id="selectAttachCode" resultType="str">
+		SELECT 'AT'||ATTACHMENT_SEQ.NEXTVAL FROM DUAL
+	</select>
+ -->
+	<select id="selectAttachmentByAT" resultType="attachment">
+
+		SELECT ATTACH_CODE,
+		       ATTACH_SAVENAME,
+		       ATTACH_SAVEPATH,
+		       ATTACH_EXTENSION,
+		       ATTACH_REGISTER,
+		       ATTACH_REGDATE,
+		       ATTACH_GROUP
+		  FROM ATTACHMENT
+		  where ATTACH_CODE = #{attachCode}
+
+	</select>
+
+
+	<select id="selectAttachmentByOther" resultType="attachment">
+
+		SELECT ATTACH_CODE,
+		       ATTACH_SAVENAME,
+		       ATTACH_SAVEPATH,
+		       ATTACH_EXTENSION,
+		       ATTACH_REGISTER,
+		       ATTACH_REGDATE,
+		       ATTACH_GROUP
+		  FROM ATTACHMENT
+		  where ATTACH_GROUP = #{attachGroup}
+
+	</select>
+	
+	<select id="selectSaveNameByEmpCode" resultType="str">
+
+		SELECT ATTACH_SAVENAME
+		  FROM ATTACHMENT
+		  where ATTACH_GROUP = #{empCode}
+
+	</select>
+
+
+
+	<update id="insertAttachment" parameterType="attachment">
+
+		INSERT
+		INTO
+		ATTACHMENT
+		(
+			ATTACH_CODE
+			, ATTACH_SAVENAME
+			, ATTACH_SAVEPATH
+			, ATTACH_EXTENSION
+			, ATTACH_REGISTER
+			, ATTACH_REGDATE
+			, ATTACH_GROUP
+		)
+		VALUES(
+			'AT'||ATTACHMENT_SEQ.NEXTVAL,
+			#{attachSavename},
+			#{attachSavepath},
+			#{attachExtension},
+		    #{attachRegister},
+		    SYSDATE,
+		    #{attachGroup}
+		)
+
+	</update>
+
+	<update id="deleteAttachmentByAT">
+
+		DELETE FROM ATTACHMENT
+		 WHERE ATTACH_CODE = #{attachCode}
+
+	</update>
+
+	<update id="deleteAttachmentByOther">
+
+		DELETE FROM ATTACHMENT
+		 WHERE ATTACH_GROUP = #{attachGroup}
+
+	</update>
+	
+	
+	
+	<select id="selectAttachmentByAttachGroup" resultType="attachment">
+
+		SELECT ATTACH_CODE,
+		       ATTACH_SAVENAME,
+		       ATTACH_SAVEPATH,
+		       ATTACH_EXTENSION,
+		       ATTACH_REGISTER,
+		       ATTACH_REGDATE,
+		       ATTACH_GROUP
+		  FROM ATTACHMENT
+		  where ATTACH_GROUP = #{attachGroup}
+
+	</select>
+	
+	<select id="selectAttachmentByAttachSavePath" resultType="attachment">
+
+		SELECT ATTACH_CODE,
+		       ATTACH_SAVENAME,
+		       ATTACH_SAVEPATH,
+		       ATTACH_EXTENSION,
+		       ATTACH_REGISTER,
+		       ATTACH_REGDATE,
+		       ATTACH_GROUP
+		  FROM ATTACHMENT
+		  WHERE ATTACH_SAVEPATH = #{attachSavepath}
+
+	</select>
+	
+	<select id="selectAttachmentByAttachSaveNameAndAttachSavePath" resultType="attachment">
+
+		SELECT ATTACH_CODE,
+		       ATTACH_SAVENAME,
+		       ATTACH_SAVEPATH,
+		       ATTACH_EXTENSION,
+		       ATTACH_REGISTER,
+		       ATTACH_REGDATE,
+		       ATTACH_GROUP
+		  FROM ATTACHMENT
+		  WHERE ATTACH_SAVENAME = #{attachSavename} AND ATTACH_SAVEPATH = #{attachSavepath}
+
+	</select>
+	
+</mapper>

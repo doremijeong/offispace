@@ -1,0 +1,39 @@
+package kr.co.offispace.dao.message;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import org.apache.ibatis.session.RowBounds;
+import org.apache.ibatis.session.SqlSession;
+
+import kr.co.offispace.command.MessageCriteria;
+import kr.co.offispace.dto.MessageVO;
+
+public class MessageDAOImpl implements MessageDAO {
+	
+	private SqlSession sqlSession;
+	
+	public void setSqlSession(SqlSession sqlSession) {
+		this.sqlSession = sqlSession;
+	}
+	
+	
+	@Override
+	public List<MessageVO> selectMsgFromList(MessageCriteria cri) throws SQLException {
+		int offset = cri.getStartRowNum();
+		int limit = cri.getPerPageNum();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		List<MessageVO> fromList = sqlSession.selectList("Message-Mapper.selectMsgFromList", cri, rowBounds);
+		
+		return fromList;
+	}
+
+
+	@Override
+	public int selectAllMsgListTotalCount(MessageCriteria cri) throws SQLException {
+		int totalCount = sqlSession.selectOne("Message-Mapper.selectAllMsgListTotalCount", cri);
+		return totalCount;
+	}
+
+}

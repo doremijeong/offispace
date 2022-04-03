@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+	<settings>
+		<!-- 전통적인 데이터베이스 컬럼명 형태인 A_COLUMN을 CamelCase형태의 자바 프로퍼티명 형태인 aColumn으로 자동으로 매핑하도록 함 -->
+		<setting name="mapUnderscoreToCamelCase" value="true"></setting>
+		<!--  파라미터에 Null 값이 있을 경우 에러 처리 -->
+		<setting name="jdbcTypeForNull" value="VARCHAR"></setting>
+	</settings>
+
+	<typeAliases>
+		<typeAlias type="java.lang.String" alias="str"/>
+		<typeAlias type="java.lang.Integer" alias="int"/>
+
+		<typeAlias type="kr.co.offispace.dto.AttachmentVO" alias="attachment"/>
+		<typeAlias type="kr.co.offispace.dto.EmployeeVO" alias="employee"/>
+		<typeAlias type="kr.co.offispace.dto.MailVO" alias="mail"/>
+		<typeAlias type="kr.co.offispace.dto.MenuVO" alias="menu"/>
+		<typeAlias type="kr.co.offispace.dto.MessageVO" alias="message"/>
+		<typeAlias type="kr.co.offispace.dto.SchedulerVO" alias="scheduler"/>
+		<typeAlias type="kr.co.offispace.dto.CommonCodeVO" alias="commonCode"/>
+		<typeAlias type="kr.co.offispace.dto.JobcodeVO" alias="jobcode"/>
+		<typeAlias type="kr.co.offispace.dto.JobAssistantVO" alias="jobAssistant"/>
+		<typeAlias type="kr.co.offispace.dto.JobVO" alias="job"/>
+		<typeAlias type="kr.co.offispace.dto.JobReplyVO" alias="jobReply"/>
+		<typeAlias type="kr.co.offispace.dto.JobIssueVO" alias="jobIssue"/>
+		<typeAlias type="kr.co.offispace.dto.JobDeniedVO" alias="jobDenied"/>
+		<typeAlias type="kr.co.offispace.dto.ReportVO" alias="report"/>
+		<typeAlias type="kr.co.offispace.dto.ReportDocVO" alias="reportDoc"/>
+		<typeAlias type="kr.co.offispace.dto.ManagerReportDTO" alias="managerReport"/>
+		<typeAlias type="kr.co.offispace.dto.ApprovalLineVO" alias="approvalLine"/>
+		<typeAlias type="kr.co.offispace.dto.ApprovalCertifyVO" alias="approvalCertify"/>
+		<typeAlias type="kr.co.offispace.dto.AttendVO" alias="attend"/>
+		<typeAlias type="kr.co.offispace.dto.AttendTypeVO" alias="attendType"/>
+		<typeAlias type="kr.co.offispace.command.AttendCommand" alias="attendCommand"/>
+		<typeAlias type="kr.co.offispace.dto.YearVacationVO" alias="yearVacation"/>
+		<typeAlias type="kr.co.offispace.dto.ApprovalFormVO" alias="approvalForm"/>
+		<typeAlias type="kr.co.offispace.dto.IPVO" alias="ip"/>
+	 	<typeAlias type="kr.co.offispace.dto.NotificationVO" alias="notification"/>
+	 	<typeAlias type="kr.co.offispace.dto.ApprovalVO" alias="apv"/>
+	 	<typeAlias type="kr.co.offispace.dto.ApprovalLineVO" alias="apvLine"/>
+	 	<typeAlias type="kr.co.offispace.dto.JApprovalLineVO" alias="jApvLine"/>
+		<typeAlias type="kr.co.offispace.command.ApprovalProcessCommand" alias="apvProCmd"/>
+		<typeAlias type="kr.co.offispace.dto.ApvAgencyVO" alias="agency"/>
+		<typeAlias type="kr.co.offispace.dto.AnnualVO" alias="annual"/>
+		<typeAlias type="kr.co.offispace.dto.AnnualHistoryVO" alias="annualHistory"/>
+		<typeAlias type="kr.co.offispace.dto.AnnualOccurVO" alias="annualOccur"/>
+		<typeAlias type="kr.co.offispace.dto.WorkFromHomeVO" alias="workFromHome"/>
+		<typeAlias type="kr.co.offispace.dto.WorkFromHomeAnswerVO" alias="workFromHomeAnswer"/>
+		<typeAlias type="kr.co.offispace.dto.ReplyVO" alias="reply"/>
+		<typeAlias type="kr.co.offispace.dto.NoticeVO" alias="notice"/>
+		<typeAlias type="kr.co.offispace.dto.TeamNoticeVO" alias="teamNotice"/>
+		<typeAlias type="kr.co.offispace.dto.TestMariaVO" alias="testMaria"/>
+
+	</typeAliases>
+
+</configuration>

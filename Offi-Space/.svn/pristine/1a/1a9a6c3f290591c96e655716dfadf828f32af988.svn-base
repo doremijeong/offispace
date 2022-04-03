@@ -1,0 +1,15 @@
+package kr.co.offispace.command;
+
+public class MailPageMaker extends PageMaker{
+	private MailCriteria mailCri;
+
+	public MailCriteria getMailCri() {
+		return mailCri;
+	}
+
+	public void setMailCri(MailCriteria mailCri) {
+		this.mailCri = mailCri;
+	}
+	
+	
+}

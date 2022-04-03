@@ -1,0 +1,33 @@
+package kr.co.offispace.dao.scheduler;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+
+import kr.co.offispace.dto.SchedulerVO;
+
+public class SchedulerDAOImpl implements SchedulerDAO{
+
+	private SqlSession sqlSession;
+	
+	public void setSqlSession(SqlSession sqlSession) {
+		this.sqlSession = sqlSession;
+	}
+
+	;
+	@Override
+	public List<SchedulerVO> SelectSchedulerList(String empCode) throws SQLException {
+		
+		List<SchedulerVO> schedulerList = sqlSession.selectList("Scheduler-Mapper.selectSchedulerList",empCode);
+		
+		return schedulerList;
+	}
+
+	@Override
+	public SchedulerVO selectSchedulerColorList(String empCode) throws SQLException {
+		SchedulerVO schedulerColorList = sqlSession.selectOne("Scheduler-Mapper.selectSchedulerColorList",empCode);
+		return schedulerColorList;
+	}
+
+}

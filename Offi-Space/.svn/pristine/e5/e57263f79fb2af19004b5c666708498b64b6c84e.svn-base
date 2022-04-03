@@ -1,0 +1,14 @@
+package kr.co.offispace.dao.message;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import kr.co.offispace.command.MessageCriteria;
+import kr.co.offispace.dto.MessageVO;
+
+public interface MessageDAO {
+	
+	List<MessageVO> selectMsgFromList(MessageCriteria cri) throws SQLException;
+	
+	public int selectAllMsgListTotalCount(MessageCriteria cri) throws SQLException;
+}

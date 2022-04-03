@@ -1,0 +1,189 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page trimDirectiveWhitespaces="true"%>
+
+<body>
+
+<div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">개인근태조회</h3>
+              </div>
+              <div class="card-header">
+                <h2 class="title" style="text-align: center;"><a href="#"><i class="fas fa-chevron-left"></i></a>&nbsp;&nbsp;&nbsp;2021.01&nbsp;&nbsp;&nbsp;<a href="#"><i class="fas fa-chevron-right"></i></a></h2>
+              </div>
+              <!-- ./card-header -->
+              <div class="card-body p-0">
+                <table class="table table-hover">
+                  <tbody>
+                  <div class="row">
+	                  <div>
+	                      <p class="border-0" style="margin-left: 20px; margin-top: 20px;">(근무타입)A형</p>
+	                  </div>
+	                  <div>
+	                  	<select class="form-control">
+	                  		<option>선택적근무제신청</option>
+	                  		<option>재택근무신청</option>
+	                  		<option>연장근무신청</option>
+	                  	</select>
+	                  </div>
+	                  <div>
+	                  	<button class="btn btn-default" type="button" style="float: right;">신청</button>
+	                  </div>
+                  </div>
+                  
+                    <tr data-widget="expandable-table" aria-expanded="false">
+                      <td>
+                        <i class="expandable-table-caret fas fa-caret-right fa-fw"></i>
+                        1주차
+                      </td>
+                    </tr>
+                    <tr class="expandable-body d-none">
+                      <td>
+                        <div class="p-0" style="display: none;">
+                          <table class="table table-hover">
+                            <tbody>
+                              <tr>
+                                <td>일자</td>
+                                <td>업무시작</td>
+                                <td>업무종료</td>
+                                <td>총 근무시간</td>
+                              </tr>
+                              <tr>
+                              	<td>03   월</td>
+                              	<td>08:40:39</td>
+                              	<td>19:01:10</td>
+                              	<td>10h 15m 5s</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr data-widget="expandable-table" aria-expanded="false">
+                      <td>
+                        <i class="expandable-table-caret fas fa-caret-right fa-fw"></i>
+                        2주차
+                      </td>
+                    </tr>
+                    <tr class="expandable-body d-none">
+                      <td>
+                        <div class="p-0" style="display: none;">
+                          <table class="table table-hover">
+                            <tbody>
+                              <tr>
+                                <td>일자</td>
+                                <td>업무시작</td>
+                                <td>업무종료</td>
+                                <td>총 근무시간</td>
+                                <td>재택근무여부</td>
+                              </tr>
+                              <tr>
+                              	<td>03  월</td>
+                              	<td>08:40:39</td>
+                              	<td>19:01:10</td>
+                              	<td>10h 15m 5s</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr data-widget="expandable-table" aria-expanded="false">
+                      <td>
+                        <i class="expandable-table-caret fas fa-caret-right fa-fw"></i>
+                        3주차
+                      </td>
+                    </tr>
+                    <tr class="expandable-body d-none">
+                      <td>
+                        <div class="p-0" style="display: none;">
+                          <table class="table table-hover">
+                            <tbody>
+                              <tr>
+                                <td>일자</td>
+                                <td>업무시작</td>
+                                <td>업무종료</td>
+                                <td>총 근무시간</td>
+                                <td>재택근무여부</td>
+                              </tr>
+                              <tr>
+                              	<td>03  월</td>
+                              	<td>08:40:39</td>
+                              	<td>19:01:10</td>
+                              	<td>10h 15m 5s</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr data-widget="expandable-table" aria-expanded="false">
+                      <td>
+                        <i class="expandable-table-caret fas fa-caret-right fa-fw"></i>
+                        4주차
+                      </td>
+                    </tr>
+                    <tr class="expandable-body d-none">
+                      <td>
+                        <div class="p-0" style="display: none;">
+                          <table class="table table-hover">
+                            <tbody>
+                              <tr>
+                                <td>일자</td>
+                                <td>업무시작</td>
+                                <td>업무종료</td>
+                                <td>총 근무시간</td>
+                                <td>재택근무여부</td>
+                              </tr>
+                              <tr>
+                              	<td>03  월</td>
+                              	<td>08:40:39</td>
+                              	<td>19:01:10</td>
+                              	<td>10h 15m 5s</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr data-widget="expandable-table" aria-expanded="false">
+                      <td>
+                        <i class="expandable-table-caret fas fa-caret-right fa-fw"></i>
+                        5주차
+                      </td>
+                    </tr>
+                    <tr class="expandable-body d-none">
+                      <td>
+                        <div class="p-0" style="display: none;">
+                          <table class="table table-hover">
+                            <tbody>
+                              <tr>
+                                <td>일자</td>
+                                <td>업무시작</td>
+                                <td>업무종료</td>
+                                <td>총 근무시간</td>
+                                <td>재택근무여부</td>
+                              </tr>
+                              <tr>
+                              	<td>03      월</td>
+                              	<td>08:40:39</td>
+                              	<td>19:01:10</td>
+                              	<td>10h 15m 5s</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+
+</body>

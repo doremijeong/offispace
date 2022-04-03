@@ -1,0 +1,897 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Job-Mapper">
+
+<sql id="searchJobcode">
+	<if test="searchType == 'all'.toString()">
+		and 1 = 1
+	</if>
+	<if test="searchType == 'teamCode'.toString()">
+		and JOB_TEAM_CODE = #{keyword}
+	</if>
+	<if test="searchType == 'empCode'.toString()">
+		and EMP_CODE = #{keyword}
+	</if>
+	<if test="searchType == 'sortedHeadOffice'.toString()">
+		and JOB_TEAM_CODE IN(
+                            SELECT COM_CODE
+                              FROM COMMON_CODE
+                             WHERE COM_CODE_GR = 'D3'
+                               AND COM_CODE2 =#{keyword})
+	</if>
+	<if test="searchType == 'sortedGroup'.toString()">
+		and JOB_TEAM_CODE IN(
+                            SELECT COM_CODE
+                              FROM COMMON_CODE
+                             WHERE COM_CODE_GR = 'D3'
+                               AND COM_CODE3 =#{keyword})
+	</if>
+	<if test="searchType == 'sortedTeam'.toString()">
+		and JOB_TEAM_CODE IN(
+                            SELECT COM_CODE
+                              FROM COMMON_CODE
+                             WHERE COM_CODE_GR = 'D3'
+                               AND COM_CODE =#{keyword})
+	</if>
+	<if test="searchType == 'sortedByKeyword'.toString()">
+		 and ( JOBCODE_NAME LIKE '%'||#{keyword}||'%' OR
+	    	       EMP_NAME LIKE '%'||#{keyword}||'%' OR
+	        	 TEAM_VALUE LIKE '%'||#{keyword}||'%')
+	</if>
+</sql>
+
+<sql id="searchJob">
+	<if test="searchType == 'received'.toString()">
+	   AND  EMP_CODE =#{loginEmpCode}
+	   AND      (JOBCODE_NAME LIKE '%'||#{keyword}||'%' OR
+	                JOB_TITLE LIKE '%'||#{keyword}||'%' OR
+	       JOB_REQUESTER_NAME LIKE '%'||#{keyword}||'%')
+	</if>
+	<if test="searchType == 'requested'.toString()">
+	   AND  JOB_REQUESTER_CODE =#{loginEmpCode}
+	   AND      (JOBCODE_NAME LIKE '%'||#{keyword}||'%' OR
+	                JOB_TITLE LIKE '%'||#{keyword}||'%' OR
+	                 EMP_NAME LIKE '%'||#{keyword}||'%')
+
+	</if>
+	<if test="searchType == 'refered'.toString()">
+	   AND  JOB_CODE IN (SELECT JOB_CODE
+	                       FROM JOB_REFERENCE
+	                      WHERE EMP_CODE = #{loginEmpCode})
+	   AND      (JOBCODE_NAME LIKE '%'||#{keyword}||'%' OR
+	                JOB_TITLE LIKE '%'||#{keyword}||'%' OR
+	                 EMP_NAME LIKE '%'||#{keyword}||'%' OR
+	       JOB_REQUESTER_NAME LIKE '%'||#{keyword}||'%')
+	</if>
+	<if test="searchType == 'tempSaved'.toString()">
+	   AND JOB_REQUESTER_CODE = #{loginEmpCode}
+       AND job_temporary = 'Y'
+	</if>
+
+
+	 <if test="searchType == 'teamReceived'.toString()">
+       AND  JOBCODE_CODE IN ( SELECT JOBCODE_CODE
+                                FROM JOBCODE_KEYWORD_SEARCH_VIEW
+                               WHERE JOB_TEAM_CODE = #{teamCode})
+	   AND      (JOBCODE_NAME LIKE '%'||#{keyword}||'%' OR
+	                JOB_TITLE LIKE '%'||#{keyword}||'%' OR
+	       JOB_REQUESTER_NAME LIKE '%'||#{keyword}||'%')
+	</if>
+	<if test="searchType == 'teamRequested'.toString()">
+       AND	JOB_REQUESTER_CODE IN ( SELECT EMP_CODE
+                                      FROM EMPLOYEE
+                                     WHERE EMPLOYEE.TEAM_CODE = #{teamCode})
+	   AND      (JOBCODE_NAME LIKE '%'||#{keyword}||'%' OR
+	                JOB_TITLE LIKE '%'||#{keyword}||'%' OR
+	                 EMP_NAME LIKE '%'||#{keyword}||'%')
+	</if>
+</sql>
+
+<sql id="jobStatus">
+	<if test="jobStatus == 'waiting'.toString()">
+	   AND JOB_STATUS = '대기'
+	</if>
+	<if test="jobStatus == 'working'.toString()">
+	   AND JOB_STATUS = '진행'
+	</if>
+	<if test="jobStatus == 'late'.toString()">
+	   AND JOB_CODE IN (SELECT JOB_CODE
+	   					  FROM JOB_KEYWORD_SEARCH_VIEW
+	   					 WHERE JOB_STATUS = '대기' OR
+	   					 	   JOB_STATUS = '진행')
+       AND TO_CHAR(JOB_CLOSING_DT,('YYYY-MM-DD')) <![CDATA[<]]> TO_CHAR(SYSDATE,('YYYY-MM-DD'))
+	</if>
+	<if test="jobStatus == 'done'.toString()">
+	   AND JOB_STATUS = '완료'
+	</if>
+</sql>
+
+<sql id="searchJobAssistant">
+	<if test="searchType == 'all'.toString()">
+		and 1 = 1
+	</if>
+	<if test="searchType == 'jobcodeCode'.toString()">
+		and JOBCODE_CODE = #{keyword}
+	</if>
+	<if test="searchType == 'empCode'.toString()">
+		and EMP_CODE = #{keyword}
+	</if>
+</sql>
+
+<sql id="notDone">
+	<if test="notDone == 'Y'.toString()">
+		AND JOB_STATUS != '완료'
+	</if>
+</sql>
+<sql id="jobCount">
+	<if test="searchType == 'weeklyWaiting'.toString()">
+	AND  TO_CHAR(JOB_REQUEST_DT,'YYYY-MM-DD') >= (SELECT TO_CHAR(SYSDATE - ((SELECT TO_CHAR (SYSDATE, 'D')
+                                                                               FROM DUAL) -2), 'YYYY-MM-DD')
+                                                    FROM DUAL)
+    AND  TO_CHAR(JOB_REQUEST_DT, 'YYYY-MM-DD') <![CDATA[<]]>= (SELECT TO_CHAR(SYSDATE - ((SELECT TO_CHAR (SYSDATE, 'D')
+                                                                               			    FROM DUAL) -2)+4, 'YYYY-MM-DD')
+                                                                 FROM DUAL)
+    AND  JOB_STATUS = '대기'
+	</if>
+	<if test="searchType == 'weeklyWorking'.toString()">
+	AND  TO_CHAR(JOB_REQUEST_DT,'YYYY-MM-DD') >= (SELECT TO_CHAR(SYSDATE - ((SELECT TO_CHAR (SYSDATE, 'D')
+                                                                               FROM DUAL) -2), 'YYYY-MM-DD')
+                                                    FROM DUAL)
+    AND  TO_CHAR(JOB_REQUEST_DT, 'YYYY-MM-DD') <![CDATA[<]]>= (SELECT TO_CHAR(SYSDATE - ((SELECT TO_CHAR (SYSDATE, 'D')
+                                                                               			    FROM DUAL) -2)+4, 'YYYY-MM-DD')
+                                                                 FROM DUAL)
+    AND  JOB_STATUS = '진행'
+	</if>
+	<if test="searchType == 'weeklyDone'.toString()">
+	AND  TO_CHAR(JOB_REQUEST_DT,'YYYY-MM-DD') >= (SELECT TO_CHAR(SYSDATE - ((SELECT TO_CHAR (SYSDATE, 'D')
+                                                                               FROM DUAL) -2), 'YYYY-MM-DD')
+                                                    FROM DUAL)
+    AND  TO_CHAR(JOB_REQUEST_DT, 'YYYY-MM-DD') <![CDATA[<]]>= (SELECT TO_CHAR(SYSDATE - ((SELECT TO_CHAR (SYSDATE, 'D')
+                                                                               			    FROM DUAL) -2)+4, 'YYYY-MM-DD')
+                                                                 FROM DUAL)
+    AND  JOB_STATUS = '완료'
+	</if>
+	<if test="searchType == 'weeklyLate'.toString()">
+	AND  TO_CHAR(JOB_REQUEST_DT,'YYYY-MM-DD') >= (SELECT TO_CHAR(SYSDATE - ((SELECT TO_CHAR (SYSDATE, 'D')
+                                                                               FROM DUAL) -2), 'YYYY-MM-DD')
+                                                    FROM DUAL)
+    AND  TO_CHAR(JOB_REQUEST_DT, 'YYYY-MM-DD') <![CDATA[<]]>= (SELECT TO_CHAR(SYSDATE - ((SELECT TO_CHAR (SYSDATE, 'D')
+                                                                               			    FROM DUAL) -2)+4, 'YYYY-MM-DD')
+                                                                 FROM DUAL)
+   	AND JOB_CODE IN (SELECT JOB_CODE
+	   				   FROM JOB_KEYWORD_SEARCH_VIEW
+	   			      WHERE JOB_STATUS = '대기' OR
+	   					 	JOB_STATUS = '진행')
+    AND TO_CHAR(JOB_CLOSING_DT,('YYYY-MM-DD')) <![CDATA[<]]> TO_CHAR(SYSDATE,('YYYY-MM-DD'))
+	</if>
+	<if test="searchType == 'monthlyWaiting'.toString()">
+    AND  TO_CHAR(JOB_REQUEST_DT,'YYYY-MM-DD') >= (SELECT TO_CHAR(A.START_DT,'YYYY-MM-DD')
+                                                    FROM (SELECT TRUNC(SYSDATE, 'MM') AS START_DT
+                                                            FROM   DUAL) A)
+    AND  TO_CHAR(JOB_REQUEST_DT, 'YYYY-MM-DD') <![CDATA[<]]> = (SELECT TO_CHAR(A.LAST_DT,'YYYY-MM-DD')
+                                                    			 FROM (SELECT LAST_DAY(SYSDATE) AS LAST_DT
+																		 FROM   DUAL) A)
+    AND  JOB_STATUS = '대기'
+     </if>
+     <if test="searchType == 'monthlyWorking'.toString()">
+    AND  TO_CHAR(JOB_REQUEST_DT,'YYYY-MM-DD') >= (SELECT TO_CHAR(A.START_DT,'YYYY-MM-DD')
+                                                    FROM (SELECT TRUNC(SYSDATE, 'MM') AS START_DT
+                                                            FROM   DUAL) A)
+    AND  TO_CHAR(JOB_REQUEST_DT, 'YYYY-MM-DD') <![CDATA[<]]> = (SELECT TO_CHAR(A.LAST_DT,'YYYY-MM-DD')
+                                                    			 FROM (SELECT LAST_DAY(SYSDATE) AS LAST_DT
+																		 FROM   DUAL) A)
+    AND  JOB_STATUS = '진행'
+     </if>
+     <if test="searchType == 'monthlyDone'.toString()">
+    AND  TO_CHAR(JOB_REQUEST_DT,'YYYY-MM-DD') >= (SELECT TO_CHAR(A.START_DT,'YYYY-MM-DD')
+                                                    FROM (SELECT TRUNC(SYSDATE, 'MM') AS START_DT
+                                                            FROM   DUAL) A)
+    AND  TO_CHAR(JOB_REQUEST_DT, 'YYYY-MM-DD') <![CDATA[<]]> = (SELECT TO_CHAR(A.LAST_DT,'YYYY-MM-DD')
+                                                    			 FROM (SELECT LAST_DAY(SYSDATE) AS LAST_DT
+																		 FROM   DUAL) A)
+    AND  JOB_STATUS = '완료'
+     </if>
+     <if test="searchType == 'monthlyLate'.toString()">
+    AND  TO_CHAR(JOB_REQUEST_DT,'YYYY-MM-DD') >= (SELECT TO_CHAR(A.START_DT,'YYYY-MM-DD')
+                                                    FROM (SELECT TRUNC(SYSDATE, 'MM') AS START_DT
+                                                            FROM   DUAL) A)
+    AND  TO_CHAR(JOB_REQUEST_DT, 'YYYY-MM-DD') <![CDATA[<]]> = (SELECT TO_CHAR(A.LAST_DT,'YYYY-MM-DD')
+                                                    			 FROM (SELECT LAST_DAY(SYSDATE) AS LAST_DT
+																		 FROM   DUAL) A)
+   	AND JOB_CODE IN (SELECT JOB_CODE
+	   				   FROM JOB_KEYWORD_SEARCH_VIEW
+	   			      WHERE JOB_STATUS = '대기' OR
+	   					 	JOB_STATUS = '진행')
+    AND TO_CHAR(JOB_CLOSING_DT,('YYYY-MM-DD')) <![CDATA[<]]> TO_CHAR(SYSDATE,('YYYY-MM-DD'))
+     </if>
+</sql>
+
+
+	<select id="selectJobCodeToRegister" resultType="str">
+		SELECT 'JB'||LPAD(JOB_SEQ.NEXTVAL,4,0)
+		  FROM DUAL
+	</select>
+
+
+	<select id="selectJobcodeCodeToRegister" resultType="str">
+		SELECT 'JC'||LPAD(JOBCODE_SEQ.NEXTVAL,4,0)
+		  FROM DUAL
+	</select>
+
+
+	<select id="selectJobcodeList" resultType="jobcode">
+		SELECT  JOBCODE_CODE
+		        ,JOBCODE_NAME
+		        ,EMP_CODE
+		        ,JOB_TEAM_CODE
+		  FROM  JOBCODE_KEYWORD_SEARCH_VIEW
+		  WHERE 1 = 1
+		 <include refid="searchJobcode" />
+		 ORDER BY JOBCODE_CODE ASC
+	</select>
+
+
+	<select id="selectJobAssistantList" resultType="jobAssistant">
+		SELECT   EMP_CODE
+				,JOBCODE_CODE
+		  FROM  JOB_ASSISTANT
+		 WHERE  1 = 1
+		 <include refid="searchJobAssistant"/>
+	</select>
+
+
+	<insert id="insertJobcodeCode">
+	INSERT INTO JOBCODE (JOBCODE_CODE
+                    ,JOBCODE_NAME
+                    ,JOB_TEAM_CODE)
+	VALUES (#{jobcodeCode}, #{jobcodeName}, #{jobTeamCode})
+	</insert>
+
+
+	<update id="updateJobCharger">
+	UPDATE JOBCODE
+       SET EMP_CODE = #{jobCharger}
+	 WHERE JOBCODE_CODE = #{jobcodeCode}
+	</update>
+
+
+	<insert id="insertJobAssistant">
+	INSERT INTO JOB_ASSISTANT(EMP_CODE
+							,JOBCODE_CODE)
+	VALUES(#{empCode},#{jobcodeCode})
+	</insert>
+
+
+	<delete id="deleteJobAssistant">
+	DELETE FROM JOB_ASSISTANT
+	WHERE JOBCODE_CODE=#{jobcodeCode}
+	</delete>
+
+	<update id="updateJobcodeCode">
+	UPDATE JOBCODE
+	   SET JOBCODE_NAME = #{jobcodeName}
+	      ,EMP_CODE = #{jobCharger}
+	 WHERE JOBCODE_CODE = #{jobcodeCode}
+	</update>
+
+
+	<!-- 수신 업무 목록 -->
+	<select id="selectReceivedJobList" resultType="job">
+		SELECT
+		  job_code
+		 ,job_title
+		 ,job_content
+		 ,job_importance
+		 ,job_status
+		 ,job_progress
+		 ,JOB_ISSUE
+		 ,JOB_DENIED
+		 ,job_request_dt
+		 ,job_closing_dt
+		 ,job_update_dt
+		 ,job_temporary
+		 ,job_note
+		 ,jobcode_code
+		 ,job_requester_code
+		 ,job_reply_code
+		 ,job_start_dt
+		 ,jobcode_name
+		FROM
+		  JOB_KEYWORD_SEARCH_VIEW
+		where
+		      jobcode_code in (select
+		                         jobcode_code
+		                       from
+		                         JOBCODE_KEYWORD_SEARCH_VIEW
+		                       where EMP_CODE = #{loginEmpCode}
+		                       )
+		 order by job_request_dt desc
+	</select>
+
+	<!-- 수신 업무 목록 개수-->
+	<select id="selectReceivedJobListTotalCount" resultType="int">
+		SELECT
+		count(*)
+		FROM
+		  JOB_KEYWORD_SEARCH_VIEW
+		where
+      jobcode_code in (select
+                         jobcode_code
+                       from
+                         JOBCODE_KEYWORD_SEARCH_VIEW
+                       where EMP_CODE = #{loginEmpCode}
+                       )
+	</select>
+
+
+	<!-- 요청 업무 목록 -->
+	<select id="selectRequestedJobList" resultType="job">
+		SELECT
+		  job_code
+		 ,job_title
+		 ,job_content
+		 ,job_importance
+		 ,job_status
+		 ,job_progress
+		 ,JOB_ISSUE
+		 ,JOB_DENIED
+		 ,job_request_dt
+		 ,job_closing_dt
+		 ,job_update_dt
+		 ,job_temporary
+		 ,job_note
+		 ,jobcode_code
+		 ,job_requester_code
+		 ,job_reply_code
+		 ,job_start_dt
+		 ,jobcode_name
+		 ,emp_code
+		FROM
+		  JOB_KEYWORD_SEARCH_VIEW
+		where
+		  job_requester_code = #{loginEmpCode}
+		order by job_closing_dt desc
+	</select>
+
+	<!-- 요청 업무 목록 개수-->
+	<select id="selectRequestedJobListTotalCount" resultType="int">
+		SELECT
+		 count(*)
+		FROM
+		  JOB_KEYWORD_SEARCH_VIEW
+		where
+		  job_requester_code = #{loginEmpCode}
+	</select>
+
+
+	<!-- 참조 업무 목록 -->
+	<select id="selectReferencedJobList" resultType="job">
+		SELECT
+		  job_code
+		 ,job_title
+		 ,job_content
+		 ,job_importance
+		 ,job_status
+		 ,job_progress
+		 ,JOB_ISSUE
+		 ,JOB_DENIED
+		 ,job_request_dt
+		 ,job_closing_dt
+		 ,job_update_dt
+		 ,job_temporary
+		 ,job_note
+		 ,jobcode_code
+		 ,job_requester_code
+		 ,job_reply_code
+		 ,job_start_dt
+     	 ,JOBCODE_NAME
+     	 ,EMP_CODE
+		FROM
+		  JOB_KEYWORD_SEARCH_VIEW
+		where
+			 job_code in (select
+                         job_code
+                       from
+                         JOB_REFERENCE
+                       where EMP_CODE = #{loginEmpCode}
+                       )
+    order by job_request_dt desc
+	</select>
+
+	<!-- 참조 업무 목록 개수-->
+	<select id="selectReferencedJobListTotalCount" resultType="int">
+			SELECT
+		count(*)
+		FROM
+		  JOB_KEYWORD_SEARCH_VIEW
+		where
+			 job_code in (select
+                         job_code
+                       from
+                         JOB_REFERENCE
+                       where EMP_CODE = #{loginEmpCode}
+                       )
+	</select>
+
+
+	<!-- 임시저장 목록 -->
+	<select id="selectTempSavedJobList" resultType="job">
+		SELECT
+		  job_code
+		 ,job_title
+		 ,job_content
+		 ,job_importance
+		 ,job_status
+		 ,job_progress
+		 ,JOB_ISSUE
+		 ,JOB_DENIED
+		 ,job_request_dt
+		 ,job_closing_dt
+		 ,job_update_dt
+		 ,job_temporary
+		 ,job_note
+		 ,jobcode_code
+		 ,job_requester_code
+		 ,job_reply_code
+		 ,job_start_dt
+		 ,jobcode_name
+		 ,emp_code
+		FROM
+		  JOB_KEYWORD_SEARCH_VIEW
+		where
+        job_requester_code = #{loginEmpCode}
+     And
+      job_temporary = 'Y'
+    order by job_request_dt desc
+	</select>
+
+	<!-- 임시저장 목록 개수-->
+	<select id="selectTempSavedJobListTotalCount" resultType="int">
+		SELECT
+		 count(*)
+		FROM
+		  JOB_KEYWORD_SEARCH_VIEW
+		where
+        job_requester_code = #{loginEmpCode}
+     And
+      job_temporary = 'Y'
+	</select>
+
+
+	<!-- 부서 수신 업무 목록 -->
+	<select id="selectTeamReceivedJobList" resultType="job">
+		SELECT
+		  job_code
+		 ,job_title
+		 ,job_content
+		 ,job_importance
+		 ,job_status
+		 ,job_progress
+		 ,JOB_ISSUE
+		 ,JOB_DENIED
+		 ,job_request_dt
+		 ,job_closing_dt
+		 ,job_update_dt
+		 ,job_temporary
+		 ,job_note
+		 ,jobcode_code
+		 ,job_requester_code
+		 ,job_reply_code
+		 ,job_start_dt
+		 ,jobcode_name
+     	 ,emp_code
+		FROM
+		  JOB_KEYWORD_SEARCH_VIEW
+		where
+		  jobcode_code in (select
+		                         jobcode_code
+		                       from
+		                         JOBCODE_KEYWORD_SEARCH_VIEW
+		                       where JOB_TEAM_CODE = #{teamCode}
+		                       )
+		order by job_request_dt desc
+	</select>
+
+	<!-- 부서 수신 업무 목록 -->
+	<select id="selectTeamReceivedJobListTotalCount" resultType="int">
+		SELECT
+		 count(*)
+		FROM
+		  JOB_KEYWORD_SEARCH_VIEW
+		where
+		  jobcode_code in (select
+		                         jobcode_code
+		                       from
+		                         JOBCODE_KEYWORD_SEARCH_VIEW
+		                       where JOB_TEAM_CODE = #{teamCode}
+		                       )
+	</select>
+
+
+	<!-- 부서 요청 업무 목록 -->
+	<select id="selectTeamRequestedJobList" resultType="job">
+		SELECT
+		  job_code
+		 ,job_title
+		 ,job_content
+		 ,job_importance
+		 ,job_status
+		 ,job_progress
+		 ,JOB_ISSUE
+		 ,JOB_DENIED
+		 ,job_request_dt
+		 ,job_closing_dt
+		 ,job_update_dt
+		 ,job_temporary
+		 ,job_note
+		 ,jobcode_code
+		 ,job_requester_code
+		 ,job_reply_code
+		 ,job_start_dt
+		 ,jobcode_name
+         ,emp_code
+		FROM
+		  JOB_KEYWORD_SEARCH_VIEW
+		where
+		 	job_requester_code in (select
+			                         emp_code
+			                       from
+			                         employee
+			                       where employee.team_code = #{teamCode}
+			                       )
+		order by job_closing_dt desc
+	</select>
+
+	<!-- 부서 요청 업무 목록 -->
+	<select id="selectTeamRequestedJobListTotalCount" resultType="int">
+		SELECT
+		 count(*)
+		FROM
+		  JOB_KEYWORD_SEARCH_VIEW
+		where
+		 	job_requester_code in (select
+			                         emp_code
+			                       from
+			                         employee
+			                       where employee.team_code = #{teamCode}
+			                       )
+	</select>
+
+
+	<!-- 나중에 위에 totalCount로 페이징 만들면 삭제 -->
+	<select id="selectAllJobListTotalCount" resultType="int">
+		select count(*)
+		from job
+		where JOB_CODE is not null
+	</select>
+
+
+  <!-- 수신 업무 상세 조회 -->
+	<select id="selectJobByJobcode" resultType="job" parameterType="str">
+		SELECT
+		  job_code
+		 ,job_title
+		 ,job_content
+		 ,job_importance
+		 ,job_status
+		 ,job_progress
+		 ,JOB_ISSUE
+		 ,JOB_DENIED
+		 ,job_request_dt
+		 ,job_closing_dt
+		 ,job_update_dt
+		 ,job_temporary
+		 ,job_note
+		 ,jobcode_code
+		 ,job_requester_code
+		 ,job_reply_code
+		 ,job_start_dt
+		 ,jobcode_name
+     	 ,emp_code
+		FROM
+		  JOB_KEYWORD_SEARCH_VIEW
+		where
+		     job_code = #{jobCode}
+	</select>
+
+
+	<!-- 참조자 불러오기 -->
+	<select id="selectRefByJobCode" resultType="job">
+		select
+			emp_code
+		from
+			JOB_REFERENCE
+		where
+			job_code = #{jobCode}
+	</select>
+
+
+	<insert id="insertJob">
+	INSERT INTO JOB
+					(JOB_CODE
+					,JOB_TITLE
+					,JOB_CONTENT
+					,JOB_IMPORTANCE
+					,JOB_STATUS
+					,JOB_ISSUE
+					,JOB_DENIED
+					,JOB_TEMPORARY
+					,JOB_REQUEST_DT
+           			,JOB_START_DT
+           			,JOB_CLOSING_DT
+					,JOBCODE_CODE
+					,JOB_REQUESTER_CODE)
+	VALUES( #{jobCode}
+	       ,#{jobTitle}
+	       ,#{jobContent}
+	       ,#{jobImportance}
+	       ,#{jobStatus}
+	       ,'N'
+	       ,'N'
+	       ,'N'
+	       ,SYSDATE
+           ,TO_DATE(#{jobStartDt})
+           ,TO_DATE(#{jobClosingDt})
+		   ,#{jobcodeCode}
+		   ,#{jobRequesterCode}
+	)
+	</insert>
+	<delete id="deleteJob">
+	DELETE JOB
+	 WHERE JOB_CODE = #{jobCode}
+	</delete>
+
+	<insert id="insertJobReference">
+	INSERT INTO JOB_REFERENCE
+		   (JOB_CODE, EMP_CODE)
+	VALUES(#{jobCode},#{empCode})
+	</insert>
+
+
+	<!-- 처리내역 입력 -->
+	<update id="updateJobProcess" parameterType="job">
+		update JOB
+		set
+				JOB_UPDATE_DT = SYSDATE
+			,	JOB_PROGRESS = #{jobProgress}
+			, JOB_NOTE = #{jobNote}
+		where JOB_CODE = #{jobCode}
+	</update>
+
+
+	<!-- 상태 '진행'으로 수정 -->
+	<update id="updateStatusToProcessing" parameterType="str">
+		UPDATE JOB
+		SET JOB_STATUS = '진행'
+		WHERE JOB_UPDATE_DT IS NOT NULL
+		AND JOB_PROGRESS IS NOT NULL
+		AND JOB_PROGRESS != 100
+		AND JOB_CODE = #{jobCode}
+	</update>
+
+	<!-- 상태 '완료'으로 수정 -->
+	<update id="updateStausToComplete" parameterType="str">
+		UPDATE JOB
+		SET JOB_STATUS = '완료'
+		WHERE JOB_PROGRESS = 100
+		AND JOB_CODE = #{jobCode}
+	</update>
+
+	<select id="selectSortedJobList" resultType="job">
+
+		SELECT  JOB_CODE
+		        ,JOB_TITLE
+		        ,JOB_CONTENT
+		        ,JOB_IMPORTANCE
+		        ,JOB_STATUS
+		        ,JOB_PROGRESS
+		        ,JOB_ISSUE
+		        ,JOB_DENIED
+		        ,JOB_REQUEST_DT
+		        ,JOB_CLOSING_DT
+		        ,JOB_UPDATE_DT
+		        ,JOB_TEMPORARY
+		        ,JOB_NOTE
+		        ,JOBCODE_CODE
+		        ,JOB_REQUESTER_CODE
+		        ,EMP_CODE
+		        ,JOB_REPLY_CODE
+		        ,JOB_START_DT
+		        ,JOBCODE_NAME
+		 FROM   JOB_KEYWORD_SEARCH_VIEW
+		 WHERE  1 = 1
+		   AND  JOB_ISSUE = 'N'
+		 <include refid="searchJob"/>
+		 <include refid="jobStatus"/>
+		 <include refid="notDone"/>
+
+		ORDER BY JOB_CLOSING_DT DESC
+		 		 ,JOB_REQUEST_DT DESC
+
+	</select>
+
+	<select id="selectSortedJobListCount" resultType="int">
+
+		SELECT  COUNT(DISTINCT JOB_CODE)
+		 FROM   JOB_KEYWORD_SEARCH_VIEW
+		 WHERE  1 = 1
+		   AND  JOB_ISSUE = 'N'
+		 <include refid="searchJob"/>
+		 <include refid="jobStatus"/>
+		 <include refid="notDone"/>
+
+		ORDER BY JOB_CLOSING_DT DESC
+		 		 ,JOB_REQUEST_DT DESC
+
+	</select>
+
+	<select id="selectSortedJobListForIssue" resultType="job">
+
+		SELECT  JOB_CODE
+		        ,JOB_TITLE
+		        ,JOB_CONTENT
+		        ,JOB_IMPORTANCE
+		        ,JOB_STATUS
+		        ,JOB_PROGRESS
+		        ,JOB_ISSUE
+		        ,JOB_DENIED
+		        ,JOB_REQUEST_DT
+		        ,JOB_CLOSING_DT
+		        ,JOB_UPDATE_DT
+		        ,JOB_TEMPORARY
+		        ,JOB_NOTE
+		        ,JOBCODE_CODE
+		        ,JOB_REQUESTER_CODE
+		        ,EMP_CODE
+		        ,JOB_REPLY_CODE
+		        ,JOB_START_DT
+		        ,JOBCODE_NAME
+		 FROM   JOB_KEYWORD_SEARCH_VIEW
+		 WHERE  1 = 1
+		   AND  JOB_ISSUE = 'Y'
+		 <include refid="searchJob"/>
+		 <include refid="jobStatus"/>
+		 <include refid="notDone"/>
+
+		ORDER BY JOB_CLOSING_DT DESC
+		 		 ,JOB_REQUEST_DT DESC
+
+	</select>
+
+	<!-- 업무 댓글 목록 -->
+	<insert id="insertJobReply" parameterType="jobReply">
+		INSERT INTO
+				job_reply (
+			    job_reply_code
+			    ,job_reply_writer
+			    ,job_reply_content
+			    ,reply_write_dt
+			    ,reply_modify_dt
+			    ,job_code
+			) VALUES (
+		   'RP'||JOB_REPLY_SEQ.NEXTVAL
+		    , #{jobReplyWriter}
+		    , #{jobReplyContent}
+		    , SYSDATE
+		    , SYSDATE
+		    , #{jobCode}
+			)
+	</insert>
+
+	<!-- 댓글 목록 -->
+	<select id="selectJobReply" resultType="jobReply">
+		select
+			JOB_REPLY_CODE
+			,JOB_REPLY_WRITER
+			,JOB_REPLY_CONTENT
+			,REPLY_WRITE_DT
+			,REPLY_MODIFY_DT
+			from job_reply
+			where job_code = #{jobCode}
+			order by REPLY_WRITE_DT asc
+	</select>
+
+	<!-- 댓글 개수 -->
+	<select id="selectReplyTotalCount" resultType="int">
+		select
+			count(*)
+		from
+			job A, job_reply B
+		where
+			A.JOB_CODE = B.JOB_CODE
+		And
+			A.job_code = #{jobCode}
+	</select>
+
+	<!-- 댓글 수정 -->
+	<update id="updateJobReply" parameterType="jobReply">
+		update
+			job_reply
+		set
+			JOB_REPLY_CONTENT = #{jobReplyContent}
+			,REPLY_MODIFY_DT = SYSDATE
+		where JOB_REPLY_CODE = #{jobReplyCode}
+	</update>
+
+	<!-- 댓글 삭제-->
+	<delete id="deleteJobReply">
+		DELETE FROM
+			JOB_REPLY
+		where JOB_REPLY_CODE = #{jobReplyCode}
+	</delete>
+
+	<insert id="insertJobIssue">
+	INSERT INTO JOB_ISSUE(
+				 JOB_ISSUE_DATE
+				,JOB_ISSUE_REASON
+				,JOB_ISSUE_EMP_CODE
+				,JOB_CODE)
+	VALUES(SYSDATE, #{jobIssueReason},#{jobIssueEmpCode},#{jobCode})
+	</insert>
+
+	<update id="updateJobIssueYes">
+	UPDATE JOB
+	   SET JOB_ISSUE = 'Y'
+	 WHERE JOB_CODE = #{jobCode}
+	</update>
+
+	<update id="updateJobIssueNo">
+	UPDATE JOB
+	   SET JOB_ISSUE = 'N'
+	 WHERE JOB_CODE = #{jobCode}
+	</update>
+
+	<select id="selectJobIssue" resultType="jobIssue">
+	SELECT  JOB_ISSUE_DATE
+			,JOB_ISSUE_REASON
+			,JOB_ISSUE_EMP_CODE
+			,JOB_CODE
+	  FROM JOB_ISSUE
+	 WHERE JOB_CODE = #{jobCode}
+	</select>
+
+	<delete id="deleteJobIssue">
+	DELETE JOB_ISSUE
+	 WHERE JOB_CODE = #{jobCode}
+	</delete>
+
+	<select id="selectJobCount" resultType="int">
+	        SELECT  COUNT(*)
+		 FROM   JOB_KEYWORD_SEARCH_VIEW
+		 WHERE  1 = 1
+           AND  EMP_CODE=#{empCode}
+		 <include refid="jobCount"/>
+
+	</select>
+	<insert id="insertJobDenied">
+	INSERT INTO JOB_DENIED(
+				 JOB_DENIED_DATE
+				,JOB_DENIED_REASON
+				,JOB_CODE)
+	VALUES(SYSDATE, #{jobDeniedReason},#{jobCode})
+	</insert>
+	<select id="selectJobDenied" resultType="jobDenied">
+	SELECT  JOB_DENIED_DATE
+			,JOB_DENIED_REASON
+			,JOB_CODE
+	  FROM JOB_DENIED
+	 WHERE JOB_CODE = #{jobCode}
+	</select>
+	<update id="updateJobDeniedYes">
+	UPDATE JOB
+	   SET JOB_DENIED = 'Y'
+	 WHERE JOB_CODE = #{jobCode}
+	</update>
+	<delete id="deleteJobDenied">
+	DELETE JOB_DENIED
+	 WHERE JOB_CODE = #{jobCode}
+	</delete>
+	<delete id="deleteJobReference">
+	DELETE JOB_REFERENCE
+	 WHERE JOB_CODE = #{jobCode}
+	</delete>
+
+</mapper>

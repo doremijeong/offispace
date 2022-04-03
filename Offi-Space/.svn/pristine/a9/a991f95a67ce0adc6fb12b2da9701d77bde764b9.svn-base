@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="Mail-Mapper">
+
+	<sql id="searchBasic">
+		<if test="searchType == 'to'.toString()">
+			AND MAIL_TO LIKE '%'||#{keyword}||'%'
+		</if>
+		<if test="searchType == 'from'.toString()">
+			AND MAIL_FROM LIKE '%'||#{keyword}||'%'
+		</if>
+		<if test="searchType == 'title'.toString()">
+			AND MAIL_TITLE LIKE '%'||#{keyword}||'%'
+		</if>
+		<if test="searchType == 'content'.toString()">
+			AND MAIL_CONTENT LIKE '%'||#{keyword}||'%'
+		</if>
+	</sql>
+	
+	<!-- 받은 메일함 조회 조건문 -->
+	<sql id="recieved">
+		AND
+			MAIL_ENABLED='Y'
+		AND 
+			MAIL_TO = #{loginUser}
+		AND
+			MAIL_TO != MAIL_FROM
+		<include refid="searchBasic"/>
+		ORDER BY 
+			MAIL_DT DESC
+	</sql>
+	
+	<!-- 받은 메일함 조회 조건문 -->
+	<sql id="notReadMail">
+		AND
+			MAIL_ENABLED ='Y'
+		AND 
+			MAIL_STATUS = 'N'
+		AND 
+			MAIL_TO = 'mihi'
+			<include refid="searchBasic"/>
+		ORDER BY 
+			MAIL_DT DESC
+	</sql>
+	
+	
+	<!-- 보낸 메일함에서 메일 조회 조건문 -->
+	<sql id="send">
+		AND
+			MAIL_ENABLED ='Y'
+		AND 
+			MAIL_TEMPORARY = 'N'
+		AND 
+			MAIL_STORE  = 'N'
+		AND 
+			MAIL_FROM = #{loginUser}
+		AND
+			MAIL_TO != MAIL_FROM
+		<include refid="searchBasic"/>
+		ORDER BY 
+			MAIL_DT DESC
+	</sql>
+	
+	<!-- 임시 메일함에서 메일 조회 조건문 -->
+	<sql id="temporary">
+		AND
+			MAIL_ENABLED ='Y'
+		AND 
+			MAIL_TEMPORARY = 'Y'
+		AND 
+			MAIL_FROM = #{loginUser}
+		<include refid="searchBasic"/>
+		ORDER BY 
+			MAIL_DT DESC
+	</sql>
+	
+	<!-- 내게쓴 메일함에서 메일 조회 조건문 -->
+	<sql id="sendToMe">
+		AND
+			MAIL_ENABLED ='Y'
+		AND 
+			MAIL_TEMPORARY = 'N'
+		AND 
+			MAIL_STORE  = 'N'
+		AND 
+			MAIL_TO = MAIL_FROM
+		AND 
+			MAIL_FROM = #{loginUser}
+		<include refid="searchBasic"/>
+		ORDER BY 
+			MAIL_DT DESC
+	</sql>
+	
+	<!-- 휴지통에서 메일 조회 조건문 -->
+	<sql id="trash">
+		AND
+			MAIL_ENABLED ='N'
+		AND (
+			MAIL_FROM = #{loginUser}
+		OR 
+			MAIL_TO like #{loginUser})
+		<include refid="searchBasic"/>
+		ORDER BY 
+			MAIL_DT DESC
+	</sql>
+	
+	<!-- 보관함에서 메일 조회 조건문 -->
+	<sql id="store">
+		AND
+			MAIL_ENABLED ='Y'
+		AND 
+			MAIL_STORE = 'Y'
+		AND (
+			MAIL_FROM = #{loginUser}
+		OR 
+			MAIL_TO like #{loginUser})
+		<include refid="searchBasic"/>
+		ORDER BY 
+			MAIL_DT DESC
+	</sql>
+	
+	<select id="selectAllMailList" resultType="mail">
+		SELECT
+			MAIL_CODE 
+			, MAIL_FROM 
+			, MAIL_TO 
+			, MAIL_DT 
+			, MAIL_TITLE 
+			, MAIL_CONTENT 
+			, MAIL_STATUS 
+			, MAIL_TEMPORARY 
+			, MAIL_IMPORTANCE 
+			, MAIL_ENABLED 
+			, MAIL_REFERENCE 
+			, MAIL_STORE 
+		FROM
+			MAIL
+	    WHERE MAIL_CODE IS NOT NULL
+	    
+	    <if test="kindOfMail == 'notReadMail'.toString()">
+	    	<include refid="notReadMail"/>
+	    </if>
+	    <if test="kindOfMail == 'recieved'.toString()">
+	    	<include refid="recieved"/>
+	    </if>
+	    <if test="kindOfMail == 'sendToMe'.toString()">
+	    	<include refid="sendToMe"/>
+	    </if>
+	    <if test="kindOfMail == 'send'.toString()">
+	    	<include refid="send"/>
+	    </if>
+	    <if test="kindOfMail == 'temporary'.toString()">
+	    	<include refid="temporary"/>
+	    </if>
+	    <if test="kindOfMail == 'trash'.toString()">
+	    	<include refid="trash"/>
+	    </if>
+	    <if test="kindOfMail == 'store'.toString()">
+	    	<include refid="store"/>
+	    </if>
+	    
+	</select>
+	
+	<select id="selectAllMailListTotalCount" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			MAIL
+	    WHERE
+			MAIL_CODE IS NOT NULL
+		<if test="kindOfMail == 'recieved'.toString()">
+	    	<include refid="recieved"/>
+	    </if>
+	    <if test="kindOfMail == 'notReadMail'.toString()">
+	    	<include refid="notReadMail"/>
+	    </if>
+	    <if test="kindOfMail == 'sendToMe'.toString()">
+	    	<include refid="sendToMe"/>
+	    </if>
+	    <if test="kindOfMail == 'send'.toString()">
+	    	<include refid="send"/>
+	    </if>
+	    <if test="kindOfMail == 'temporary'.toString()">
+	    	<include refid="temporary"/>
+	    </if>
+	    <if test="kindOfMail == 'trash'.toString()">
+	    	<include refid="trash"/>
+	    </if>
+	    <if test="kindOfMail == 'store'.toString()">
+	    	<include refid="store"/>
+	    </if>
+	</select>
+	
+	<select id="selectMailByMailCode" resultType="mail" parameterType="str">
+		SELECT
+			MAIL_CODE,
+			MAIL_FROM,
+			MAIL_TO,
+			MAIL_DT,
+			MAIL_TITLE,
+			MAIL_CONTENT,
+			MAIL_STATUS,
+			MAIL_TEMPORARY,
+			MAIL_IMPORTANCE,
+			MAIL_ENABLED,
+			MAIL_REFERENCE,
+			MAIL_STORE
+		FROM
+			MAIL
+		WHERE MAIL_CODE = #{mailCode}
+		
+	</select>
+	
+	<select id="selectNotRreadMailCount" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			MAIL
+	    WHERE
+			MAIL_CODE IS NOT NULL
+		AND 
+			MAIL_STATUS = 'N'
+		<if test="kindOfMail == 'recieved'.toString()">
+	    	<include refid="recieved"/>
+	    </if>
+	    <if test="kindOfMail == 'sendToMe'.toString()">
+	    	<include refid="sendToMe"/>
+	    </if>
+	    <if test="kindOfMail == 'send'.toString()">
+	    	<include refid="send"/>
+	    </if>
+	    <if test="kindOfMail == 'temporary'.toString()">
+	    	<include refid="temporary"/>
+	    </if>
+	    <if test="kindOfMail == 'trash'.toString()">
+	    	<include refid="trash"/>
+	    </if>
+	    <if test="kindOfMail == 'store'.toString()">
+	    	<include refid="store"/>
+	    </if>
+	</select>
+	
+	<update id="updateImportance" parameterType="mail">
+		UPDATE MAIL 
+		SET 
+		<if test="mailImportance == 'Y'.toString()">
+			MAIL_IMPORTANCE = 'N'
+		</if>
+		<if test="mailImportance == 'N'.toString()">
+			MAIL_IMPORTANCE = 'Y'
+		</if>
+		WHERE MAIL_CODE = #{mailCode}
+	</update>
+	
+</mapper>

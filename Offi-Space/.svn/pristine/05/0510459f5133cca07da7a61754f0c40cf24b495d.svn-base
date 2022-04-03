@@ -1,0 +1,12 @@
+employee.images.path=c:/offispace/employee/images/
+fileDocument.path=c:/offispace/fileDocument/
+log.errors.path=c:/offispace/log/errors/
+log.logins.path=c:/offispace/log/logins/
+log.approvals.path=c:/offispace/log/approvals/
+log.reports.path=c:/offispace/log/reports/
+log.jobs.path=c:/offispace/log/jobs/
+mail.files.path=c:/offispace/mail/files/
+summernote.images.path=c:/offispace/summernote/images/
+job.files.path=c:/offispace/job/files/
+notice.files.path=c:/offispace/notice/files/
+apv.files.path=c:/offispace/approval/files/

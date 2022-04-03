@@ -1,0 +1,962 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Mail-Mapper">
+
+	<sql id="searchBasic">
+		<if test="searchType == 'title'.toString()">
+			AND MAIL_TITLE LIKE '%'||#{keyword}||'%'
+		</if>
+		<if test="searchType == 'content'.toString()">
+			AND MAIL_CONT LIKE '%'||#{keyword}||'%'
+		</if>
+		<if test="searchType == 'all'.toString()">
+			AND
+				(MAIL_CONT LIKE '%'||#{keyword}||'%'
+			OR
+				MAIL_TITLE LIKE '%'||#{keyword}||'%')
+		</if>
+	</sql>
+
+	<sql id="searchDetail">
+		<if test="to != null and to != ''">
+			AND MAIL_TO = #{to}
+		</if>
+		<if test="from != null and from != ''">
+			AND MAIL_FROM = #{from}
+		</if>
+		<if test="sDate != null and eDate != null and sDate != '' and eDate != ''">
+			AND MAIL_DATE BETWEEN TO_DATE(#{sDate}) AND TO_DATE(#{eDate})
+		</if>
+	</sql>
+
+	<insert id="insertMail" parameterType="mail">
+		INSERT
+			INTO
+			MAIL
+		(
+			MAIL_CODE,
+			MAIL_TITLE,
+			MAIL_CONT,
+			MAIL_TEMP,
+			MAIL_IMPORTANCE,
+			MAIL_DATE
+		)
+		VALUES(
+			'MA'||LPAD(MAIL_SEQ.NEXTVAL,4,0),
+			#{mailTitle},
+			#{mailCont},
+			#{mailTemp},
+			#{mailImportance},
+			sysdate
+		)
+		<selectKey keyProperty="mailCode" resultType="str">
+			SELECT 'MA'||LPAD(MAIL_SEQ.CURRVAL,4,0) FROM DUAL
+		</selectKey>
+	</insert>
+
+	<insert id="insertMailInfo" parameterType="mail">
+		INSERT
+			INTO
+			MAIL_INFO
+		(
+			MAIL_SN_CODE,
+			MAIL_TO,
+			MAIL_FROM,
+			MAIL_T_TRASH,
+			MAIL_STATUS,
+			MAIL_T_STORE,
+			MAIL_F_STORE,
+			MAIL_CODE,
+			MAIL_F_TRASH
+		)
+		VALUES(
+			'MI'||MAIL_INFO_SEQ.NEXTVAL,
+			#{mailTo},
+			#{mailFrom},
+			'N',
+			'N',
+			'N',
+			'N',
+			#{mailCode},
+			'N'
+		)
+	</insert>
+
+	<insert id="insertMailRef" parameterType="mail">
+		INSERT
+			INTO
+			MAIL_REFERENCE
+		(
+			MAIL_REF_CODE,
+			MAIL_REF_EMPCODE,
+			MAIL_REF_TRASH,
+			MAIL_REF_STATUS,
+			MAIL_REF_STORE,
+			MAIL_CODE
+		)
+		VALUES(
+			'MR'||MAIL_REF_SEQ.NEXTVAL,
+			#{mailRefEmpcode},
+			'N',
+			'N',
+			'N',
+			#{mailCode}
+		)
+
+	</insert>
+
+	<!-- 받은 메일함 리스트 -->
+	<select id="selectRecievedList" resultType="mail">
+				SELECT
+					MAIL_CODE,
+					MAIL_TITLE,
+					MAIL_CONT,
+					MAIL_TEMP,
+					MAIL_IMPORTANCE,
+					MAIL_DATE
+				FROM
+					RECIEVEDMAILVIEW
+				WHERE
+					MAIL_TO = #{loginUser}
+				AND
+					MAIL_TO != MAIL_FROM
+				AND
+					MAIL_T_TRASH = 'N'
+				AND
+					MAIL_TEMP = 'N'
+				AND
+					MAIL_T_STORE = 'N'
+				<include refid="searchBasic" />
+				<include refid="searchDetail" />
+			UNION
+				SELECT
+					MAIL_CODE,
+					MAIL_TITLE,
+					MAIL_CONT,
+					MAIL_TEMP,
+					MAIL_IMPORTANCE,
+					MAIL_DATE
+				 FROM
+					REFMAILVIEW
+				WHERE
+					MAIL_REF_EMPCODE = #{loginUser}
+				AND
+					MAIL_REF_TRASH = 'N'
+				AND
+					MAIL_TEMP = 'N'
+				AND
+					MAIL_REF_STORE = 'N'
+				<include refid="searchBasic" />
+				ORDER BY
+					MAIL_DATE DESC
+</select>
+
+	<!-- 받은 메일함 수  -->
+	<select id="selectRecievedMailListCount" resultType="int">
+		SELECT COUNT(*)
+		FROM (
+				SELECT
+					MAIL_CODE,
+					MAIL_TITLE,
+					MAIL_CONT,
+					MAIL_TEMP,
+					MAIL_IMPORTANCE,
+					MAIL_DATE
+				FROM
+					RECIEVEDMAILVIEW
+				WHERE
+					MAIL_TO = #{loginUser}
+				AND
+					MAIL_TO != MAIL_FROM
+				AND
+					MAIL_T_TRASH = 'N'
+				AND
+					MAIL_TEMP = 'N'
+				AND
+					MAIL_T_STORE = 'N'
+				<include refid="searchBasic" />
+				<include refid="searchDetail" />
+			UNION
+				SELECT
+					MAIL_CODE,
+					MAIL_TITLE,
+					MAIL_CONT,
+					MAIL_TEMP,
+					MAIL_IMPORTANCE,
+					MAIL_DATE
+				 FROM
+					REFMAILVIEW
+				WHERE
+					MAIL_REF_EMPCODE = #{loginUser}
+				AND
+					MAIL_REF_TRASH = 'N'
+				AND
+					MAIL_TEMP = 'N'
+				AND
+					MAIL_REF_STORE = 'N'
+				<include refid="searchBasic" />
+				ORDER BY
+					MAIL_DATE DESC
+			)
+	</select>
+
+	<!-- 받은 메일함 안읽은 메일 리스트  -->
+	<select id="selectRecievedMailListNotRead" resultType="mail">
+
+				SELECT
+					MAIL_CODE,
+					MAIL_TITLE,
+					MAIL_CONT,
+					MAIL_TEMP,
+					MAIL_IMPORTANCE,
+					MAIL_DATE
+				FROM
+					RECIEVEDMAILVIEW
+				WHERE
+					MAIL_TO = #{loginUser}
+				AND
+					MAIL_TO != MAIL_FROM
+				AND
+					MAIL_T_TRASH = 'N'
+				AND
+					MAIL_TEMP = 'N'
+				AND
+					MAIL_T_STORE = 'N'
+				AND
+					MAIL_STATUS = 'N'
+				<include refid="searchBasic" />
+				<include refid="searchDetail" />
+			UNION
+				SELECT
+					MAIL_CODE,
+					MAIL_TITLE,
+					MAIL_CONT,
+					MAIL_TEMP,
+					MAIL_IMPORTANCE,
+					MAIL_DATE
+				 FROM
+					REFMAILVIEW
+				WHERE
+					MAIL_REF_EMPCODE = #{loginUser}
+				AND
+					MAIL_REF_TRASH = 'N'
+				AND
+					MAIL_TEMP = 'N'
+				AND
+					MAIL_REF_STORE = 'N'
+				AND
+					MAIL_REF_STATUS = 'N'
+				<include refid="searchBasic" />
+				ORDER BY
+					MAIL_DATE DESC
+
+	</select>
+
+	<!-- 받은 메일함 안읽은 메일 수  -->
+	<select id="selectRecievedMailListNotReadCount" resultType="int">
+
+	SELECT COUNT(*)
+		FROM (
+				SELECT
+					MAIL_CODE,
+					MAIL_TITLE,
+					MAIL_CONT,
+					MAIL_TEMP,
+					MAIL_IMPORTANCE,
+					MAIL_DATE
+				FROM
+					RECIEVEDMAILVIEW
+				WHERE
+					MAIL_TO = #{loginUser}
+				AND
+					MAIL_TO != MAIL_FROM
+				AND
+					MAIL_T_TRASH = 'N'
+				AND
+					MAIL_TEMP = 'N'
+				AND
+					MAIL_T_STORE = 'N'
+				AND
+					MAIL_STATUS = 'N'
+				<include refid="searchBasic" />
+				<include refid="searchDetail" />
+			UNION
+				SELECT
+					MAIL_CODE,
+					MAIL_TITLE,
+					MAIL_CONT,
+					MAIL_TEMP,
+					MAIL_IMPORTANCE,
+					MAIL_DATE
+				 FROM
+					REFMAILVIEW
+				WHERE
+					MAIL_REF_EMPCODE = #{loginUser}
+				AND
+					MAIL_REF_TRASH = 'N'
+				AND
+					MAIL_TEMP = 'N'
+				AND
+					MAIL_REF_STORE = 'N'
+				AND
+					MAIL_REF_STATUS = 'N'
+				<include refid="searchBasic" />
+				ORDER BY
+					MAIL_DATE DESC
+			)
+
+	</select>
+
+	<!-- 받은 메일함 중요 메일 수  -->
+	<select id="selectImportMailList" resultType="mail">
+
+				SELECT
+					MAIL_CODE,
+					MAIL_TITLE,
+					MAIL_CONT,
+					MAIL_TEMP,
+					MAIL_IMPORTANCE,
+					MAIL_DATE
+				FROM
+					RECIEVEDMAILVIEW
+				WHERE
+					MAIL_TO = #{loginUser}
+				AND
+					MAIL_TO != MAIL_FROM
+				AND
+					MAIL_T_TRASH = 'N'
+				AND
+					MAIL_TEMP = 'N'
+				AND
+					MAIL_T_STORE = 'N'
+				AND
+					MAIL_IMPORTANCE = 'Y'
+				<include refid="searchBasic" />
+
+			UNION
+				SELECT
+					MAIL_CODE,
+					MAIL_TITLE,
+					MAIL_CONT,
+					MAIL_TEMP,
+					MAIL_IMPORTANCE,
+					MAIL_DATE
+				 FROM
+					REFMAILVIEW
+				WHERE
+					MAIL_REF_EMPCODE = #{loginUser}
+				AND
+					MAIL_REF_TRASH = 'N'
+				AND
+					MAIL_TEMP = 'N'
+				AND
+					MAIL_REF_STORE = 'N'
+				AND
+					MAIL_IMPORTANCE = 'Y'
+				<include refid="searchBasic" />
+				ORDER BY
+					MAIL_DATE DESC
+
+	</select>
+
+	<!-- 받은 메일함 중요 메일 수  -->
+	<select id="selectImportMailListCount" resultType="int">
+
+	SELECT COUNT(*)
+		FROM (
+				SELECT
+					MAIL_CODE,
+					MAIL_TITLE,
+					MAIL_CONT,
+					MAIL_TEMP,
+					MAIL_IMPORTANCE,
+					MAIL_DATE
+				FROM
+					RECIEVEDMAILVIEW
+				WHERE
+					MAIL_TO = #{loginUser}
+				AND
+					MAIL_TO != MAIL_FROM
+				AND
+					MAIL_T_TRASH = 'N'
+				AND
+					MAIL_TEMP = 'N'
+				AND
+					MAIL_T_STORE = 'N'
+				AND
+					MAIL_IMPORTANCE = 'Y'
+				<include refid="searchBasic" />
+
+			UNION
+				SELECT
+					MAIL_CODE,
+					MAIL_TITLE,
+					MAIL_CONT,
+					MAIL_TEMP,
+					MAIL_IMPORTANCE,
+					MAIL_DATE
+				 FROM
+					REFMAILVIEW
+				WHERE
+					MAIL_REF_EMPCODE = #{loginUser}
+				AND
+					MAIL_REF_TRASH = 'N'
+				AND
+					MAIL_TEMP = 'N'
+				AND
+					MAIL_REF_STORE = 'N'
+				AND
+					MAIL_IMPORTANCE = 'Y'
+				<include refid="searchBasic" />
+				ORDER BY
+					MAIL_DATE DESC
+			)
+
+	</select>
+
+
+	<!-- 보낸 메일함 리스트 -->
+	<select id="selectSendList" resultType="mail">
+
+			SELECT
+				DISTINCT MAIL_CODE,
+				MAIL_DATE
+			FROM
+				SENDMAILVIEW
+			WHERE
+				MAIL_FROM = #{loginUser}
+			AND
+				MAIL_FROM != MAIL_TO
+			AND
+				MAIL_F_TRASH = 'N'
+			AND
+				MAIL_TEMP = 'N'
+			AND
+				MAIL_F_STORE = 'N'
+			<include refid="searchBasic" />
+			<include refid="searchDetail" />
+			ORDER BY
+				MAIL_DATE DESC
+
+	</select>
+
+	<!-- 보낸 메일 수-->
+	<select id="selectSendListCount" resultType="int">
+
+		SELECT
+			COUNT (DISTINCT MAIL_CODE)
+		FROM
+			SENDMAILVIEW
+		WHERE
+			MAIL_FROM = #{loginUser}
+		AND
+			MAIL_FROM != MAIL_TO
+		AND
+			MAIL_F_TRASH = 'N'
+		AND
+			MAIL_TEMP = 'N'
+		AND
+			MAIL_F_STORE = 'N'
+		<include refid="searchBasic" />
+		<include refid="searchDetail" />
+		ORDER BY
+			MAIL_DATE DESC
+
+	</select>
+
+	<!-- 보낸 메일 임시 보관함 -->
+	<select id="selectSendTempList" resultType="mail">
+
+		SELECT
+			DISTINCT MAIL_CODE, MAIL_DATE
+		FROM
+			SENDMAILVIEW
+		WHERE
+			(MAIL_FROM = #{loginUser}
+		OR
+			MAIL_FROM = MAIL_TO)
+		AND
+			MAIL_F_TRASH = 'N'
+		AND
+			MAIL_TEMP = 'Y'
+		<include refid="searchBasic" />
+		<include refid="searchDetail" />
+		ORDER BY
+			MAIL_DATE DESC
+
+	</select>
+
+	<!-- 보낸 메일 임시 보관함 수 -->
+	<select id="selectSendTempListCount" resultType="int">
+
+		SELECT
+			COUNT (DISTINCT MAIL_CODE)
+		FROM
+			SENDMAILVIEW
+		WHERE
+			(MAIL_FROM = #{loginUser}
+		OR
+			MAIL_FROM = MAIL_TO)
+		AND
+			MAIL_F_TRASH = 'N'
+		AND
+			MAIL_TEMP = 'Y'
+		AND
+			MAIL_F_STORE = 'N'
+		<include refid="searchBasic" />
+		<include refid="searchDetail" />
+
+	</select>
+
+	<!-- 내게쓴 메일함 리스트 -->
+	<select id="selectToMeList" resultType="mail">
+
+		SELECT
+			MAIL_CODE,
+			MAIL_TITLE,
+			MAIL_CONT,
+			MAIL_TEMP,
+			MAIL_IMPORTANCE,
+			MAIL_DATE,
+			MAIL_SN_CODE,
+			MAIL_TO,
+			MAIL_FROM,
+			MAIL_F_TRASH,
+			MAIL_T_TRASH,
+			MAIL_STATUS,
+			MAIL_F_STORE,
+			MAIL_T_STORE
+		FROM
+			SENDMAILVIEW
+		WHERE
+			MAIL_FROM = #{loginUser}
+		AND
+			MAIL_FROM = MAIL_TO
+		AND
+			MAIL_F_TRASH = 'N'
+		AND
+			MAIL_TEMP = 'N'
+		AND
+			MAIL_F_STORE = 'N'
+		AND
+			MAIL_T_STORE = 'N'
+		<include refid="searchBasic" />
+		<include refid="searchDetail" />
+		ORDER BY
+			MAIL_DATE DESC
+
+	</select>
+
+	<!-- 내게쓴 메일함 수 -->
+	<select id="selectToMeListCount" resultType="int">
+
+		SELECT
+			COUNT (DISTINCT MAIL_CODE)
+		FROM
+			SENDMAILVIEW
+		WHERE
+			MAIL_FROM = #{loginUser}
+		AND
+			MAIL_FROM = MAIL_TO
+		AND
+			MAIL_F_TRASH = 'N'
+		AND
+			MAIL_TEMP = 'N'
+		AND
+			MAIL_F_STORE = 'N'
+		AND
+			MAIL_T_STORE = 'N'
+		<include refid="searchBasic" />
+		<include refid="searchDetail" />
+		ORDER BY
+			MAIL_DATE DESC
+
+	</select>
+
+	<!-- 휴지통에 있는 메일 조회 쿼리 -->
+	<select id="selectTrashMailCode" resultType="str">
+			SELECT
+				MAIL_CODE,
+				MAIL_DATE
+			FROM
+				(
+					SELECT
+						MAIL_CODE,
+						MAIL_DATE
+					FROM
+						RECIEVEDMAILVIEW
+					WHERE
+							MAIL_TO = #{loginUser}
+						AND
+							MAIL_T_TRASH = 'Y'
+				UNION
+					SELECT
+						MAIL_CODE,
+						MAIL_DATE
+					FROM
+								SENDMAILVIEW
+					WHERE
+								((
+									MAIL_FROM = #{loginUser}
+							AND
+									MAIL_F_TRASH = 'Y'
+								)
+						OR
+								(
+									MAIL_TO = #{loginUser}
+							AND
+									MAIL_FROM = #{loginUser}
+							AND
+									MAIL_F_TRASH = 'Y'
+								))
+					<include refid="searchBasic" />
+					<include refid="searchDetail" />)
+			UNION
+				SELECT
+					MAIL_CODE,
+					MAIL_DATE
+				FROM
+					REFMAILVIEW
+				WHERE
+					MAIL_REF_EMPCODE = #{loginUser}
+				AND
+					MAIL_REF_TRASH = 'Y'
+				<include refid="searchBasic" />
+				<include refid="searchDetail" />
+				ORDER BY
+					MAIL_DATE DESC
+	</select>
+
+	<!-- 휴지통에 있는 메일 갯수 조회 쿼리 -->
+	<select id="selectTrashMailCodeCount" resultType="int">
+		SELECT COUNT(*)
+		FROM (
+				SELECT
+				MAIL_CODE,
+				MAIL_DATE
+			FROM
+				(
+					SELECT
+						MAIL_CODE,
+						MAIL_DATE
+					FROM
+						RECIEVEDMAILVIEW
+					WHERE
+							MAIL_FROM = #{loginUser}
+						AND
+							MAIL_F_TRASH = 'Y'
+				UNION
+					SELECT
+						MAIL_CODE,
+						MAIL_DATE
+					FROM
+								SENDMAILVIEW
+					WHERE
+								 ((
+									MAIL_TO = #{loginUser}
+							AND
+									MAIL_T_TRASH = 'Y'
+								)
+						OR
+								(
+									MAIL_TO = #{loginUser}
+							AND
+									MAIL_FROM = #{loginUser}
+							AND
+									MAIL_T_TRASH = 'Y'
+								))
+					<include refid="searchBasic" />
+					<include refid="searchDetail" />)
+			UNION
+				SELECT
+					MAIL_CODE,
+					MAIL_DATE
+				FROM
+					REFMAILVIEW
+				WHERE
+					MAIL_REF_EMPCODE = #{loginUser}
+				AND
+					MAIL_REF_TRASH = 'Y'
+				<include refid="searchBasic" />
+				<include refid="searchDetail" />
+				ORDER BY
+					MAIL_DATE DESC
+		)
+	</select>
+
+	<!-- 보관함 메일 쿼리 -->
+	<select id="selectStoreMailCode" resultType="str">
+			SELECT
+				MAIL_CODE,
+				MAIL_DATE
+			FROM
+				(
+					SELECT
+						MAIL_CODE,
+						MAIL_DATE
+					FROM
+						RECIEVEDMAILVIEW
+					WHERE
+							MAIL_TO = #{loginUser}
+						AND
+							MAIL_T_STORE = 'Y'
+				UNION
+					SELECT
+						MAIL_CODE,
+						MAIL_DATE
+					FROM
+								SENDMAILVIEW
+					WHERE
+								((
+									MAIL_FROM = #{loginUser}
+							AND
+									MAIL_F_STORE = 'Y'
+								)
+						OR
+								(
+									MAIL_TO = #{loginUser}
+							AND
+									MAIL_FROM = #{loginUser}
+							AND
+									MAIL_F_STORE = 'Y'
+								))
+					<include refid="searchBasic" />
+					<include refid="searchDetail" />)
+			UNION
+				SELECT
+					MAIL_CODE,
+					MAIL_DATE
+				FROM
+					REFMAILVIEW
+				WHERE
+					MAIL_REF_EMPCODE = #{loginUser}
+				AND
+					MAIL_REF_STORE = 'Y'
+				<include refid="searchBasic" />
+				<include refid="searchDetail" />
+				ORDER BY
+					MAIL_DATE DESC
+	</select>
+
+	<!-- 보관함 메일 쿼리 -->
+	<select id="selectStoreMailCodeCount" resultType="int">
+		SELECT COUNT(*)
+		FROM(
+				SELECT
+					MAIL_CODE
+				FROM
+					MAIL_INFO
+				WHERE
+					(
+						MAIL_TO = #{loginUser}
+					AND
+						MAIL_T_STORE = 'Y'
+					)
+				OR
+					(
+						MAIL_FROM = #{loginUser}
+					AND
+						MAIL_F_STORE = 'Y'
+					)
+				OR
+					(
+						MAIL_TO = #{loginUser}
+					AND
+						MAIL_FROM = #{loginUser}
+					AND
+						MAIL_T_STORE = 'Y'
+					)
+				<include refid="searchBasic" />
+				<include refid="searchDetail" />
+			UNION
+				SELECT
+					MAIL_CODE
+				FROM
+					MAIL_REFERENCE
+				WHERE
+					MAIL_REF_EMPCODE = #{loginUser}
+				AND
+					MAIL_REF_STORE = 'Y'
+				ORDER BY
+					MAIL_CODE DESC
+		)
+	</select>
+
+	<!-- 상세 조회 하는 쿼리문 -->
+	<select id="selectMailInfoByMailCode" resultType="mail">
+		SELECT
+			MAIL_SN_CODE,
+			MAIL_TO,
+			MAIL_FROM,
+			MAIL_T_TRASH,
+			MAIL_STATUS,
+			MAIL_F_STORE,
+			MAIL_T_STORE,
+			MAIL_CODE,
+			MAIL_F_TRASH
+		FROM
+			MAIL_INFO
+		WHERE
+			MAIL_CODE = #{mailCode}
+	</select>
+
+	<select id="selectMailByMailCode" resultType="mail">
+		SELECT
+			MAIL_CODE,
+			MAIL_TITLE,
+			MAIL_CONT,
+			MAIL_TEMP,
+			MAIL_IMPORTANCE,
+			MAIL_DATE
+		FROM
+			MAIL
+		WHERE
+			MAIL_CODE = #{mailCode}
+
+	</select>
+
+	<select id="selectMailRefByMailCode" resultType="mail">
+
+		SELECT
+			MAIL_REF_CODE,
+			MAIL_REF_EMPCODE,
+			MAIL_REF_TRASH,
+			MAIL_REF_STATUS,
+			MAIL_REF_STORE,
+			MAIL_CODE
+		FROM
+			MAIL_REFERENCE
+		WHERE
+			MAIL_CODE = #{mailCode}
+
+	</select>
+
+	<!-- 중요도 변경 -->
+	<update id="updateImportance" parameterType="mail">
+		UPDATE MAIL
+		SET
+		<if test="mailImportance == 'N'.toString()">
+			MAIL_IMPORTANCE = 'Y'
+		</if>
+		<if test="mailImportance == 'Y'.toString()">
+			MAIL_IMPORTANCE = 'N'
+		</if>
+		WHERE MAIL_CODE = #{mailCode}
+	</update>
+
+	<!-- 메일 수정시 업데이트문 -->
+	<update id="updateMail" parameterType="mail">
+		UPDATE
+			MAIL
+		SET
+			MAIL_TITLE = #{mailTitle},
+			MAIL_CONT = #{mailCont},
+			MAIL_TEMP = #{mailTemp},
+			MAIL_IMPORTANCE = #{mailImportance},
+			MAIL_DATE = sysdate
+		WHERE
+			MAIL_CODE = #{mailCode}
+	</update>
+
+	<update id="deleteMailInfo" parameterType="str">
+		DELETE
+		FROM
+			MAIL_INFO
+		WHERE
+			MAIL_CODE = #{mailCode}
+	</update>
+	<update id="deleteMailRef" parameterType="str">
+		DELETE
+		FROM
+			MAIL_REFERENCE
+		WHERE
+			MAIL_CODE = #{mailCode}
+	</update>
+
+	<!-- 휴지통 이동, 복원 , 삭제 쿼리문 -->
+	<update id="updateFTrash" parameterType="mail">
+		UPDATE
+			MAIL_INFO
+		SET
+			MAIL_F_TRASH = #{mailfTrash}
+		WHERE
+			MAIL_SN_CODE = #{mailSnCode}
+	</update>
+	<update id="updateTTrash" parameterType="mail">
+		UPDATE
+			MAIL_INFO
+		SET
+			MAIL_T_TRASH = #{mailtTrash}
+		WHERE
+			MAIL_SN_CODE = #{mailSnCode}
+	</update>
+	<update id="updateRefTrash" parameterType="mail">
+		UPDATE
+			MAIL_REFERENCE
+		SET
+			MAIL_REF_TRASH = #{mailRefTrash}
+		WHERE
+			MAIL_REF_CODE = #{mailRefCode}
+	</update>
+
+    <!-- 보관함 이동 쿼리문 -->
+    <update id="updateFStore">
+		UPDATE
+			MAIL_INFO
+		SET
+			MAIL_F_STORE = #{mailfStore}
+		WHERE
+			MAIL_SN_CODE = #{mailSnCode}
+	</update>
+	<update id="updateTStore">
+		UPDATE
+			MAIL_INFO
+		SET
+			MAIL_T_STORE = #{mailtStore}
+		WHERE
+			MAIL_SN_CODE = #{mailSnCode}
+	</update>
+	<update id="updateRefStore">
+		UPDATE
+			MAIL_REFERENCE
+		SET
+			MAIL_REF_STORE = #{mailRefStore}
+		WHERE
+			MAIL_REF_CODE = #{mailRefCode}
+	</update>
+
+
+    <!-- 메일 읽음 상태변경 쿼리문 -->
+    <update id="updateStatus" parameterType="mail">
+		UPDATE
+			MAIL_INFO
+		SET
+			MAIL_STATUS = 'Y'
+		WHERE
+			MAIL_SN_CODE = #{mailSnCode}
+    </update>
+
+     <!-- 메일 읽음 상태변경 쿼리문 -->
+    <update id="updateRefStatus" parameterType="mail">
+		UPDATE
+			MAIL_REFERENCE
+		SET
+			MAIL_REF_STATUS = 'Y'
+		WHERE
+			MAIL_REF_CODE = #{mailRefCode}
+    </update>
+
+    <!-- 메일 받은 사람 리스트 조회 -->
+	<select id="selectMailToList" resultType="mail">
+		SELECT
+			MAIL_TO
+		FROM
+			MAIL_INFO
+		WHERE
+			MAIL_CODE = #{mailCode}
+	</select>
+
+</mapper>

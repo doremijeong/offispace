@@ -1,0 +1,977 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<head>
+
+</head>
+<body>
+	<%-- <div class="content-wrapper">
+		<section class="content-header">
+			<h1>여기는 전자결재 메인페이지입니당.</h1>
+		</section>
+		<section class="content">
+			<div class="card card-primary card-outline">
+				<div class="card-header">
+					<h3 class="card-title">전자결재</h3>
+				</div>
+				<!-- /.card-header -->
+				<div class="card-body p-0">
+
+				</div>
+				<!-- /.card-body -->
+				<div class="card-footer bg-white">
+					<div class="btn-group">
+						<button class="btn btn-info" type="button" id="detail" onclick="javascript:OpenWindow('<%=request.getContextPath()%>/approval/detail','','850','820')">
+							상세보기
+						</button>
+						<button class="btn btn-info" type="button" id="detail" onclick="javascript:OpenWindow('<%=request.getContextPath()%>/approval/detail2','','870','900')">
+							나리 언니 폼 상세보기
+						</button>
+					</div>
+				</div>
+				<!-- /.card-footer -->
+			</div>
+
+		</section>
+	</div> --%>
+
+	<!-- Content Header (Page header) -->
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<section class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1>전자결재</h1>
+					</div>
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item">
+								<a href="#">Home</a>
+							</li>
+							<li class="breadcrumb-item active">전자결재</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+
+		<!-- Main content -->
+		<section class="content">
+			<div class="container-fluid">
+				<div id="toastsContainerTopRight" class="toasts-top-right fixed"></div>
+				<!-- 마진을 위한 div -->
+				<!-- <div style="height: 15px;"></div> -->
+				
+				
+				
+				
+				<!-- 위젯 -->
+				<div class="row">
+		          <div class="col-md-2 col-sm-6 col-12">
+		            <div class="info-box bg-secondary">
+		              <!-- <span class="info-box-icon"><i class="far fa-bookmark"></i></span> -->
+		
+		              <div class="info-box-content">
+		                <span class="info-box-number text-center"><h3 style="margin: 0px;">0</h3></span>
+		                <span class="info-box-text text-center text-bold">결재할 문서</span>
+		
+		              </div>
+		              <!-- /.info-box-content -->
+		            </div>
+		            <!-- /.info-box -->
+		          </div>
+		          <!-- /.col -->
+		          <div class="col-md-2 col-sm-6 col-12">
+		            <div class="info-box bg-secondary">
+		              <div class="info-box-content">
+		                <span class="info-box-number text-center"><h3 style="margin: 0px;">0</h3></span>
+		                <span class="info-box-text text-center text-bold">진행중 문서</span>
+		
+		              </div>
+		              <!-- /.info-box-content -->
+		            </div>
+		            <!-- /.info-box -->
+		          </div>
+		          <!-- /.col -->
+		          <div class="col-md-2 col-sm-6 col-12">
+		            <div class="info-box bg-secondary">
+		             <div class="info-box-content">
+		                <span class="info-box-number text-center"><h3 style="margin: 0px;">0</h3></span>
+		                <span class="info-box-text text-center text-bold">완료된문서</span>
+		
+		              </div>
+		              <!-- /.info-box-content -->
+		            </div>
+		            <!-- /.info-box -->
+		          </div>
+		          <!-- /.col -->
+		          <div class="col-md-2 col-sm-6 col-12">
+		            <div class="info-box bg-secondary">
+		             <div class="info-box-content">
+		                <span class="info-box-number text-center"><h3 style="margin: 0px;">0</h3></span>
+		                <span class="info-box-text text-center text-bold">임시보관함</span>
+		
+		              </div>
+		              <!-- /.info-box-content -->
+		            </div>
+		            <!-- /.info-box -->
+		          </div>
+		          <!-- /.col -->
+		          <div class="col-md-2 col-sm-6 col-12">
+		            <div class="info-box bg-secondary">
+		              <div class="info-box-content">
+		                <span class="info-box-number text-center"><h3 style="margin: 0px;">0</h3></span>
+		                <span class="info-box-text text-center text-bold">반려된 문서</span>
+		
+		              </div>
+		              <!-- /.info-box-content -->
+		            </div>
+		            <!-- /.info-box -->
+		          </div>
+		          <!-- /.col -->
+		          <div class="col-md-2 col-sm-6 col-12">
+		            <div class="info-box bg-secondary">
+		              <div class="info-box-content">
+		                <span class="info-box-number text-center"><h3 style="margin: 0px;">0</h3></span>
+		                <span class="info-box-text text-center text-bold">기안한 문서</span>
+		
+		              </div>
+		              <!-- /.info-box-content -->
+		            </div>
+		            <!-- /.info-box -->
+		          </div>
+		        </div>
+
+
+
+
+				<!-- 퀵메뉴슬라이드 -->
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="card" style="background-color: hsla(9, 100%, 64%, 0)">
+							<!-- /.card-header -->
+							<div class="card-body">
+								<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+									<ol class="carousel-indicators">
+										<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+										<li data-target="#carouselExampleIndicators" data-slide-to="1" class=""></li>
+									</ol>
+									<div class="carousel-inner" style="height: 256.95px;">
+										<div class="carousel-item active">
+											<!-- row -->
+											<div class="row" alt="First slide">
+												<!-- Quick Card with Ribbon -->
+												<div class="col-lg-3">
+													<div class="position-relative " style="height: 180px">
+														<div class="ribbon-wrapper">
+															<div class="ribbon bg-danger">긴급</div>
+														</div>
+														<div class="card card-info card-outline">
+															<div class="card-body">
+																<div class="row" style="justify-content: space-between; align-items: baseline;">
+																	<h6>2022</h6>
+																</div>
+																<h2>01/07(금)</h2>
+																<h5>협조문</h5>
+																<p style="font-size: 0.8em;">
+																	개발자 충원 요청에 관한 건<br />기안자 : 김미희 과장
+																</p>
+																<a onclick="javascript:OpenWindow('<%=request.getContextPath()%>/approval/detail','','850','820')" class="btn btn-outline-primary btn-block">
+																	<b>결재하기</b>
+																</a>
+															</div>
+															<!-- ./card-body -->
+														</div>
+														<!-- ./card -->
+													</div>
+												</div>
+												<!-- ./col-lg-3 ./Quick Card with Ribbon-->
+												<!-- Quick Card -->
+												<div class="col-lg-3">
+													<div class="card card-info card-outline">
+														<div class="card-body">
+															<div class="row" style="justify-content: space-between; align-items: baseline;">
+																<h6>2022</h6>
+																<span class="badge badge-danger">중요</span>
+															</div>
+															<h2>01/07(금)</h2>
+															<h5>휴가신청서</h5>
+															<p style="font-size: 0.8em;">
+																휴가를 신청합니다.<br /> 기안자 : 김혜윤 차장
+															</p>
+															<a href="#" class="btn btn-outline-primary btn-block">
+																<b>결재하기</b>
+															</a>
+														</div>
+														<!-- ./card-body -->
+													</div>
+													<!-- ./card -->
+												</div>
+												<!-- ./col-lg-3 ./Quick Card-->
+												<!-- Quick Card -->
+												<div class="col-lg-3">
+													<div class="card card-info card-outline">
+														<div class="card-body">
+															<div class="row" style="justify-content: space-between; align-items: baseline;">
+																<h6>2022</h6>
+																<span class="badge badge-danger">중요</span>
+															</div>
+															<h2>01/07(금)</h2>
+															<h5>연차 신청서</h5>
+															<p style="font-size: 0.8em;">
+																반차를 신청합니다.<br />기안자 : 이미정 대리
+															</p>
+															<a href="#" class="btn btn-outline-primary btn-block">
+																<b>결재하기</b>
+															</a>
+														</div>
+														<!-- ./card-body -->
+													</div>
+													<!-- ./card -->
+												</div>
+												<!-- ./col-lg-3 ./Quick Card-->
+												<!-- Quick Card -->
+												<div class="col-lg-3">
+													<div class="card card-info card-outline">
+														<div class="card-body">
+															<div class="row" style="justify-content: space-between; align-items: baseline;">
+																<h6>2022</h6>
+																<span class="badge badge-danger">중요</span>
+															</div>
+															<h2>01/10(월)</h2>
+															<h5>구매품의서</h5>
+															<p style="font-size: 0.8em;">
+																비품 구매의 건<br />기안자 : 김지윤 대리
+															</p>
+															<a href="#" class="btn btn-outline-primary btn-block">
+																<b>결재하기</b>
+															</a>
+														</div>
+														<!-- ./card-body -->
+													</div>
+													<!-- ./card -->
+												</div>
+												<!-- ./col-lg-3 ./Quick Card-->
+											</div>
+											<!-- ./row -->
+										</div>
+										<div class="carousel-item">
+											<div class="row" alt="Second slide">
+												<!-- Quick Card -->
+												<div class="col-lg-3">
+													<div class="card card-info card-outline">
+														<div class="card-body">
+															<div class="row" style="justify-content: space-between; align-items: baseline;">
+																<h6>2022</h6>
+															</div>
+															<h2>01/10(월)</h2>
+															<h5>출장신청서</h5>
+															<p style="font-size: 0.8em;">
+																행사 지원을 위한 출장 <br />기안자 : 류인성 과장
+															</p>
+															<a href="#" class="btn btn-outline-primary btn-block">
+																<b>결재하기</b>
+															</a>
+														</div>
+														<!-- ./card-body -->
+													</div>
+													<!-- ./card -->
+												</div>
+												<!-- ./col-lg-3 ./Quick Card-->
+
+												<!-- Quick Card  -->
+												<div class="col-lg-3">
+													<div class="card card-info card-outline">
+														<div class="card-body">
+															<div class="row" style="justify-content: space-between; align-items: baseline;">
+																<h6>2022</h6>
+															</div>
+															<h2>01/11(화))</h2>
+															<h5>외근신청서</h5>
+															<p style="font-size: 0.8em;">
+																관리 감독을 위한 외근 신청<br />기안자 : 임나리 부장
+															</p>
+															<a href="#" class="btn btn-outline-primary btn-block">
+																<b>결재하기</b>
+															</a>
+														</div>
+														<!-- ./card-body -->
+													</div>
+													<!-- ./card -->
+												</div>
+												<!-- ./col-lg-3 ./Quick Card -->
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<a class="carousel-control-prev" style="margin-left: 5px; width: 15px; color: lightgray;" href="#carouselExampleIndicators" role="button" data-slide="prev">
+									<span class="carousel-control-custom-icon" aria-hidden="true">
+										<i class="fas fa-chevron-left" data-slide="prev"></i>
+									</span>
+									<span class="sr-only">Previous</span>
+								</a>
+								<a class="carousel-control-next" style="margin-right: 10px; width: 15px; color: lightgray;" href="#carouselExampleIndicators" role="button" data-slide="next">
+									<span class="carousel-control-custom-icon" aria-hidden="true">
+										<i class="fas fa-chevron-right"></i>
+									</span>
+									<span class="sr-only">Next</span>
+								</a>
+
+
+							</div>
+							<!-- /.card-body -->
+						</div>
+						<!-- /.card -->
+					</div>
+					<!-- ./col=lg-12 -->
+				</div>
+				<!-- ./row -->
+				<!-- ./퀵메뉴슬라이드 -->
+
+				<!-- 마진을 위한 div -->
+				<!-- <div style="height: 43px;"></div> -->
+
+				<!-- compressed list -->
+                    <div class="row">
+                        <!-- left-list -->
+                        <div class="col-lg-6">
+                            <div class="card card-primary card-outline card-outline-tabs">
+                                <div class="card-header p-0 border-bottom-0">
+                                    <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="custom-tabs-four-home-tab" data-toggle="pill" href="#custom-tabs-four-wait" role="tab" aria-controls="custom-tabs-four-wait" aria-selected="true">대기</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="custom-tabs-four-profile-tab" data-toggle="pill" href="#custom-tabs-four-work" role="tab" aria-controls="custom-tabs-four-work" aria-selected="false">진행</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="custom-tabs-four-messages-tab" data-toggle="pill" href="#custom-tabs-four-done" role="tab" aria-controls="custom-tabs-four-done" aria-selected="false">완료</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="custom-tabs-four-settings-tab" data-toggle="pill" href="#custom-tabs-four-all" role="tab" aria-controls="custom-tabs-four-all" aria-selected="false">전체</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="card-body" style="padding: 5px 5px;">
+                                    <div class="tab-content" id="custom-tabs-four-tabContent">
+                                        <div class="tab-pane fade active show" id="custom-tabs-four-wait" role="tabpanel" aria-labelledby="custom-tabs-four-wait-tab">
+                                            <!-- 내부 table card -->
+                                            <div>
+                                                <div class="card-header" style="padding: 10px 10px;" >
+                                                    <h3 class="card-title">
+                                                        대기 결재 목록 
+                                                    </h3>
+                                                    <div class="card-tools" style="margin: 0;">
+                                                        <a href="#" class="btn btn-tool" title="Previous"><i class="fas fa-chevron-left"></i></a>
+                                                        <a href="#" class="btn btn-tool" title="Next"><i class="fas fa-chevron-right"></i></a>
+                                                    </div>                     
+                                                </div>
+                                                <!-- /.card-header -->
+                                                <div class="card-body p-0">
+                                                    <table class="table table-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <th></th>
+                                                                <th>결재종류</th>                           
+                                                                <th>제목</th>
+                                                                <th>기안자</th>
+                                                                <th>마감일</th>
+                                                                
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody  style="font-size:0.8em;">
+                                                            <tr>  
+                                                                <td><span class="badge bg-danger">긴급</span></td>
+                                                                <td>휴가신청서</td>
+                                                                <td>연차를 신청...</td>
+                                                                <td>김지윤 과장</td>
+                                                                <td>2021-01-05(화)</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="badge bg-primary">중요</span></td>
+                                                                
+                                                                <td>재택근무신청서</td>
+                                                                <td>2주간 재택근...</td>
+                                                                <td>김지윤 과장</td>
+                                                                <td>2021-01-05(화)</td>
+                                                            </tr>
+                                                             <tr>  
+                                                                <td><span class="badge bg-danger">긴급</span></td>
+                                                                <td>휴가신청서</td>
+                                                                <td>연차를 신청...</td>
+                                                                <td>김지윤 과장</td>
+                                                                <td>2021-01-05(화)</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="badge bg-primary">중요</span></td>
+                                                                
+                                                                <td>재택근무신청서</td>
+                                                                <td>2주간 재택근...</td>
+                                                                <td>김지윤 과장</td>
+                                                                <td>2021-01-05(화)</td>
+                                                            </tr>
+                                                            <tr>  
+                                                                <td><span class="badge bg-danger">긴급</span></td>
+                                                                <td>휴가신청서</td>
+                                                                <td>연차를 신청...</td>
+                                                                <td>김지윤 과장</td>
+                                                                <td>2021-01-05(화)</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="badge bg-primary">중요</span></td>
+                                                                
+                                                                <td>재택근무신청서</td>
+                                                                <td>2주간 재택근...</td>
+                                                                <td>김지윤 과장</td>
+                                                                <td>2021-01-05(화)</td>
+                                                            </tr>
+                                                             <tr>  
+                                                                <td><span class="badge bg-danger">긴급</span></td>
+                                                                <td>휴가신청서</td>
+                                                                <td>연차를 신청...</td>
+                                                                <td>김지윤 과장</td>
+                                                                <td>2021-01-05(화)</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="badge bg-primary">중요</span></td>
+                                                                
+                                                                <td>재택근무신청서</td>
+                                                                <td>2주간 재택근...</td>
+                                                                <td>김지윤 과장</td>
+                                                                <td>2021-01-05(화)</td>
+                                                            </tr>
+                                                            
+                                                       
+                                                        
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <!-- /.card-body -->
+                                            </div>
+                                            <!-- / .내부 table card -->
+                                        </div>
+                                        <div class="tab-pane fade" id="custom-tabs-four-work" role="tabpanel" aria-labelledby="custom-tabs-four-work-tab">
+                                            <!-- 내부 table card -->
+                                            <div>
+                                                <div class="card-header" style="padding: 10px 10px;" >
+                                                    <h3 class="card-title">
+                                                        진행 결재 목록 
+                                                    </h3>
+                                                    <div class="card-tools" style="margin: 0;">
+                                                        <a href="#" class="btn btn-tool" title="Previous"><i class="fas fa-chevron-left"></i></a>
+                                                        <a href="#" class="btn btn-tool" title="Next"><i class="fas fa-chevron-right"></i></a>
+                                                    </div>                     
+                                                </div>
+                                                <!-- /.card-header -->
+                                                <div class="card-body p-0">
+                                                    <table class="table table-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <th></th>
+                                                                <th>결재명</th>
+                                                                <th>제목</th>                           
+                                                                <th>요청자</th>
+                                                                <th>마감일자</th>
+                                                                <th>진척도</th>                                                               
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody  style="font-size:0.8em;">
+                                                            <tr>
+                                                                <td><span class="badge bg-danger">긴급</span></td>
+                                                                <td>사원관리</td>
+                                                                <td>12월퇴사자관련</td>
+                                                                <td>김지윤 과장</td>
+                                                                <td>2021-01-05(화)</td>
+                                                                <td>
+                                                                    <div class="progress progress-xs" style="margin-top: 6px;">
+                                                                        <div class="progress-bar progress-bar-danger" style="width: 88%"></div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="badge bg-primary">중요</span></td>
+                                                                <td>인사관리관리</td>
+                                                                <td>12월퇴사자관련</td>
+                                                                <td>김지윤 과장</td>
+                                                                <td>2021-01-05(화)</td>
+                                                                <td>
+                                                                    <div class="progress progress-xs" style="margin-top: 6px;">
+                                                                        <div class="progress-bar progress-bar-striped" style="width: 80%"></div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="badge bg-primary">중요</span></td>
+                                                                <td>인사관리관리</td>
+                                                                <td>12월퇴사자관련</td>
+                                                                <td>김지윤 과장</td>
+                                                                <td>2021-01-05(화)</td>
+                                                                <td>
+                                                                    <div class="progress progress-xs" style="margin-top: 6px;">
+                                                                        <div class="progress-bar progress-bar-striped" style="width: 55%"></div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="badge bg-danger"></span></td>
+                                                                <td>인사관리관리</td>
+                                                                <td>12월퇴사자관련</td>
+                                                                <td>김지윤 과장</td>
+                                                                <td>2021-01-05(화)</td>
+                                                                <td>
+                                                                    <div class="progress progress-xs" style="margin-top: 6px;">
+                                                                        <div class="progress-bar progress-bar-striped" style="width: 45%"></div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="badge bg-danger"></span></td>
+                                                                <td>인사관리관리</td>
+                                                                <td>인사관리</td>
+                                                                <td>김지윤 과장</td>
+                                                                <td>2021-01-05(화)</td>
+                                                                <td>
+                                                                    <div class="progress progress-xs" style="margin-top: 6px;">
+                                                                        <div class="progress-bar progress-bar-striped" style="width: 10%"></div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="badge bg-danger"></span></td>
+                                                                <td>인사관리관리</td>
+                                                                <td>12월퇴사자관련</td>
+                                                                <td>김지윤 과장</td>
+                                                                <td>2021-01-05(화)</td>
+                                                                <td>
+                                                                    <div class="progress progress-xs" style="margin-top: 6px;">
+                                                                        <div class="progress-bar progress-bar-striped" style="width: 30%"></div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="badge bg-danger"></span></td>
+                                                                <td>인사관리관리</td>
+                                                                <td>12월퇴사자관련</td>
+                                                                <td>김지윤 과장</td>
+                                                                <td>2021-01-05(화)</td>
+                                                                <td>
+                                                                    <div class="progress progress-xs" style="margin-top: 6px;">
+                                                                        <div class="progress-bar progress-bar-striped" style="width: 30%"></div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="badge bg-danger"></span></td>
+                                                                <td>인사관리관리</td>
+                                                                <td>12월퇴사자관련</td>
+                                                                <td>김지윤 과장</td>
+                                                                <td>2021-01-05(화)</td>
+                                                                <td>
+                                                                    <div class="progress progress-xs" style="margin-top: 6px;">
+                                                                        <div class="progress-bar progress-bar-striped" style="width: 30%"></div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="badge bg-danger"></span></td>
+                                                                <td>인사관리관리</td>
+                                                                <td>12월퇴사자관련</td>
+                                                                <td>김지윤 과장</td>
+                                                                <td>2021-01-05(화)</td>
+                                                                <td>
+                                                                    <div class="progress progress-xs" style="margin-top: 6px;">
+                                                                        <div class="progress-bar progress-bar-striped" style="width: 30%"></div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="badge bg-danger"></span></td>
+                                                                <td>인사관리관리</td>
+                                                                <td>12월퇴사자관련</td>
+                                                                <td>김지윤 과장</td>
+                                                                <td>2021-01-05(화)</td>
+                                                                <td>
+                                                                    <div class="progress progress-xs" style="margin-top: 6px;">
+                                                                        <div class="progress-bar progress-bar-striped" style="width: 30%"></div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <!-- /.card-body -->
+                                            </div>
+                                            <!-- / .내부 table card -->
+                                        </div>
+                                        <div class="tab-pane fade" id="custom-tabs-four-done" role="tabpanel" aria-labelledby="custom-tabs-four-done-tab">
+                                            <!-- 내부 table card -->
+                                            <div>
+                                                <div class="card-header" style="padding: 10px 10px;" >
+                                                    <h3 class="card-title">
+                                                        완료 결재 목록 
+                                                    </h3>
+                                                    <div class="card-tools" style="margin: 0;">
+                                                        <a href="#" class="btn btn-tool" title="Previous"><i class="fas fa-chevron-left"></i></a>
+                                                        <a href="#" class="btn btn-tool" title="Next"><i class="fas fa-chevron-right"></i></a>
+                                                    </div>                     
+                                                </div>
+                                                <!-- /.card-header -->
+                                                <div class="card-body p-0">
+                                                    <table class="table table-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <th></th>
+                                                                <th>결재명</th>                           
+                                                                <th>제목</th>
+                                                                <th>요청자</th>
+                                                                <th>완료일자</th>
+                                                                
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody  style="font-size:0.8em;">
+                                                            <tr>  
+                                                                <td><span class="badge bg-danger">긴급</span></td>
+                                                                <td>사원관리</td>
+                                                                <td>신입사원관련</td>
+                                                                <td>김지윤 과장</td>
+                                                                <td>2021-01-05(화)</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="badge bg-primary">중요</span></td>
+                                                                
+                                                                <td>인사관리관리</td>
+                                                                <td>신입사원관련</td>
+                                                                <td>김지윤 과장</td>
+                                                                <td>2021-01-05(화)</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="badge bg-primary">중요</span></td>
+                                                                
+                                                                <td>인사관리관리</td>
+                                                                <td>신입사원관련</td>
+                                                                <td>김지윤 과장</td>
+                                                                <td>2021-01-05(화)</td>
+                                                            </tr>
+                                                            <tr>
+                                                                
+                                                                <td><span class="badge bg-danger"></span></td>
+                                                                <td>인사관리관리</td>
+                                                                <td>신입사원관련</td>
+                                                                <td>김지윤 과장</td>
+                                                                <td>2021-01-05(화)</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="badge bg-danger"></span></td>
+                                                                
+                                                                <td>인사관리관리</td>
+                                                                <td>신입사원관련</td>
+                                                                <td>김지윤 과장</td>
+                                                                <td>2021-01-05(화)</td>
+                                                            </tr>
+                                                            <tr>
+                                                                
+                                                                <td><span class="badge bg-danger"></span></td>
+                                                                <td>인사관리관리</td>
+                                                                <td>신입사원관련</td>
+                                                                <td>김지윤 과장</td>
+                                                                <td>2021-01-05(화)</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <!-- /.card-body -->
+                                            </div>
+                                            <!-- / .내부 table card -->
+                                        </div>
+                                        <div class="tab-pane fade" id="custom-tabs-four-all" role="tabpanel" aria-labelledby="custom-tabs-four-all-tab">
+                                            <!-- 내부 table card -->
+                                            <div>
+                                                <div class="card-header" style="padding: 10px 10px;" >
+                                                    <h3 class="card-title">
+                                                        진행 결재 목록 
+                                                    </h3>
+                                                    <div class="card-tools" style="margin: 0;">
+                                                        <a href="#" class="btn btn-tool" title="Previous"><i class="fas fa-chevron-left"></i></a>
+                                                        <a href="#" class="btn btn-tool" title="Next"><i class="fas fa-chevron-right"></i></a>
+                                                    </div>                     
+                                                </div>
+                                                <!-- /.card-header -->
+                                                <div class="card-body p-0">
+                                                    <table class="table table-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <th></th>
+                                                                <th>결재명</th>
+                                                                <th>제목</th>                           
+                                                                <th>요청자</th>
+                                                                <th>마감일자</th>
+                                                                <th>상태</th>                                                               
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody  style="font-size:0.8em;">
+                                                            <tr>
+                                                                <td><span class="badge bg-danger">긴급</span></td>
+                                                                <td>사원관리</td>
+                                                                <td>12월퇴사자관련</td>
+                                                                <td>김지윤 과장</td>
+                                                                <td>2021-01-07(금)</td>
+                                                                <td><span class="badge bg-success">대기</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="badge bg-primary">중요</span></td>
+                                                                <td>인사관리관리</td>
+                                                                <td>12월퇴사자관련</td>
+                                                                <td>김지윤 과장</td>
+                                                                <td>2021-01-07(금)</td>
+                                                                <td><span class="badge bg-warning">진행</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="badge bg-primary">중요</span></td>
+                                                                <td>인사관리관리</td>
+                                                                <td>12월퇴사자관련</td>
+                                                                <td>김지윤 과장</td>
+                                                                <td>2021-01-05(화)</td>
+                                                                <td><span class="badge bg-secondary">완료</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="badge bg-danger"></span></td>
+                                                                <td>인사관리관리</td>
+                                                                <td>12월퇴사자관련</td>
+                                                                <td>김지윤 과장</td>
+                                                                <td>2021-01-04(월)</td>
+                                                                <td><span class="badge bg-secondary">완료</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="badge bg-danger"></span></td>
+                                                                <td>인사관리관리</td>
+                                                                <td>인사관리</td>
+                                                                <td>김지윤 과장</td>
+                                                                <td>2021-01-04(월)</td>
+                                                                <td><span class="badge bg-secondary">완료</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="badge bg-danger"></span></td>
+                                                                <td>인사관리관리</td>
+                                                                <td>12월퇴사자관련</td>
+                                                                <td>김지윤 과장</td>
+                                                                <td>2021-01-04(월)</td>
+                                                                <td><span class="badge bg-secondary">완료</span></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <!-- /.card-body -->
+                                            </div>
+                                            <!-- / .내부 table card -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                        </div>
+                        <!-- ./left-list -->
+                        <!-- right-list -->
+                        <div class="col-lg-6">
+                            <div class="card card-primary card-outline card-outline-tabs">
+                                <div class="card-header p-0 border-bottom-0">
+                                    <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="custom-tabs-three-daily-tab" data-toggle="pill" href="#custom-tabs-three-daily" role="tab" aria-controls="custom-tabs-three-daily" aria-selected="true">일간 결재 현황</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="custom-tabs-three-weekly-tab" data-toggle="pill" href="#custom-tabs-three-weekly" role="tab" aria-controls="custom-tabs-three-weekly" aria-selected="false">주간 결재 현황</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="custom-tabs-three-monthly-tab" data-toggle="pill" href="#custom-tabs-three-monthly" role="tab" aria-controls="custom-tabs-three-monthly" aria-selected="false">월간 결재 현황</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="card-body">
+                                    <div class="tab-content" id="custom-tabs-three-tabContent">
+                                        <div class="tab-pane fade active show" id="custom-tabs-three-daily" role="tabpanel" aria-labelledby="custom-tabs-three-daily-tab">
+                                            <!-- 내부 card -->
+                                            <div class="">
+                                                <div class="card-header">
+                                                  <h3 class="card-title">일간 결재 현황</h3>
+                                                </div>
+                                                <!-- /.card-header -->
+                                                <div class="card-body text-center" style="padding-bottom: 0;">                                                       
+                                                  <div class="progress vertical">
+                                                    <div class="progress-bar bg-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="height: 40%">
+                                                      <span class="sr-only">40%</span>
+                                                    </div>                                                                            
+                                                  </div>
+                                                  <div class="progress vertical">
+                                                    <div class="progress-bar bg-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="height: 20%">
+                                                      <span class="sr-only">20%</span>
+                                                    </div>
+                                                  </div>
+                                                  <div class="progress vertical">
+                                                    <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="height: 80%">
+                                                      <span class="sr-only">80%</span>
+                                                    </div>
+                                                  </div>
+                                                  <div class="progress vertical">
+                                                    <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="height: 60%">
+                                                      <span class="sr-only">60%</span>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                                <div class="text-center ">                                                       
+                                                    <span>대기</span>&nbsp;&nbsp;&nbsp;
+                                                    <span>진행</span>&nbsp;&nbsp;&nbsp;
+                                                    <span>지연</span>&nbsp;&nbsp;&nbsp;
+                                                    <span>완료</span>&nbsp;&nbsp;
+                                                </div>
+                                                
+                                                <!-- /.card-body -->                                               
+                                            </div>
+                                             <!-- /. 내부 card -->
+                                        </div>
+                                        <div class="tab-pane fade" id="custom-tabs-three-weekly" role="tabpanel" aria-labelledby="custom-tabs-three-weekly-tab">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">Condensed Full Width Table</h3>
+                                                </div>
+                                                <!-- /.card-header -->
+                                                <div class="card-body p-0">
+                                                    <table class="table table-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width: 10px">#</th>
+                                                                <th>Task</th>
+                                                                <th>Progress</th>
+                                                                <th style="width: 40px">Label</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>1.</td>
+                                                                <td>Update software</td>
+                                                                <td>
+                                                                    <div class="progress progress-xs">
+                                                                        <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
+                                                                    </div>
+                                                                </td>
+                                                                <td><span class="badge bg-danger">55%</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>2.</td>
+                                                                <td>Clean database</td>
+                                                                <td>
+                                                                    <div class="progress progress-xs">
+                                                                        <div class="progress-bar bg-warning" style="width: 70%"></div>
+                                                                    </div>
+                                                                </td>
+                                                                <td><span class="badge bg-warning">70%</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>3.</td>
+                                                                <td>Cron job running</td>
+                                                                <td>
+                                                                    <div class="progress progress-xs progress-striped active">
+                                                                        <div class="progress-bar bg-primary" style="width: 30%"></div>
+                                                                    </div>
+                                                                </td>
+                                                                <td><span class="badge bg-primary">30%</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>4.</td>
+                                                                <td>Fix and squish bugs</td>
+                                                                <td>
+                                                                    <div class="progress progress-xs progress-striped active">
+                                                                        <div class="progress-bar bg-success" style="width: 90%"></div>
+                                                                    </div>
+                                                                </td>
+                                                                <td><span class="badge bg-success">90%</span></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <!-- /.card-body -->
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="custom-tabs-three-monthly" role="tabpanel" aria-labelledby="custom-tabs-three-monthly-tab">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">Condensed Full Width Table</h3>
+                                                </div>
+                                                <!-- /.card-header -->
+                                                <div class="card-body p-0">
+                                                    <table class="table table-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width: 10px">#</th>
+                                                                <th>Task</th>
+                                                                <th>Progress</th>
+                                                                <th style="width: 40px">Label</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>1.</td>
+                                                                <td>Update software</td>
+                                                                <td>
+                                                                    <div class="progress progress-xs">
+                                                                        <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
+                                                                    </div>
+                                                                </td>
+                                                                <td><span class="badge bg-danger">55%</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>2.</td>
+                                                                <td>Clean database</td>
+                                                                <td>
+                                                                    <div class="progress progress-xs">
+                                                                        <div class="progress-bar bg-warning" style="width: 70%"></div>
+                                                                    </div>
+                                                                </td>
+                                                                <td><span class="badge bg-warning">70%</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>3.</td>
+                                                                <td>Cron job running</td>
+                                                                <td>
+                                                                    <div class="progress progress-xs progress-striped active">
+                                                                        <div class="progress-bar bg-primary" style="width: 30%"></div>
+                                                                    </div>
+                                                                </td>
+                                                                <td><span class="badge bg-primary">30%</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>4.</td>
+                                                                <td>Fix and squish bugs</td>
+                                                                <td>
+                                                                    <div class="progress progress-xs progress-striped active">
+                                                                        <div class="progress-bar bg-success" style="width: 90%"></div>
+                                                                    </div>
+                                                                </td>
+                                                                <td><span class="badge bg-success">90%</span></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <!-- /.card-body -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                        </div>
+                        <!-- ./right-list -->
+                    </div>
+                    <!-- ./row -->
+                    <!-- ./compressed list -->
+
+
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+		<!-- /.content -->
+	</div>
+</body>
+
+

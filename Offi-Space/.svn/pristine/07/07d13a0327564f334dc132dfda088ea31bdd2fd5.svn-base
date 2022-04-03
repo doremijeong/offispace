@@ -1,0 +1,14 @@
+package kr.co.offispace.dao.message;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+
+import kr.co.offispace.command.Criteria;
+import kr.co.offispace.dto.MessageVO;
+
+public interface MessageDAO {
+	
+	List<MessageVO> selectMsgFromList(Criteria cri) throws SQLException;
+}

@@ -1,0 +1,174 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ page trimDirectiveWhitespaces="true"%>
+<body>
+	<div class="content-wrapper">
+		<section class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1>부서근태현황</h1>
+					</div>
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item"><a href="#">Home</a></li>
+							<li class="breadcrumb-item active">부서근태현황</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+
+		<section class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-12">
+						<div class="card card-info card-outline">
+							<div>
+								<h2 class="title" style="text-align: center; margin-top: 2%;">
+									<a href="#"><i class="fas fa-chevron-left"></i></a>&nbsp;&nbsp;&nbsp;2021.01&nbsp;&nbsp;&nbsp;<a
+										href="#"><i class="fas fa-chevron-right"></i></a>
+								</h2>
+							</div>
+							<div class="d-flex justify-content-end">
+								<a href="#"><i class="fas fa-cog"></i>근태타입설정&nbsp;&nbsp;</a>
+							</div>
+							<div class="card-header">
+								<div class="card-tools">
+									<div class="input-group-append">
+										<select class="form-control form-control-sm"
+											style="width: 140px;">
+											<option selected>--본부명선택--</option>
+											<option>경영혁신본부</option>
+											<option>개발사업본부</option>
+											<option>영업전략본부</option>
+											<option>연구사업본부</option>
+										</select> <select class="form-control form-control-sm"
+											style="width: 140px;">
+											<option selected>--그룹명선택--</option>
+											<option>인재개발그룹</option>
+											<option>기획조정그룹</option>
+										</select> <select class="form-control form-control-sm"
+											style="width: 140px;">
+											<option selected>--부서선택--</option>
+											<option>인사팀</option>
+											<option>교육운영팀</option>
+										</select>
+
+										<div class="input-group-append input-group-sm"
+											style="width: 180px;">
+											<input type="text" name="table_search"
+												class="form-control float-right" placeholder="Search">
+
+											<div class="input-group-append">
+												<button type="submit" class="btn btn-default">
+													<i class="fas fa-search"></i>
+												</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- /.card-header -->
+							<div class="card-body table-responsive p-0">
+								<table class="table table-hover text-nowrap">
+									<thead>
+										<tr>
+											<th>이름</th>
+											<th>부서명</th>
+											<th>1주</th>
+											<th>2주</th>
+											<th>3주</th>
+											<th>4주</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td><img src="../images/01.jpg"
+												style="object-fit: cover; width: 30px; height: 30px;"
+												class="img-size-50 mr-3 img-circle" alt="User Image">임나리</td>
+											<td>총무부</td>
+											<td>35h 7m 59s<br /> 기본:35h 37m 59s<br /> 연장:0h 0m 0s<br />
+												지각: 1회<br /> 조퇴: 0회<br /> 결근: 0회<br />
+											</td>
+											<td>35h 7m 59s<br /> 기본:35h 37m 59s<br /> 연장:0h 0m 0s<br />
+												지각: 0회<br /> 조퇴: 0회<br /> 결근: 0회<br />
+											</td>
+											<td>35h 7m 59s<br /> 기본:35h 37m 59s<br /> 연장:0h 0m 0s<br />
+												지각: 0회<br /> 조퇴: 0회<br /> 결근: 0회<br />
+											</td>
+											<td>35h 7m 59s<br /> 기본:35h 37m 59s<br /> 연장:0h 0m 0s<br />
+												지각: 0회<br /> 조퇴: 0회<br /> 결근: 0회<br />
+											</td>
+										</tr>
+										<tr>
+											<td><img src="../images/01.jpg"
+												style="object-fit: cover; width: 30px; height: 30px;"
+												class="img-size-50 mr-3 img-circle" alt="User Image">임나리</td>
+											<td>총무부</td>
+											<td>35h 7m 59s<br /> 기본:35h 37m 59s<br /> 연장:0h 0m 0s<br />
+												지각: 1회<br /> 조퇴: 0회<br /> 결근: 0회<br />
+											</td>
+											<td>35h 7m 59s<br /> 기본:35h 37m 59s<br /> 연장:0h 0m 0s<br />
+												지각: 0회<br /> 조퇴: 0회<br /> 결근: 0회<br />
+											</td>
+											<td>35h 7m 59s<br /> 기본:35h 37m 59s<br /> 연장:0h 0m 0s<br />
+												지각: 0회<br /> 조퇴: 0회<br /> 결근: 0회<br />
+											</td>
+											<td>35h 7m 59s<br /> 기본:35h 37m 59s<br /> 연장:0h 0m 0s<br />
+												지각: 0회<br /> 조퇴: 0회<br /> 결근: 0회<br />
+											</td>
+										</tr>
+										<tr>
+											<td><img src="../images/01.jpg"
+												style="object-fit: cover; width: 30px; height: 30px;"
+												class="img-size-50 mr-3 img-circle" alt="User Image">임나리</td>
+											<td>총무부</td>
+											<td>35h 7m 59s<br /> 기본:35h 37m 59s<br /> 연장:0h 0m 0s<br />
+												지각: 1회<br /> 조퇴: 0회<br /> 결근: 0회<br />
+											</td>
+											<td>35h 7m 59s<br /> 기본:35h 37m 59s<br /> 연장:0h 0m 0s<br />
+												지각: 0회<br /> 조퇴: 0회<br /> 결근: 0회<br />
+											</td>
+											<td>35h 7m 59s<br /> 기본:35h 37m 59s<br /> 연장:0h 0m 0s<br />
+												지각: 0회<br /> 조퇴: 0회<br /> 결근: 0회<br />
+											</td>
+											<td>35h 7m 59s<br /> 기본:35h 37m 59s<br /> 연장:0h 0m 0s<br />
+												지각: 0회<br /> 조퇴: 0회<br /> 결근: 0회<br />
+											</td>
+										</tr>
+										<tr>
+											<td><img src="../images/01.jpg"
+												style="object-fit: cover; width: 30px; height: 30px;"
+												class="img-size-50 mr-3 img-circle" alt="User Image">임나리</td>
+											<td>총무부</td>
+											<td>35h 7m 59s<br /> 기본:35h 37m 59s<br /> 연장:0h 0m 0s<br />
+												지각: 1회<br /> 조퇴: 0회<br /> 결근: 0회<br />
+											</td>
+											<td>35h 7m 59s<br /> 기본:35h 37m 59s<br /> 연장:0h 0m 0s<br />
+												지각: 0회<br /> 조퇴: 0회<br /> 결근: 0회<br />
+											</td>
+											<td>35h 7m 59s<br /> 기본:35h 37m 59s<br /> 연장:0h 0m 0s<br />
+												지각: 0회<br /> 조퇴: 0회<br /> 결근: 0회<br />
+											</td>
+											<td>35h 7m 59s<br /> 기본:35h 37m 59s<br /> 연장:0h 0m 0s<br />
+												지각: 0회<br /> 조퇴: 0회<br /> 결근: 0회<br />
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<!-- /.card-body -->
+						</div>
+						<!-- /.card -->
+					</div>
+				</div>
+
+				<div class="d-flex justify-content-center">
+					<p>여기는페이지네이션</p>
+				</div>
+			</div>
+		</section>
+	</div>
+</body>

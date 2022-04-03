@@ -1,0 +1,17 @@
+package kr.co.offispace.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/videoConference")
+public class VideoConferenceController {
+
+	@RequestMapping("/main.do")
+	public String main() throws Exception
+	{
+		String url="videoConference/main";
+
+		return url;
+	}
+}

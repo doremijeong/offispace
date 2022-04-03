@@ -1,0 +1,43 @@
+package kr.co.offispace.dao.attach;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+
+import kr.co.offispace.dto.AttachmentVO;
+
+public class AttachmentDAOImpl implements AttachmentDAO{
+
+	private SqlSession session;
+
+	public void setSession(SqlSession session) {
+		this.session = session;
+	}
+
+	@Override
+	public List<AttachmentVO> selectAttachmentByAT(String attachCode) throws SQLException {
+		return session.selectList("Attachment-Mapper.selectAttachmentByAT",attachCode);
+	}
+
+	@Override
+	public List<AttachmentVO> selectAttachmentByOther(String attachGroup) throws SQLException {
+		return session.selectList("Attachment-Mapper.selectAttachmentByOther",attachGroup);
+	}
+
+	@Override
+	public void insertAttachment(AttachmentVO attachment) throws SQLException {
+		session.update("Attachment-Mapper.insertAttachment", attachment);
+	}
+
+	@Override
+	public void deleteAttachmentByAT(String attachCode) throws SQLException {
+		session.update("Attachment-Mapper.deleteAttachmentByAT", attachCode);
+	}
+
+	@Override
+	public void deleteAttachmentByOther(String attachGroup) throws SQLException {
+		session.update("Attachment-Mapper.deleteAttachmentByOther", attachGroup);
+	}
+
+}

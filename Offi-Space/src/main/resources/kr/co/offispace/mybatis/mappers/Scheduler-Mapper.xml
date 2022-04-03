@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="Scheduler-Mapper">
+
+<sql id="search">
+	<if test="searchType == 'personalScheduler'.toString()">
+		AND SCD_GR_CODE=(SELECT SCD_GR_CODE 
+						   FROM SCHEDULE_GROUP 
+						  WHERE EMP_CODE=#{keyword})
+	</if>
+	<if test="searchType == 'departmentScheduler'.toString()">
+		AND SCD_GR_CODE=(SELECT SCD_GR_CODE
+						   FROM SCHEDULE_GROUP
+						  WHERE EMP_CODE IS NULL
+						    AND SCD_DPT_CODE=#{keyword})
+	</if>
+	<if test="searchType == 'companyScheduler'.toString()">
+		AND SCD_GR_CODE=(SELECT SCD_GR_CODE
+						   FROM SCHEDULE_GROUP
+						  WHERE EMP_CODE IS NULL
+						    AND SCD_DPT_CODE IS NULL
+	</if>
+</sql>
+
+
+
+	<!-- 분류별 일정 리스트 조회 -->
+	<!-- 개인일정리스트 -->
+	<select id="selectSchedulerList" resultType="scheduler">
+		SELECT
+			SCD_CODE
+			, SCD_GR_CODE
+			, SCD_START_DT
+			, SCD_END_DT
+			, SCD_IMPORT
+			, SCD_TITLE
+			, SCD_CONTENT
+			, SCD_ALLDAY
+			, SCD_HOLLYDAY
+			, EMP_CODE
+		FROM  
+			SCHEDULE
+		WHERE 
+			SCD_GR_CODE=(SELECT SCD_GR_CODE
+						   FROM SCHEDULE_GROUP 
+						  WHERE EMP_CODE=#{empCode})
+	</select>
+	
+	<!-- 부서일정리스트 -->
+	<select id="selectDPTSchedulerList" resultType="scheduler">
+		SELECT
+			SCD_CODE
+			, SCD_GR_CODE
+			, SCD_START_DT
+			, SCD_END_DT
+			, SCD_IMPORT
+			, SCD_TITLE
+			, SCD_CONTENT
+			, SCD_ALLDAY
+			, SCD_HOLLYDAY
+			, EMP_CODE
+		FROM  
+			SCHEDULE
+		WHERE 
+			SCD_GR_CODE=(SELECT SCD_GR_CODE
+						   FROM SCHEDULE_GROUP
+						  WHERE EMP_CODE IS NULL
+						    AND SCD_DPT_CODE=#{teamCode})
+	</select>
+	
+	<!-- 회사일정리스트 -->
+	<select id="selectCMPSchedulerList" resultType="scheduler">
+		SELECT
+			SCD_CODE
+			, SCD_GR_CODE
+			, SCD_START_DT
+			, SCD_END_DT
+			, SCD_IMPORT
+			, SCD_TITLE
+			, SCD_CONTENT
+			, SCD_ALLDAY
+			, SCD_HOLLYDAY
+			, EMP_CODE
+		FROM  
+			SCHEDULE
+		WHERE 
+			SCD_GR_CODE=(SELECT SCD_GR_CODE
+						   FROM SCHEDULE_GROUP
+						  WHERE EMP_CODE IS NULL
+						    AND SCD_DPT_CODE IS NULL)
+	</select>
+	
+	<!-- 개인일정분류코드 -->
+	<select id="selectSchedulerByScdGrCode" resultType="scheduler">
+		SELECT
+			SCD_GR_CODE
+			, SCD_NAME
+			, SCD_COLOR
+			, EMP_CODE
+			, SCD_DPT_CODE
+		FROM
+			SCHEDULE_GROUP
+		WHERE 
+			EMP_CODE=#{empCode}
+		
+	</select>
+	
+	<!-- 부서일정분류코드 -->
+	<select id="selectSchedulerByScdDptCode" resultType="scheduler">
+		SELECT
+			SCD_GR_CODE
+			, SCD_NAME
+			, SCD_COLOR
+			, EMP_CODE
+			, SCD_DPT_CODE
+		FROM
+			SCHEDULE_GROUP
+		WHERE 
+			SCD_DPT_CODE=#{scdDptCode}
+		AND
+			EMP_CODE IS NULL
+		
+	</select>
+	
+	<!-- 회사일정분류코드 -->
+	<select id="selectSchedulerByscdCpGrCode" resultType="scheduler">
+		SELECT
+			SCD_GR_CODE
+			, SCD_NAME
+			, SCD_COLOR
+			, EMP_CODE
+			, SCD_DPT_CODE
+		FROM
+			SCHEDULE_GROUP
+		WHERE 
+			SCD_GR_CODE='SG0001'
+		
+	</select>
+	
+	<!-- 상세조회 -->
+	<select id="selectSchedulerByScdCode" resultType="scheduler">
+		SELECT
+			SCD_CODE
+			, SCD_GR_CODE
+			, SCD_START_DT
+			, SCD_END_DT
+			, SCD_IMPORT
+			, SCD_TITLE
+			, SCD_CONTENT
+			, SCD_ALLDAY
+			, SCD_HOLLYDAY
+			, EMP_CODE
+		FROM
+			SCHEDULE
+		WHERE SCD_CODE=#{scdCode}
+	</select>
+	
+	<!-- 일정등록 -->
+	<update id="insertScheduler" parameterType="scheduler">
+		INSERT
+		INTO
+			SCHEDULE
+			(
+			SCD_CODE
+			, SCD_GR_CODE
+			, SCD_START_DT
+			, SCD_END_DT
+			, SCD_IMPORT
+			, SCD_TITLE
+			, SCD_CONTENT
+			, SCD_ALLDAY
+			, EMP_CODE
+			)
+		VALUES(
+			'SC'||LPAD(SCHEDULE_SEQ.NEXTVAL,4,0)
+			, #{scdGrCode}
+			, #{scdStartDt}
+			, #{scdEndDt}
+			, #{scdImport}
+			, #{scdTitle}
+			, #{scdContent}
+			, #{scdAllday}
+			, #{empCode}
+		)
+		
+		<selectKey keyProperty="scdCode" resultType="str">
+			SELECT 'SC'||LPAD(SCHEDULE_SEQ.CURRVAL,4,0) FROM DUAL
+		</selectKey>
+	</update>
+	
+	
+	<!-- 일정 수정 -->
+	<update id="updateScheduler" parameterType="scheduler">
+		UPDATE
+			SCHEDULE
+		SET
+			SCD_START_DT = #{scdStartDt}
+			, SCD_END_DT = #{scdEndDt}
+			, SCD_TITLE = #{scdTitle}
+			, SCD_CONTENT = #{scdContent}
+			, SCD_IMPORT = #{scdImport}
+		WHERE
+			SCD_CODE = #{scdCode}
+	</update>
+
+	
+	<!-- 일정삭제 -->
+	<update id="deleteScheduler" parameterType="String">
+		DELETE
+		FROM
+			SCHEDULE
+		WHERE
+			SCD_CODE=#{scdCode}
+	</update>
+
+
+	<!-- 사원 최초 등록시 스케쥴러_그룹 테이블 한행 추가 -->
+	<update id="insertSchedulerGroup" parameterType="employee">
+		INSERT
+		INTO
+			SCHEDULE_GROUP
+			(
+			SCD_GR_CODE
+			, SCD_NAME
+			, SCD_COLOR
+			, EMP_CODE
+			, SCD_DPT_CODE
+			)
+		VALUES(
+			'SG'||LPAD(SCHEDULE_GROUP_SEQ.NEXTVAL,4,0)
+			, #{empName}
+			, '#00FF00'
+			, #{empCode}
+			, #{teamCode}
+		)
+	</update>
+	
+	
+	
+	<select id="selectPersonalSchedulerList" resultType="scheduler">
+		SELECT
+			SCD_CODE
+			, SCD_GR_CODE
+			, SCD_START_DT
+			, SCD_END_DT
+			, SCD_IMPORT
+			, SCD_TITLE
+			, SCD_CONTENT
+			, SCD_ALLDAY
+			, SCD_HOLLYDAY
+			, EMP_CODE
+		FROM
+			SCHEDULE
+		WHERE 
+			EMP_CODE =#{empCode}
+		AND TO_CHAR(SCD_START_DT,'YYYY-MM-DD')
+					<![CDATA[<]]>=
+				   	TO_CHAR(SYSDATE,'YYYY-MM-DD')
+				AND TO_CHAR(SYSDATE,'YYYY-MM-DD')
+					<![CDATA[<]]>=
+					TO_CHAR(SCD_END_DT,'YYYY-MM-DD')
+
+	</select>
+	
+	
+</mapper>

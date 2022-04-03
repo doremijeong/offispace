@@ -1,0 +1,62 @@
+package kr.co.offispace.service.message;
+
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import kr.co.offispace.command.MessageCriteria;
+import kr.co.offispace.command.MessagePageMaker;
+import kr.co.offispace.dao.message.MessageDAO;
+import kr.co.offispace.dto.EmployeeVO;
+import kr.co.offispace.dto.MailVO;
+import kr.co.offispace.dto.MessageVO;
+import kr.co.offispace.service.employee.EmployeeService;
+
+public class MessageServiceImpl implements MessageService {
+
+	private MessageDAO messageDAO;
+
+	public void setMessageDAO(MessageDAO messageDAO) {
+		this.messageDAO = messageDAO;
+	}
+	
+	private EmployeeService employeeService;
+	
+	public void setEmployeeService(EmployeeService employeeService) {
+		this.employeeService = employeeService;
+	}
+
+	
+	@Override
+	public Map<String, Object> getFromList(MessageCriteria msgCri) throws SQLException {
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+
+		List<MessageVO> fromList = messageDAO.selectMsgFromList(msgCri);
+
+		int totalCount = messageDAO.selectAllMsgListTotalCount(msgCri);
+
+		MessagePageMaker pageMaker = new MessagePageMaker();
+		pageMaker.setMsgCri(msgCri);
+		pageMaker.setTotalCount(totalCount);
+
+		for (MessageVO message : fromList) {
+
+			String toID = message.getMsgTo();
+			String FromID = message.getMsgFrom();
+
+			System.out.println(toID);
+			EmployeeVO employeeTo = employeeService.getEmployee(toID);
+			EmployeeVO employeeFrom = employeeService.getEmployee(FromID);
+
+			message.setMsgTo(employeeTo.getEmpName());
+			message.setMsgFrom(employeeFrom.getEmpName());
+		}
+
+		dataMap.put("fromList", fromList);
+		dataMap.put("pageMaker", pageMaker);
+
+		return dataMap;
+	}
+
+}

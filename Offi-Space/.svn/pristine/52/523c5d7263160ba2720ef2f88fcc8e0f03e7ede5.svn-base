@@ -1,0 +1,556 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Attend-Mapper">
+	
+	<select id="selectAttPerCodeCntByEmpcode" resultType="int" parameterType="attend">
+		SELECT
+			COUNT(*)
+		FROM
+			ATTEND
+		WHERE
+			EMP_CODE =#{empCode}
+		AND
+			ATT_PER_ST_CODE=#{attPerStCode}
+		AND 
+			ATT_DT LIKE #{attDtSt}||'%'
+	</select>
+	
+	<update id="insertAttend" parameterType="attendCommand">
+		INSERT
+		INTO
+			ATTEND(
+			ATT_CODE
+			, ATT_DT
+			, ATT_TIME
+			, ATT_TLCOM_ST
+			, ATT_JOB_ST_CODE
+			, ATT_PER_ST_CODE
+			, ATT_TYPE_CODE
+			, EMP_CODE
+			)
+		VALUES(
+			'AT'||LPAD(ATTEND_SEQ.NEXTVAL,4,0)
+			, SYSDATE
+			, SYSDATE
+			, #{attTlcomSt}
+			, (select att_job_st_code from ATTEND_JOB_ST where att_job_st_nm = '업무중')
+			, 'AP0004'
+			, #{attTypeCode}
+			, #{empCode}
+			)
+		
+	</update>
+	
+	<update id="insertAttendByAttend" parameterType="attend">
+		INSERT
+		INTO
+			ATTEND(
+			ATT_CODE
+			, ATT_DT
+			, ATT_TIME
+			, EMP_CODE
+			, TEAM_VALUE
+			, EMP_NAME
+			, ATT_PER_ST_CODE
+			, ATT_JOB_ST_CODE
+			)
+		VALUES(
+			'AT'||LPAD(ATTEND_SEQ.NEXTVAL,4,0)
+			, #{attDt}
+			, #{attTime}
+			, #{empCode}
+			, #{teamValue}
+			, #{empName}
+			, 'AP0004'
+			, 'AJ0001'
+			)
+		
+		<selectKey keyProperty="attCode" resultType="str">
+			SELECT 'AT'||LPAD(ATTEND_SEQ.CURRVAL,4,0) FROM DUAL
+		</selectKey>
+	</update>
+
+
+	<update id="updateAttLeavTimeByAttTime" parameterType="attendCommand">
+		UPDATE
+			ATTEND
+		SET
+			ATT_DT = SYSDATE 
+			, ATT_LEAV_TIME = SYSDATE 
+			, ATT_REAL_WORK_TIME = #{attRealWorkTime}
+			, ATT_EX_WORK_TIME = #{attExWorkTime}
+			, ATT_TOTAL_WORK_TIME = #{attTotalWorkTime} 
+			, ATT_JOB_ST_CODE = (select att_job_st_code from ATTEND_JOB_ST where att_job_st_nm = '업무완료')
+			, ATT_PER_ST_CODE = #{attPerStCode}
+			, APV_CODE = #{apvCode}
+			, YEAR_VAC_EMPCODE = #{yearVacEmpCode}
+		WHERE
+			TO_CHAR(ATT_DT,'YYYY-MM-DD') = TO_CHAR(SYSDATE,'YYYY-MM-DD')
+		  AND 
+		  	EMP_CODE=#{empCode}
+				
+	</update>
+	
+	<update id="updateOtherAttTimesByEmpCode" parameterType="attendCommand">
+		UPDATE
+			ATTEND
+		SET
+			ATT_REAL_WORK_TIME = #{attRealWorkTime}
+			, ATT_EX_WORK_TIME = #{attExWorkTime}
+			, ATT_TOTAL_WORK_TIME = #{attTotalWorkTime} 
+			, ATT_PER_ST_CODE = #{attPerStCode}
+			, APV_CODE = #{apvCode}
+			, YEAR_VAC_EMPCODE = #{yearVacEmpCode}
+		WHERE
+			TO_CHAR(ATT_DT,'YYYY-MM-DD') = TO_CHAR(SYSDATE,'YYYY-MM-DD')
+		  AND 
+		  	EMP_CODE=#{empCode}
+	</update>
+	
+	<!-- <select id="selectAttTimeByEmpCode" resultType="attendCommand" parameterType="attendCommand">
+		SELECT 
+		   	ATT_TIME
+        FROM 
+        	ATTEND
+        WHERE 
+        	TO_CHAR(ATT_DT,'YYYY-MM-DD') = TO_CHAR(SYSDATE,'YYYY-MM-DD') 
+        AND 
+        	EMP_CODE = #{empCode}
+	</select>
+	
+	<select id="selectAttLeavTimeByEmpCode" resultType="attendCommand" parameterType="attendCommand">
+		SELECT 
+		   	ATT_LEAV_TIME
+        FROM 
+        	ATTEND
+        WHERE 
+        	TO_CHAR(ATT_DT,'YYYY-MM-DD') = TO_CHAR(SYSDATE,'YYYY-MM-DD') 
+        AND 
+        	EMP_CODE = #{empCode}
+	</select> -->
+	
+	<select id="selectAttTime" resultType="attendCommand" parameterType="attendCommand">
+		SELECT 
+		   	ATT_TIME,
+            ATT_LEAV_TIME
+        FROM 
+        	ATTEND
+        WHERE 
+        	TO_CHAR(ATT_DT,'YYYY-MM-DD') = TO_CHAR(SYSDATE,'YYYY-MM-DD') 
+        AND 
+        	EMP_CODE = #{empCode}
+		
+	</select>
+	
+	<update id="updateAttJobStCodeByEmpCode" parameterType="attend">
+		UPDATE
+			ATTEND
+		SET
+			ATT_JOB_ST_CODE = #{attJobStCode}
+		WHERE
+			TO_CHAR(ATT_DT,'YYYY-MM-DD')=TO_CHAR(SYSDATE,'YYYY-MM-DD')
+		AND 
+			EMP_CODE =#{empCode}
+			
+	</update>
+	
+	<select id="selectAttendPerStCode" resultType="attend">
+		SELECT 
+    		*
+		FROM
+    		ATTEND
+    	WHERE
+    		ATT_DT LIKE #{attDtSt}||'%'
+    	ORDER BY ATT_DT
+	</select>
+	
+	
+	<update id="updateLeave" parameterType="attend">
+		UPDATE
+			ATTEND
+		SET
+			ATT_LEAV_TIME = #{attLeavTime} 
+			, ATT_REAL_WORK_TIME = #{attRealWorkTime}
+			, ATT_TOTAL_WORK_TIME = #{attTotalWorkTime} 
+			, ATT_PER_ST_CODE = #{attPerStCode}
+		WHERE
+			ATT_CODE=#{attCode}
+				
+	</update>
+	
+	<!-- <update id="insertAttendType" parameterType="attendType">
+		INSERT
+		INTO
+			ATTEND_TYPE (
+				ATT_TYPE_CODE
+				, ATT_CORE_START_TIME
+				, ATT_CORE_END_TIME
+				, ATT_TIME
+				, ATT_LEAV_TIME
+				, ATT_NAME
+			)
+		VALUES(
+			'AT'||LPAD(ATTEND_SEQ.NEXTVAL,4,0)
+			, TO_DATE(#{attCoreStartTime},'yyyy-mm-dd HH24:MI:SS')
+			, TO_DATE(#{attCoreEndTime},'yyyy-mm-dd HH24:MI:SS')
+			, TO_DATE(#{attTime},'yyyy-mm-dd HH24:MI:SS')
+			, TO_DATE(#{attLeavTime},'yyyy-mm-dd HH24:MI:SS')
+			, #{attName}
+		)
+		
+	</update> -->
+	
+	
+	<select id="selectCountAttend" parameterType="attend" resultType="int">
+		SELECT 
+    		COUNT(*)
+		FROM
+    		ATTEND
+    	WHERE
+    		EMP_CODE=#{empCode}
+    	AND
+    		ATT_DT=#{attDt}
+	</select>
+	
+	<select id="selectCountAttendLeave" parameterType="attend" resultType="int">
+		SELECT 
+    		COUNT(*)
+		FROM
+    		ATTEND
+    	WHERE
+    		EMP_CODE=#{empCode}
+    	AND
+    		ATT_DT=#{attDt}
+    	AND
+    		ATT_LEAV_TIME IS NOT NULL
+	</select>
+	
+	<select id="selectAttendForLogin" parameterType="attend" resultType="attend">
+		SELECT 
+    		*
+		FROM
+    		ATTEND
+    	WHERE
+    		EMP_CODE=#{empCode}
+    	AND
+    		ATT_DT=#{attDt}
+	</select>
+	
+	<select id="selectTodaysTeamMemberAttend" parameterType="attend" resultType="attend">
+		SELECT 
+    		*
+		FROM
+    		ATTEND
+    	WHERE
+    		TEAM_VALUE=#{teamValue}
+    	AND
+    		ATT_DT=#{attDt}
+	</select>
+	
+	<select id="selectMonthPersonalAttendList" parameterType="attend" resultType="attend">
+		SELECT 
+    		*
+		FROM
+    		ATTEND
+    	WHERE
+    		ATT_DT LIKE #{attDtSt}||'%'
+    	AND
+    		EMP_CODE=#{empCode}
+    	ORDER BY ATT_DT
+	</select>
+	
+	<select id="selectYearVacationListByEmpCode" resultType="yearVacation" parameterType="String">
+		SELECT
+			YEAR_VAC_CODE
+			, EMP_CODE
+			, TOTAL_YEAR_VAC
+			, OCCUR_YEAR_VAC
+			, TOTAL_USED_YEAR_VAC
+			, REMAIN_YEAR_VAC
+			, EMP_NAME
+			, TEAM_VALUE
+			, YEAR_VAC_KINDS
+			, USED_START_DT
+			, YEAR_VAC_USED
+			, REGISTER_DT
+			, OCCUR_CNT
+			, USED_END_DT
+			, CONTENT
+		FROM
+			YEAR_VACATION
+		WHERE 
+			EMP_CODE=#{empCode}
+	</select>
+	
+	<select id="selectYearVacationByEmpCode" resultType="yearVacation" parameterType="String">
+		SELECT
+			YEAR_VAC_CODE
+			, EMP_CODE
+			, TOTAL_YEAR_VAC
+			, OCCUR_YEAR_VAC
+			, TOTAL_USED_YEAR_VAC
+			, REMAIN_YEAR_VAC
+		FROM
+			YEAR_VACATION
+		WHERE 
+			EMP_CODE=#{empCode}
+	</select>
+	
+	
+	<select id="selectAnnual" resultType="annual" parameterType="annual">
+		SELECT
+			*
+		FROM
+			ANNUAL
+		WHERE 
+			EMP_CODE=#{empCode}
+		AND
+			ANN_YEAR LIKE #{annYearSt}||'%'
+	</select>
+	
+	<select id="selectAnnualHistoryList" resultType="annualHistory" parameterType="annual">
+		SELECT
+			*
+		FROM
+			ANNUAL_HISTORY
+		WHERE 
+			EMP_CODE=#{empCode}
+		AND
+			ANN_YEAR LIKE #{annYearSt}||'%'
+	</select>
+	
+	<select id="selectAnnualOccurList" resultType="annualOccur" parameterType="annual">
+		SELECT
+			*
+		FROM
+			ANNUAL_OCCUR_HISTORY
+		WHERE 
+			EMP_CODE=#{empCode}
+		AND
+			ANN_YEAR LIKE #{annYearSt}||'%'
+	</select>
+	
+	<select id="selectWorkFromHomeByEmpCode" resultType="workFromHome">
+		SELECT
+		    WFH_CODE
+		    ,EMP_CODE
+		    ,EMP_NAME
+		    ,TEAM_VALUE
+		    ,APPLICATION_DT
+		    ,START_DT
+		    ,END_DT
+		    ,APPLICATION_REASON
+		    ,APV_CODE
+		    ,ATT_CODE
+		    ,TEAM_CODE
+		FROM
+		    WORK_FROM_HOME
+		WHERE
+		    EMP_CODE=#{empCode}
+		AND TO_CHAR(START_DT,'YYYY-MM-DD')
+			<![CDATA[<]]>=
+		   	TO_CHAR(SYSDATE,'YYYY-MM-DD')
+		AND TO_CHAR(SYSDATE,'YYYY-MM-DD')
+			<![CDATA[<]]>=
+			TO_CHAR(END_DT,'YYYY-MM-DD')
+	</select>
+	
+	<select id="selectWorkFromHomeByTeamCode" resultType="workFromHome">
+		SELECT
+		    WFH_CODE
+		    ,EMP_CODE
+		    ,EMP_NAME
+		    ,TEAM_VALUE
+		    ,APPLICATION_DT
+		    ,START_DT
+		    ,END_DT
+		    ,APPLICATION_REASON
+		    ,APV_CODE
+		    ,ATT_CODE
+		    ,TEAM_CODE
+		FROM
+		    WORK_FROM_HOME
+		WHERE
+            TEAM_CODE=#{teamCode}
+		AND TO_CHAR(START_DT,'YYYY-MM-DD')
+			<![CDATA[<]]>=
+		   TO_CHAR(SYSDATE,'YYYY-MM-DD')
+		AND TO_CHAR(SYSDATE,'YYYY-MM-DD')
+			<![CDATA[<]]>=
+			TO_CHAR(END_DT,'YYYY-MM-DD')
+	</select>
+	
+
+	<update id="insertWorkFromHome" parameterType="workFromHome">
+		INSERT
+		INTO
+			WORK_FROM_HOME(	
+				WFH_CODE
+				, EMP_CODE
+				, EMP_NAME
+				, TEAM_VALUE
+				, APPLICATION_DT
+				, START_DT
+				, END_DT
+				, APPLICATION_REASON
+				, APV_CODE
+				, ATT_CODE
+				, TEAM_CODE
+			)
+		VALUES(
+			'WF'||LPAD(ATTEND_SEQ.NEXTVAL,4,0)
+			, #{empCode}
+			, #{empName}
+			, #{teamValue}
+			, #{applicationDt}
+			, #{startDt}
+			, #{endDt}
+			, #{applicationReason}
+			, #{apvCode}
+			, #{attCode}
+			, #{teamCode}
+		)
+		
+	</update>
+	
+	<update id="insertTeamsHomeCheck" parameterType="workFromHomeAnswer">
+		INSERT
+			INTO
+			WORK_FROM_HOME_ANSWER
+			(ANSWER_CODE
+			, OBSERVER_CODE
+			, WFHA_DATE
+			, WFHA_RECEIVE_TIME
+			, EMP_CODE
+			, EMP_NAME
+			, TEAM_VALUE
+			, TEAM_CODE)
+		VALUES(
+		'WA'||LPAD(REPORT_DOC_SEQ.NEXTVAL,4,0)
+		, #{observerCode}
+		, #{wfhaDate}
+		, sysdate
+		, #{empCode}
+		, #{empName}
+		, #{teamValue}
+		, #{teamCode}
+		)
+	</update>
+	
+	<update id="updateWorkFromHomeAnswerTime" parameterType="workFromHomeAnswer">
+		UPDATE 
+			WORK_FROM_HOME_ANSWER
+		   SET 
+		    WFHA_ANS_TIME=#{wfhaAnsTime}
+		 WHERE 
+		 	WFHA_RECEIVE_TIME=(SELECT 
+		 							MAX(WFHA_RECEIVE_TIME)
+             	                 FROM 
+         			                WORK_FROM_HOME_ANSWER
+                         	     WHERE 
+                    		       	EMP_CODE=#{empCode})
+		   AND EMP_CODE=#{empCode}
+		   
+	</update>
+	
+	<select id="selectWorkFromHomeAnswerListByTeamCode" resultType="workFromHomeAnswer" parameterType="String">
+		SELECT
+			ANSWER_CODE
+			, OBSERVER_CODE
+			, WFHA_DATE
+			, WFHA_ANS_TIME
+			, WFHA_RECEIVE_TIME
+			, EMP_CODE
+			, TEAM_VALUE
+			, TEAM_CODE
+			, EMP_NAME
+		FROM
+			WORK_FROM_HOME_ANSWER
+		WHERE
+			TEAM_CODE=#{teamValue}
+		 ORDER BY WFHA_DATE
+	</select>
+	
+	<select id="selectWorkFromHomeAnsCntByEmpCode" resultType="int" parameterType="String">
+		    SELECT
+				count(*)
+			FROM
+				WORK_FROM_HOME_ANSWER
+			WHERE 
+				WFHA_ANS_TIME IS NOT NULL
+	        AND
+	            EMP_CODE=#{empCode}
+	</select>
+	
+	<select id="selectWorkFromhomeAnswerByAnswerTimeAndEmpCode" resultType="workFromHomeAnswer">
+		SELECT 
+			ANSWER_CODE
+			,OBSERVER_CODE
+		FROM
+			WORK_FROM_HOME_ANSWER
+		WHERE
+			WFHA_ANS_TIME=#{wfhaAnsTime}
+		AND 
+			EMP_CODE=#{empCode}
+	</select>
+	
+	<update id="insertAnnualHistory" parameterType="annualHistory">
+		INSERT
+			INTO
+			ANNUAL_HISTORY(
+				ANN_HISTORY_CODE
+				, EMP_CODE
+				, EMP_NAME
+				, TEAM_VALUE
+				, ANN_START_DT
+				, ANN_END_DT
+				, ANN_USED_CNT
+				, ANN_REASON
+				, ANN_YEAR
+				)
+		VALUES(
+				'AH'||LPAD( ANNUAL_HISTORY_SEQ.NEXTVAL,4,0)
+				, #{empCode}
+				, #{empName}
+				, #{teamValue}
+				, #{annStartDt}
+				, #{annEndDt}
+				, #{annUsedCnt}
+				, #{annReason}
+				, #{annStartDt}
+				)
+		
+	</update>
+	
+	
+	<select id="selectWorkFromHomeEmployeeList" resultType="employee" parameterType="str">
+		SELECT 
+			*
+		FROM
+			EMPLOYEE_VIEW
+		WHERE
+			EMP_CODE IN
+				(SELECT 
+					DISTINCT EMP_CODE 
+				FROM 
+					WORK_FROM_HOME 
+				WHERE 
+					START_DT LIKE #{yearMonth}||'%'
+					OR 
+					END_DT LIKE #{yearMonth}||'%')
+	</select>
+	
+	<select id="selectWorkFromHomeAnswerList" resultType="workFromHomeAnswer" parameterType="str">
+		SELECT 
+			* 
+		FROM 
+			WORK_FROM_HOME_ANSWER 
+		WHERE 
+			WFHA_DATE LIKE #{yearMonth}||'%'
+		ORDER BY
+			WFHA_RECEIVE_TIME
+	</select>
+	
+</mapper>

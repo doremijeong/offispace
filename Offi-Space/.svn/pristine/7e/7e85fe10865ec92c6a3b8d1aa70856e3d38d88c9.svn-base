@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="Scheduler-Mapper">
+
+	<!-- 분류별 일정 리스트 조회 -->
+	<select id="SchedulerList" resultType="scheduler">
+		SELECT
+			SCD_CODE
+			, SCD_GR_CODE
+			, SCD_START_DT
+			, SCD_END_DT
+			, SCD_IMPORT
+			, SCD_TITLE
+			, SCD_CONTENT
+			, SCD_ALLDAY
+			, SCD_HOLLYDAY
+			, EMP_CODE
+		FROM  
+			SCHEDULE
+		WHERE 
+			SCD_GR_CODE=#{scd_gr_code}
+		AND 
+			EMP_CODE=#{emp_code}
+	</select>
+
+
+
+
+</mapper>

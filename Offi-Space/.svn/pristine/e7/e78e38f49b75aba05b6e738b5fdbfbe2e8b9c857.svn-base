@@ -1,0 +1,82 @@
+package kr.co.offispace.command;
+
+import java.io.File;
+import java.util.Date;
+
+public class RegisterEmployeeCommand {
+
+	public String empName;
+	public String empReginum;
+	public String empHireDt;
+	public String headOfficeCode;
+	public String groupCode;
+	public String departmentCode;
+	public String positionCode;
+	public String chargeCode;
+	public String authorityCode;
+	public File empPhoto;
+	
+	public String getEmpName() {
+		return empName;
+	}
+	public void setEmpName(String empName) {
+		this.empName = empName;
+	}
+	public String getEmpReginum() {
+		return empReginum;
+	}
+	public void setEmpReginum(String empReginum) {
+		this.empReginum = empReginum;
+	}
+	public String getEmpHireDt() {
+		return empHireDt;
+	}
+	public void setEmpHireDt(String empHireDt) {
+		this.empHireDt = empHireDt;
+	}
+	public String getHeadOfficeCode() {
+		return headOfficeCode;
+	}
+	public void setHeadOfficeCode(String headOfficeCode) {
+		this.headOfficeCode = headOfficeCode;
+	}
+	public String getGroupCode() {
+		return groupCode;
+	}
+	public void setGroupCode(String groupCode) {
+		this.groupCode = groupCode;
+	}
+	public String getDepartmentCode() {
+		return departmentCode;
+	}
+	public void setDepartmentCode(String departmentCode) {
+		this.departmentCode = departmentCode;
+	}
+	public String getPositionCode() {
+		return positionCode;
+	}
+	public void setPositionCode(String positionCode) {
+		this.positionCode = positionCode;
+	}
+	public String getChargeCode() {
+		return chargeCode;
+	}
+	public void setChargeCode(String chargeCode) {
+		this.chargeCode = chargeCode;
+	}
+	public String getAuthorityCode() {
+		return authorityCode;
+	}
+	public void setAuthorityCode(String authorityCode) {
+		this.authorityCode = authorityCode;
+	}
+	public File getEmpPhoto() {
+		return empPhoto;
+	}
+	public void setEmpPhoto(File empPhoto) {
+		this.empPhoto = empPhoto;
+	}
+	
+	
+	
+}

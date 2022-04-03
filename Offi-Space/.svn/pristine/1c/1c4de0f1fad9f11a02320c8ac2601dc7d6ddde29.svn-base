@@ -1,0 +1,63 @@
+package kr.co.offispace.dao.employee;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import org.apache.ibatis.session.RowBounds;
+import org.apache.ibatis.session.SqlSession;
+
+import kr.co.offispace.command.ContactCriteria;
+import kr.co.offispace.command.Criteria;
+import kr.co.offispace.command.RegisterEmployeeCommand;
+import kr.co.offispace.dto.EmployeeVO;
+
+public class EmployeeDAOImpl implements EmployeeDAO {
+	
+	private SqlSession sqlSession;
+	public void setSqlSession(SqlSession sqlSession) {
+		this.sqlSession = sqlSession;
+	}
+	
+	@Override
+	public String selectEmpCodeToRegister() throws SQLException {
+		String empCode = sqlSession.selectOne("Employee-Mapper.selectEmpCodeToRegister");
+		return empCode;
+	}
+
+	@Override
+	public void insertEmployee(RegisterEmployeeCommand registerEmployeeCommand) throws SQLException {
+		sqlSession.insert("Employee-Mapper.insertEmployee", registerEmployeeCommand);
+	}
+
+	@Override
+	public List<EmployeeVO> selectEmployeeList() throws SQLException {
+		List<EmployeeVO> employeeList=sqlSession.selectList("Employee-Mapper.selectEmployeeList");
+		return employeeList;
+	}
+
+	@Override
+	public List<EmployeeVO> selectEmployeeList(ContactCriteria cri) throws SQLException {
+		int offset = cri.getStartRowNum();
+		int limit = cri.getPerPageNum();
+		RowBounds rowBounds=new RowBounds(offset,limit);
+		
+		List<EmployeeVO> employeeList = sqlSession.selectList("Employee-Mapper.selectSearchEmployeeList", cri, rowBounds);
+		return employeeList;
+	}
+
+	@Override
+	public int selectEmployeeListCount(ContactCriteria cri) throws SQLException {
+		int totalCount=sqlSession.selectOne("Employee-Mapper.selectSearchEmployeeListCount",cri);
+		return totalCount;
+	}
+	
+
+	@Override
+	public EmployeeVO selectEmployeeById(String empId) throws SQLException {
+		EmployeeVO employee = null;
+		employee = sqlSession.selectOne("Employee-Mapper.selectEmployeeById",empId);
+		return employee;
+	}
+
+	
+}

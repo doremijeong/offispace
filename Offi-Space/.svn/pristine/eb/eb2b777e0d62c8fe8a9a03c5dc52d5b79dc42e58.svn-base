@@ -1,0 +1,42 @@
+package kr.co.offispace.service.attach;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import kr.co.offispace.dao.attach.AttachmentDAO;
+import kr.co.offispace.dto.AttachmentVO;
+
+public class AttachmentServiceImpl implements AttachmentService{
+	
+	private AttachmentDAO attachDAO;
+	
+	public void setAttachmentDAO(AttachmentDAO attachmentDAO) {
+		this.attachDAO = attachmentDAO;
+	}
+
+	@Override
+	public List<AttachmentVO> getAttachmentListByAT(String attachCode) throws SQLException {
+		return attachDAO.selectAttachmentByAT(attachCode);
+	}
+
+	@Override
+	public List<AttachmentVO> getAttachmentListByOther(String attachGroup) throws SQLException {
+		return attachDAO.selectAttachmentByOther(attachGroup);
+	}
+
+	@Override
+	public void registerAttachment(AttachmentVO attachment) throws SQLException {
+		attachDAO.insertAttachment(attachment);
+	}
+
+	@Override
+	public void removeAttachmentByAT(String attachCode) throws SQLException {
+		attachDAO.deleteAttachmentByAT(attachCode);
+	}
+
+	@Override
+	public void removeAttachmentByOther(String attachGroup) throws SQLException {
+		attachDAO.deleteAttachmentByOther(attachGroup);
+	}
+
+}

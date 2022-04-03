@@ -1,0 +1,274 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page trimDirectiveWhitespaces="true"%>
+
+<head></head>
+
+<title></title>
+
+<body>
+<!-- Content Header (Page header) -->
+            <!-- 마진을 위한 div -->
+            <div style="height: 20px;"></div>
+
+
+
+            
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1>회의록 보관함</h1>
+            </div>
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active">Inbox</li>
+              </ol>
+            </div>
+          </div>
+        </div><!-- /.container-fluid -->
+      </section>
+  
+      <!-- Main content -->
+      <section class="content">
+          
+
+        <div class="row">
+            <!-- left column -->
+
+            <div class="col-md-4">
+
+                <div class="card card-info" >
+                    <div class="card-header" >
+                      <h3 class="card-title">회의록 보관함 목록</h3>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <i class="fas fa-plus-square"></i>
+                    </div>
+        
+        
+                    <!-- /.card-header -->
+                    
+                      <div class="card-body" >
+                        
+                        <div class="form-group" >
+                          <select multiple="" class="form-control" style="height:658px">
+                            
+        
+                          </select>
+                        </div>
+                    
+        
+                      </div>
+                      <!-- /.card-body -->
+        
+                      
+                    
+                  </div>
+                  <!-- /.card -->
+            </div>
+
+            <div class="col-md-8">
+
+
+            <div class="card card-primary card-outline">
+              <div class="card-header">
+                
+                <h3 class="card-title"><button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-left"></i></button> &nbsp;&nbsp;&nbsp;&nbsp;현재 경로 : [ 임나리/업무/양식/ ]</h3>
+                
+                <div class="card-tools">
+                  <div class="input-group input-group-sm">
+                    <input type="text" class="form-control" placeholder="Search Folder/File">
+                    <div class="input-group-append">
+                      <div class="btn btn-primary">
+                        <i class="fas fa-search"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.card-tools -->
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <div class="mailbox-controls">
+                  <!-- Check all button -->
+                  <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="far fa-square"></i>
+                  </button>
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-default btn-sm"><i class="far fa-trash-alt"></i></button>
+                    <button type="button" class="btn btn-default btn-sm">다운로드</button>
+                    <button type="button" class="btn btn-default btn-sm">이동</button>
+                    <button type="button" class="btn btn-default btn-sm">이름 변경</button>
+                  </div>
+                  <!-- /.btn-group -->
+                  <button type="button" class="btn btn-default btn-sm"><i class="fas fa-sync-alt"></i></button>
+                  
+                  <div class="float-right">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-default btn-sm">업로드</button>
+                      <button type="button" class="btn btn-default btn-sm">새폴더</button>
+                    </div>
+                    
+                    <div class="btn-group">
+                      <!-- <button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-left"></i></button>
+                      <button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-right"></i></button> -->
+                    </div>
+                    <!-- /.btn-group -->
+                  </div>
+                  <!-- /.float-right -->
+                </div>
+                <div class="table-responsive mailbox-messages">
+                  <table class="table table-hover table-striped">
+                    <tbody>
+                    <tr>
+                      <th>
+                        <div class="icheck-primary">
+                          <input type="checkbox" value="" id="check1">
+                          <label for="check1"></label>
+                        </div>
+                      </th>
+                      <th><a href="#"><i class="fas fa-star text-warning"></i></a></th>
+                      <th>종류</th>
+                      <th>폴더/파일명</th>
+                      <th>공개설정</th>
+                      <th>크기</th>
+                      <th>등록일</th>
+                      <th>등록자</th>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="icheck-primary">
+                          <input type="checkbox" value="" id="check1">
+                          <label for="check1"></label>
+                        </div>
+                      </td>
+                      <td></td>
+                      <td><a href="#"><i class="fas fa-folder"></i></a></td>
+                      <td>연말결산 서류 모음</td>
+                      <td>비공개</td>
+                      <td></td>
+                      <td>2021.11.05</td>
+                      <td>임나리</td>
+                    </tr>
+  
+                    <tr>
+                      <td>
+                        <div class="icheck-primary">
+                          <input type="checkbox" value="" id="check1">
+                          <label for="check1"></label>
+                        </div>
+                      </td>
+                      <td><a href="#"><i class="fas fa-star text-warning"></i></a></td>
+                      <td><a href="#"><i class="fas fa-folder-open"></i></a></td>
+                      <td>결재 양식 모음</td>
+                      <td>비공개</td>
+                      <td></td>
+                      <td>2021.12.27</td>
+                      <td>임나리</td>
+                    </tr>
+  
+                    <tr>
+                      <td>
+                        <div class="icheck-primary">
+                          <input type="checkbox" value="" id="check1">
+                          <label for="check1"></label>
+                        </div>
+                      </td>
+                      <td></td>
+                      <td><a href="#"><i class="fas fa-file-pdf"></i></a></td>
+                      <td>휴가 신청서</td>
+                      <td>비공개</td>
+                      <td>10KB</td>
+                      <td>2022.01.02</td>
+                      <td>임나리</td>
+                    </tr>
+  
+                    <tr>
+                      <td>
+                        <div class="icheck-primary">
+                          <input type="checkbox" value="" id="check1">
+                          <label for="check1"></label>
+                        </div>
+                      </td>
+                      <td></td>
+                      <td><a href="#"><i class="fas fa-file-pdf"></i></a></td>
+                      <td>재택근무 신청서</td>
+                      <td>비공개</td>
+                      <td>8KB</td>
+                      <td>2022.01.02</td>
+                      <td>임나리</td>
+                    </tr>
+  
+                    <tr>
+                      <td>
+                        <div class="icheck-primary">
+                          <input type="checkbox" value="" id="check1">
+                          <label for="check1"></label>
+                        </div>
+                      </td>
+                      <td></td>
+                      <td><a href="#"><i class="fas fa-file-excel"></i></a></td>
+                      <td>비품 영수증 청구 신청서</td>
+                      <td>비공개</td>
+                      <td>12KB</td>
+                      <td>2022.01.03</td>
+                      <td>임나리</td>
+                    </tr>
+  
+                    <tr>
+                      <td>
+                        <div class="icheck-primary">
+                          <input type="checkbox" value="" id="check1">
+                          <label for="check1"></label>
+                        </div>
+                      </td>
+                      <td></td>
+                      <td><a href="#"><i class="fas fa-file-excel"></i></a></td>
+                      <td>출장 근무 신청서</td>
+                      <td>비공개</td>
+                      <td>7KB</td>
+                      <td>2022.01.04</td>
+                      <td>임나리</td>
+                    </tr>
+  
+                    <tr>
+                      <td>
+                        <div class="icheck-primary">
+                          <input type="checkbox" value="" id="check1">
+                          <label for="check1"></label>
+                        </div>
+                      </td>
+                      <td><a href="#"><i class="fas fa-star text-warning"></i></a></td>
+                      <td><a href="#"><i class="fas fa-file-pdf"></i></a></td>
+                      <td>보고서 양식</td>
+                      <td>비공개</td>
+                      <td>12KB</td>
+                      <td>2022.01.04</td>
+                      <td>임나리</td>
+                    </tr>
+                    
+  
+                    </tbody>
+                  </table>
+                  <!-- /.table -->
+                </div>
+                <!-- /.mail-box-messages -->
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer p-0">
+                <div class="mailbox-controls">
+                  <!-- Check all button -->
+                 
+                  <!-- /.btn-group -->
+                  
+                  <!-- /.float-right -->
+                </div>
+              </div>
+            </div>
+            <!-- /.card -->
+        </div>
+        <!-- /.row -->
+      </section>
+</body>

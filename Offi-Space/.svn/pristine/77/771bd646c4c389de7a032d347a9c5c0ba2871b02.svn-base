@@ -1,0 +1,276 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page trimDirectiveWhitespaces="true"%>
+
+<body>
+
+<div class="content-wrapper">
+
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>개인근태</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">개인근태</li>
+          </ol>
+        </div>
+      </div>
+    </div><!-- /.container-fluid -->
+  </section>
+
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="card card-info card-outline">
+
+            <div>
+              <h2 class="title" style="text-align: center; margin-top: 2%;"><a href="#"><i
+                    class="fas fa-chevron-left"></i></a>&nbsp;&nbsp;&nbsp;2021.01&nbsp;&nbsp;&nbsp;<a href="#"><i
+                    class="fas fa-chevron-right"></i></a></h2>
+            </div>
+            <!-- ./card-header -->
+
+            <div class="card-body">
+              <div class="row">
+                <div class="col-12">
+                  <div class="row">
+                    <div class="col-12 col-md-12">
+                      <div class="info-box bg-light">
+                        <div class="info-box-content">
+                          <div class="row">
+                            <div class="col-12 col-md-2">
+                              <span class="info-box-text text-center text-muted">이번주누적</span>
+                              <span class="info-box-text text-center text-muted">7h 16m 24s</span>
+                            </div>
+                            <div class="col-12 col-md-2">
+                              <span class="info-box-text text-center text-muted">이번주 초과</span>
+                              <span class="info-box-text text-center text-muted">7h 16m 24s</span>
+                            </div>
+                            <div class="col-12 col-md-2">
+                              <span class="info-box-text text-center text-muted">이번주 잔여</span>
+                              <span class="info-box-text text-center text-muted">7h 16m 24s</span>
+                            </div>
+                            <div class="col-12 col-md-2">
+                              <span class="info-box-text text-center text-muted">이번달 누적</span>
+                              <span class="info-box-text text-center text-muted">7h 16m 24s</span>
+                            </div>
+                            <div class="col-12 col-md-2">
+                              <span class="info-box-text text-center text-muted">이번달 연장</span>
+                              <span class="info-box-text text-center text-muted">7h 16m 24s</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /.card-body -->
+
+
+
+
+            <!-- /.card -->
+          </div>
+          <div class="card">
+            <div class="card-body p-0">
+              <div class="col-12 d-flex justify-content-between">
+                <div style="margin-top: 2%;">
+                  <p>(근무타입)A형</p>
+                </div>
+                <div class="row" style="margin-top: 2%;">
+                  <span><a href="#"><i class="far fa-file-alt"></i>선택적근무신청서</a></span>&nbsp;&nbsp;
+                  <span><a href="#"><i class="far fa-file-alt"></i>재택근무신청서</a></span>&nbsp;&nbsp;
+                </div>
+              </div>
+              <table class="table table-hover">
+                <tbody>
+
+                  <tr data-widget="expandable-table" aria-expanded="false">
+                    <td>
+                      <div>
+                        <i class="expandable-table-caret fas fa-caret-right fa-fw"></i>
+                        1주차
+                        <div class="float-right">
+                          누적근무시간 35h 37m 59s(초과근무시간 0h 0m 0s)
+                        </div>
+                      </div>
+
+                    </td>
+                  </tr>
+                  <tr class="expandable-body d-none">
+                    <td>
+                      <div class="p-0" style="display: none;">
+                        <table class="table table-hover">
+                          <tbody>
+                            <tr>
+                              <td>일자</td>
+                              <td>업무시작</td>
+                              <td>업무종료</td>
+                              <td>총 근무시간</td>
+                            </tr>
+                            <tr>
+                              <td>03 월</td>
+                              <td>08:40:39</td>
+                              <td>19:01:10</td>
+                              <td>10h 15m 5s</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr data-widget="expandable-table" aria-expanded="false">
+                    <td>
+                      <div>
+                        <i class="expandable-table-caret fas fa-caret-right fa-fw"></i>
+                        2주차
+                        <div class="float-right">
+                          누적근무시간 35h 37m 59s(초과근무시간 0h 0m 0s)
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="expandable-body d-none">
+                    <td>
+                      <div class="p-0" style="display: none;">
+                        <table class="table table-hover">
+                          <tbody>
+                            <tr>
+                              <td>일자</td>
+                              <td>업무시작</td>
+                              <td>업무종료</td>
+                              <td>총 근무시간</td>
+
+                            </tr>
+                            <tr>
+                              <td>03 월</td>
+                              <td>08:40:39</td>
+                              <td>19:01:10</td>
+                              <td>10h 15m 5s</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr data-widget="expandable-table" aria-expanded="false">
+                    <td>
+                      <div>
+                        <i class="expandable-table-caret fas fa-caret-right fa-fw"></i>
+                        3주차
+                        <div class="float-right">
+                          누적근무시간 35h 37m 59s(초과근무시간 0h 0m 0s)
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="expandable-body d-none">
+                    <td>
+                      <div class="p-0" style="display: none;">
+                        <table class="table table-hover">
+                          <tbody>
+                            <tr>
+                              <td>일자</td>
+                              <td>업무시작</td>
+                              <td>업무종료</td>
+                              <td>총 근무시간</td>
+
+                            </tr>
+                            <tr>
+                              <td>03 월</td>
+                              <td>08:40:39</td>
+                              <td>19:01:10</td>
+                              <td>10h 15m 5s</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr data-widget="expandable-table" aria-expanded="false">
+                    <td>
+                      <div>
+                        <i class="expandable-table-caret fas fa-caret-right fa-fw"></i>
+                        4주차
+                        <div class="float-right">
+                          누적근무시간 35h 37m 59s(초과근무시간 0h 0m 0s)
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="expandable-body d-none">
+                    <td>
+                      <div class="p-0" style="display: none;">
+                        <table class="table table-hover">
+                          <tbody>
+                            <tr>
+                              <td>일자</td>
+                              <td>업무시작</td>
+                              <td>업무종료</td>
+                              <td>총 근무시간</td>
+
+                            </tr>
+                            <tr>
+                              <td>03 월</td>
+                              <td>08:40:39</td>
+                              <td>19:01:10</td>
+                              <td>10h 15m 5s</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr data-widget="expandable-table" aria-expanded="false">
+                    <td>
+                      <div>
+                        <i class="expandable-table-caret fas fa-caret-right fa-fw"></i>
+                        5주차
+                        <div class="float-right">
+                          누적근무시간 35h 37m 59s(초과근무시간 0h 0m 0s)
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="expandable-body d-none">
+                    <td>
+                      <div class="p-0" style="display: none;">
+                        <table class="table table-hover">
+                          <tbody>
+                            <tr>
+                              <td>일자</td>
+                              <td>업무시작</td>
+                              <td>업무종료</td>
+                              <td>총 근무시간</td>
+
+                            </tr>
+                            <tr>
+                              <td>03 월</td>
+                              <td>08:40:39</td>
+                              <td>19:01:10</td>
+                              <td>10h 15m 5s</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- /.card-body -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+</body>

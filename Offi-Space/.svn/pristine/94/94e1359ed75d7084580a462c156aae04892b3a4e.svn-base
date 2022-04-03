@@ -1,0 +1,66 @@
+package kr.co.offispace.service.commonCode;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import kr.co.offispace.command.Criteria;
+import kr.co.offispace.dao.commonCode.CommonCodeDAO;
+import kr.co.offispace.dto.CommonCodeVO;
+
+public class CommonCodeServiceImpl implements CommonCodeService {
+	private CommonCodeDAO commonCodeDAO;
+	
+	public void setCommonCodeDAO(CommonCodeDAO commonCodeDAO) {
+		this.commonCodeDAO = commonCodeDAO;
+	}
+	
+	@Override
+	public List<CommonCodeVO> getCommonCodeList(Criteria cri) throws SQLException {
+		List<CommonCodeVO> commonCodeList = commonCodeDAO.selectCommonCodeList(cri);
+		return commonCodeList;
+	}
+
+	@Override
+	public List<CommonCodeVO> getHeadOfficeList() throws SQLException {
+		List<CommonCodeVO> commonCodeList = commonCodeDAO.selectHeadOfficeList();
+		return commonCodeList;
+	}
+
+	@Override
+	public List<CommonCodeVO> getGroupList() throws SQLException {
+		List<CommonCodeVO> commonCodeList = commonCodeDAO.selectGroupList();
+		return commonCodeList;
+	}
+
+	@Override
+	public List<CommonCodeVO> getTeamList() throws SQLException {
+		List<CommonCodeVO> commonCodeList = commonCodeDAO.selectTeamList();
+		return commonCodeList;
+	}
+
+	@Override
+	public List<CommonCodeVO> getPositionList() throws SQLException {
+		List<CommonCodeVO> commonCodeList = commonCodeDAO.selectPositionList();
+		return commonCodeList;
+	}
+
+	@Override
+	public List<CommonCodeVO> getChargeList() throws SQLException {
+		List<CommonCodeVO> commonCodeList = commonCodeDAO.selectChargeList();
+		return commonCodeList;
+	}
+
+	@Override
+	public List<CommonCodeVO> getStatusList() throws SQLException {
+		List<CommonCodeVO> commonCodeList = commonCodeDAO.selectStatusList();
+		return commonCodeList;
+	}
+
+	@Override
+	public List<CommonCodeVO> getAuthorityList() throws SQLException {
+		List<CommonCodeVO> commonCodeList = commonCodeDAO.selectAuthorityList();
+		return commonCodeList;
+	}
+
+	
+}

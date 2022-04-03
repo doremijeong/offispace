@@ -1,0 +1,23 @@
+package kr.co.offispace.dao.mail;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+
+import kr.co.offispace.dto.MailVO;
+
+public class MailDAOImpl implements MailDAO{
+	
+	private SqlSession session;
+	
+	public void setSession(SqlSession session) {
+		this.session = session;
+	}
+
+	@Override
+	public List<MailVO> selectAllMailList() throws SQLException {
+		return session.selectList("Mail-Mapper.selectAllMailList");
+	}
+	
+}

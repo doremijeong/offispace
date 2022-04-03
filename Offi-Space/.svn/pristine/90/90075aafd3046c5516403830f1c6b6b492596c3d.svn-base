@@ -1,0 +1,30 @@
+package kr.co.offispace.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+@Controller
+public class SchedulerController {
+
+	@RequestMapping(value="/scheduler/personalScheduler", method=RequestMethod.GET)
+	public String personalSCD() throws Exception{
+		String url = "scheduler/personalScheduler";
+		
+		return url;
+	}
+	
+	@RequestMapping(value="/scheduler/departmentScheduler", method=RequestMethod.GET)
+	public String departmentSCD()throws Exception{
+		String url = "scheduler/departmentScheduler";
+		
+		return url;
+	}
+	
+	@RequestMapping(value="/scheduler/companyScheduler", method=RequestMethod.GET)
+	public String companySCD() throws Exception{
+		String url = "scheduler/companyScheduler";
+		
+		return url;
+	}
+}

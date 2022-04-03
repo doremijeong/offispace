@@ -1,0 +1,18 @@
+package kr.co.offispace.service.mail;
+
+import java.sql.SQLException;
+import java.util.Map;
+
+import kr.co.offispace.command.MailCriteria;
+import kr.co.offispace.dto.MailVO;
+
+public interface MailService {
+	
+	public Map<String, Object> getAllMailList(MailCriteria cri) throws SQLException;
+	
+	public int getNotReadMailCount(MailCriteria cri) throws SQLException;
+	
+	public MailVO getMailByMailCode(String mailCode) throws SQLException;
+	
+	public void modifyImportance(String mailCode) throws SQLException;
+}

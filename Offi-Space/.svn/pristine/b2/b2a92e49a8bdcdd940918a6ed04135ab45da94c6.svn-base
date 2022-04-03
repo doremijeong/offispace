@@ -1,0 +1,390 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<head></head>
+
+<body>
+
+	<!-- Content Header (Page header) -->
+	<div class="content-wrapper" style="min-height: 1602px;">
+		<!-- Content Header (Page header) -->
+		<section class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1>휴지통</h1>
+					</div>
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item"><a href="#">쪽지</a></li>
+							<li class="breadcrumb-item active">휴지통</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+
+
+		<!-- Main content -->
+		<section class="content">
+			<div class="container-fluid">
+				<!-- 마진을 위한 div -->
+				<div style="height: 3px;"></div>
+				<!-- 쪽지목록-->
+				<div class="column">
+
+					<!-- 검색줄-->
+					<div class="card card-info card-outline">
+						<div class="card-header">
+							<div class="float-left">
+								전체
+								<p class="text-danger" style="display: inline-block; margin: 0;">84</p>
+							</div>
+							<div class="card-tools col-sm-7">
+								<div class="input-group input-group-sm">
+									<select class="custom-select col-sm-2" id="inputGroupSelect01">
+										<option>15개씩</option>
+										<option>20개씩</option>
+										<option>30개씩</option>
+									</select> &nbsp; <select class="custom-select col-sm-2"
+										id="inputGroupSelect01">
+										<option>전체</option>
+										<option>개인</option>
+										<option>업무</option>
+									</select> &nbsp; <select class="custom-select col-sm-3"
+										id="inputGroupSelect01">
+										<option>제목</option>
+										<option>보낸사람</option>
+										<option>받는사람</option>
+									</select> &nbsp; <input type="text" class="form-control"
+										placeholder="검색">
+									<div class="input-group-append">
+										<div class="btn btn-primary">
+											<i class="fas fa-search"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- /.card-tools -->
+						</div>
+
+						<!-- /.card-header -->
+						<div class="card-body p-0">
+							<div class="mailbox-controls">
+								<!--전체 선택 체크박스-->
+								&nbsp;
+								<button type="button"
+									class="btn btn-default btn-sm checkbox-toggle">
+									<i class="far fa-square"></i>
+								</button>
+								<button type="button" class="btn btn-default btn-sm">
+									복구</button>
+								<button type="button" class="btn btn-default btn-sm msg-modal"
+									data-toggle="modal" data-target="#modal-default">
+									<i class="far fa-trash-alt"></i>&nbsp;영구삭제
+								</button>
+								<div class="float-right">
+									<button type="button"
+										class="btn btn-default btn-sm checkbox-toggle2">
+										<i class="far fa-square"></i>&nbsp;<i
+											class="fas fa-exclamation text-danger"></i>
+									</button>
+									<button type="button"
+										class="btn btn-default btn-sm checkbox-toggle3">
+										<i class="far fa-square"></i>&nbsp;<i
+											class="fas fa-envelope text-gray"></i>
+									</button>
+									&nbsp;&nbsp;
+								</div>
+							</div>
+
+
+							<!-- 쪽지 테이블-->
+							<div class="table-responsive mailbox-messages">
+								<table class="table table-hover table-sm">
+									<tbody>
+										<tr>
+											<td>
+												<div class="icheck-primary">
+													<input type="checkbox" value="" id="check1"> <label
+														for="check1"></label>
+												</div>
+											</td>
+											<td class="mailbox-star"><a href="#"><i
+													class="fas fa-exclamation text-danger"></i></a></td>
+											<td class="mailbox-star"><a href="#"><i
+													class="far fa-envelope-open text-gray"></i></a></td>
+											<td class="mailbox-name"><a href="read-mail.html">임나리</a></td>
+											<td class="mailbox-subject"><a href=""
+												data-toggle="modal" data-target="#modal-trash"> 휴지 휴지
+													휴지통 노래를 한다~ </a></td>
+											<td class="mailbox-date">2022.01.01. 09:29</td>
+										</tr>
+										<tr>
+											<td>
+												<div class="icheck-primary">
+													<input type="checkbox" value="" id="check1"> <label
+														for="check1"></label>
+												</div>
+											</td>
+											<td class="mailbox-star"><a href="#"><i
+													class="fas fa-exclamation text-danger"></i></a></td>
+											<td class="mailbox-star"><a href="#"><i
+													class="far fa-envelope-open text-gray"></i></a></td>
+											<td class="mailbox-name"><a href="read-mail.html">임나리</a></td>
+											<td class="mailbox-subject">내가 보낸 쪽지 양식입니다.~~</td>
+											</a>
+											<td class="mailbox-date">2022.01.01. 09:28</td>
+										</tr>
+										<tr>
+											<td>
+												<div class="icheck-primary">
+													<input type="checkbox" value="" id="check1"> <label
+														for="check1"></label>
+												</div>
+											</td>
+											<td class="mailbox-star"></i></a></td>
+											<td class="mailbox-star"><a href="#"><i
+													class="far fa-envelope-open text-gray"></i></a></td>
+											<td class="mailbox-name"><a href="read-mail.html">임나리</a></td>
+											<td class="mailbox-subject">AdminLTE 3.0 Issue - Trying
+												to find a solution to this...</td>
+
+											<td class="mailbox-date">2021.11.16. 10:21</td>
+										</tr>
+										<tr>
+											<td>
+												<div class="icheck-primary">
+													<input type="checkbox" value="" id="check1"> <label
+														for="check1"></label>
+												</div>
+											</td>
+											<td class="mailbox-star"></i></a></td>
+											<td class="mailbox-star"><a href="#"><i
+													class="far fa-envelope-open text-gray"></i></a></td>
+											<td class="mailbox-name"><a href="read-mail.html">임나리</a></td>
+											<td class="mailbox-subject">[답장]AdminLTE 3.0 Issue -
+												Trying to find a solution to this...</td>
+
+											<td class="mailbox-date">2021.11.12. 10:13</td>
+										</tr>
+										<tr>
+											<td>
+												<div class="icheck-primary">
+													<input type="checkbox" value="" id="check1"> <label
+														for="check1"></label>
+												</div>
+											</td>
+											<td class="mailbox-star"><a href="#"><i
+													class="fas fa-exclamation text-danger"></i></a></td>
+											<td class="mailbox-star"><a href="#"><i
+													class="far fa-envelope-open text-gray"></i></a></td>
+											<td class="mailbox-name"><a href="read-mail.html">임나리</a></td>
+											<td class="mailbox-subject">AdminLTE 3.0 Issue - Trying
+												to find a solution to this...</td>
+
+											<td class="mailbox-date">2021.11.05. 18:14</td>
+										</tr>
+										<tr>
+											<td>
+												<div class="icheck-primary">
+													<input type="checkbox" value="" id="check1"> <label
+														for="check1"></label>
+												</div>
+											</td>
+											<td class="mailbox-star"><a href="#"></i></a></td>
+											<td class="mailbox-star"><a href="#"><i
+													class="far fa-envelope-open text-gray"></i></a></td>
+											<td class="mailbox-name"><a href="read-mail.html">임나리</a></td>
+											<td class="mailbox-subject">AdminLTE 3.0 Issue - Trying
+												to find a solution to this...</td>
+
+											<td class="mailbox-date">2021.11.04. 21:05</td>
+										</tr>
+										<tr>
+											<td>
+												<div class="icheck-primary">
+													<input type="checkbox" value="" id="check1"> <label
+														for="check1"></label>
+												</div>
+											</td>
+											<td class="mailbox-star"><a href="#"><i
+													class="fas fa-exclamation text-danger"></i></a></td>
+											<td class="mailbox-star"><a href="#"><i
+													class="far fa-envelope-open text-gray"></i></a></td>
+											<td class="mailbox-name"><a href="read-mail.html">임나리</a></td>
+											<td class="mailbox-subject">AdminLTE 3.0 Issue - Trying
+												to find a solution to this...</td>
+
+											<td class="mailbox-date">2021.10.15. 08:45</td>
+										</tr>
+										<tr>
+											<td>
+												<div class="icheck-primary">
+													<input type="checkbox" value="" id="check1"> <label
+														for="check1"></label>
+												</div>
+											</td>
+											<td class="mailbox-star"><a href="#"></i></a></td>
+											<td class="mailbox-star"><a href="#"><i
+													class="fas fa-envelope text-gray"></i></a></td>
+											<td class="mailbox-name"><a href="read-mail.html">임나리</a></td>
+											<td class="mailbox-subject">[답장]AdminLTE 3.0 Issue -
+												Trying to find a solution to this...</td>
+
+											<td class="mailbox-date">2021.10.15. 09:26</td>
+										</tr>
+										<tr>
+											<td>
+												<div class="icheck-primary">
+													<input type="checkbox" value="" id="check1"> <label
+														for="check1"></label>
+												</div>
+											</td>
+											<td class="mailbox-star"><a href="#"><i
+													class="fas fa-exclamation text-danger"></i></a></td>
+											<td class="mailbox-star"><a href="#"><i
+													class="far fa-envelope-open text-gray"></i></a></td>
+											<td class="mailbox-name"><a href="read-mail.html">임나리</a></td>
+											<td class="mailbox-subject">AdminLTE 3.0 Issue - Trying
+												to find a solution to this...</td>
+
+											<td class="mailbox-date">2021.10.12. 15:17</td>
+										</tr>
+										<tr>
+											<td>
+												<div class="icheck-primary">
+													<input type="checkbox" value="" id="check1"> <label
+														for="check1"></label>
+												</div>
+											</td>
+											<td class="mailbox-star"><a href="#"><i
+													class="fas fa-exclamation text-danger"></i></a></td>
+											<td class="mailbox-star"><a href="#"><i
+													class="far fa-envelope-open text-gray"></i></a></td>
+											<td class="mailbox-name"><a href="read-mail.html">임나리</a></td>
+											<td class="mailbox-subject">AdminLTE 3.0 Issue - Trying
+												to find a solution to this...</td>
+
+											<td class="mailbox-date">2021.10.07. 13:45</td>
+										</tr>
+										<tr>
+											<td>
+												<div class="icheck-primary">
+													<input type="checkbox" value="" id="check1"> <label
+														for="check1"></label>
+												</div>
+											</td>
+											<td class="mailbox-star"><a href="#"></i></a></td>
+											<td class="mailbox-star"><a href="#"><i
+													class="fas fa-envelope text-gray"></i></a></td>
+											<td class="mailbox-name"><a href="read-mail.html">임나리</a></td>
+											<td class="mailbox-subject">[답장]AdminLTE 3.0 Issue -
+												Trying to find a solution to this...</td>
+
+											<td class="mailbox-date">2021.09.25. 11:35</td>
+										</tr>
+										<tr>
+											<td>
+												<div class="icheck-primary">
+													<input type="checkbox" value="" id="check1"> <label
+														for="check1"></label>
+												</div>
+											</td>
+											<td class="mailbox-star"><a href="#"></i></a></td>
+											<td class="mailbox-star"><a href="#"><i
+													class="fas fa-envelope text-gray"></i></a></td>
+											<td class="mailbox-name"><a href="read-mail.html">임나리</a></td>
+											<td class="mailbox-subject">[답장]AdminLTE 3.0 Issue -
+												Trying to find a solution to this...</td>
+
+											<td class="mailbox-date">2021.09.21. 12:45</td>
+										</tr>
+										<tr>
+											<td>
+												<div class="icheck-primary">
+													<input type="checkbox" value="" id="check1"> <label
+														for="check1"></label>
+												</div>
+											</td>
+											<td class="mailbox-star"><a href="#"></i></a></td>
+											<td class="mailbox-star"><a href="#"><i
+													class="far fa-envelope-open text-gray"></i></a></td>
+											<td class="mailbox-name"><a href="read-mail.html">임나리</a></td>
+											<td class="mailbox-subject">AdminLTE 3.0 Issue - Trying
+												to find a solution to this...</td>
+
+											<td class="mailbox-date">2021.09.15. 09:11</td>
+										</tr>
+										<tr>
+											<td>
+												<div class="icheck-primary">
+													<input type="checkbox" value="" id="check1"> <label
+														for="check1"></label>
+												</div>
+											</td>
+											<td class="mailbox-star"><a href="#"><i
+													class="fas fa-exclamation text-danger"></i></a></td>
+											<td class="mailbox-star"><a href="#"><i
+													class="far fa-envelope-open text-gray"></i></a></td>
+											<td class="mailbox-name"><a href="read-mail.html">임나리</a></td>
+											<td class="mailbox-subject">AdminLTE 3.0 Issue - Trying
+												to find a solution to this...</td>
+
+											<td class="mailbox-date">2021.09.08. 14:18</td>
+										</tr>
+										<tr>
+											<td>
+												<div class="icheck-primary">
+													<input type="checkbox" value="" id="check1"> <label
+														for="check1"></label>
+												</div>
+											</td>
+											<td class="mailbox-star"><a href="#"></a></td>
+											<td class="mailbox-star"><a href="#"><i
+													class="far fa-envelope-open text-gray"></i></a></td>
+											<td class="mailbox-name"><a href="read-mail.html">임나리</a></td>
+											<td class="mailbox-subject">[답장]AdminLTE 3.0 Issue -
+												Trying to find a solution to this...</td>
+
+											<td class="mailbox-date">2021.09.04. 16:19</td>
+										</tr>
+									</tbody>
+								</table>
+								<!-- /.table -->
+							</div>
+							<!-- /.mail-box-messages -->
+						</div>
+						<!-- /.card-body-->
+
+						<!--페이징-->
+						<div class="card-footer p-0 d-flex justify-content-center">
+							<ul class="pagination pagination-sm m-0">
+								<li class="page-item"><a class="page-link" href="#">«</a></li>
+								<li class="page-item"><a class="page-link" href="#">1</a></li>
+								<li class="page-item"><a class="page-link" href="#">2</a></li>
+								<li class="page-item"><a class="page-link" href="#">3</a></li>
+								<li class="page-item"><a class="page-link" href="#">4</a></li>
+								<li class="page-item"><a class="page-link" href="#">5</a></li>
+								<li class="page-item"><a class="page-link" href="#">6</a></li>
+								<li class="page-item"><a class="page-link" href="#">7</a></li>
+								<li class="page-item"><a class="page-link" href="#">8</a></li>
+								<li class="page-item"><a class="page-link" href="#">9</a></li>
+								<li class="page-item"><a class="page-link" href="#">10</a></li>
+								<li class="page-item"><a class="page-link" href="#">»</a></li>
+							</ul>
+						</div>
+						<!--페이징-->
+
+					</div>
+					<!-- card -->
+				</div>
+				<!-- ./column -->
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+		<!-- /.content -->
+	</div>
+	<!-- content-wrapper -->
+
+</body>

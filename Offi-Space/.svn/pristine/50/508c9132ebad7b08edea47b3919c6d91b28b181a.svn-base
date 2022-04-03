@@ -1,0 +1,19 @@
+package kr.co.offispace.dao.employee;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import kr.co.offispace.command.ContactCriteria;
+import kr.co.offispace.command.RegisterEmployeeCommand;
+import kr.co.offispace.dto.EmployeeVO;
+
+public interface EmployeeDAO {
+
+	public String selectEmpCodeToRegister()throws SQLException;
+	public void insertEmployee (RegisterEmployeeCommand registerEmployeeCommand) throws SQLException;
+	public List<EmployeeVO> selectEmployeeList() throws SQLException;
+	public List<EmployeeVO> selectEmployeeList(ContactCriteria cri) throws SQLException;
+	public int selectEmployeeListCount(ContactCriteria cri) throws SQLException;
+	// 사원정보 조회
+	public EmployeeVO selectEmployeeById(String empId) throws SQLException;
+}

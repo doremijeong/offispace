@@ -1,0 +1,12 @@
+package kr.co.offispace.dao.employee;
+
+import java.sql.SQLException;
+
+import kr.co.offispace.command.RegisterEmployeeCommand;
+
+public interface EmployeeDAO {
+
+	public String selectEmpCodeToRegister()throws SQLException;
+	public void insertEmployee (RegisterEmployeeCommand registerEmployeeCommand) throws SQLException;
+	
+}

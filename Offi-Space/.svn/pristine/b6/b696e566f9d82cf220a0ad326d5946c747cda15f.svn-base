@@ -1,0 +1,40 @@
+package kr.co.offispace.service.mail;
+
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import kr.co.offispace.command.Criteria;
+import kr.co.offispace.command.PageMaker;
+import kr.co.offispace.dao.mail.MailDAO;
+import kr.co.offispace.dto.MailVO;
+
+public class MailServiceImpl implements MailService{
+
+	private MailDAO mailDAO;
+	
+	public void setMailDAO(MailDAO mailDAO) {
+		this.mailDAO = mailDAO;
+	}
+
+	@Override
+	public Map<String, Object> getAllMailList(Criteria cri) throws SQLException {
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		
+		List<MailVO> mailList = mailDAO.selectAllMailList(cri);
+		
+		int totalCount = mailDAO.selectAllMailListTotalCount(cri);
+		
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(totalCount);
+		
+		dataMap.put("mailList", mailList);
+		dataMap.put("pageMaker", pageMaker);
+		
+		return dataMap;
+	}
+	
+	
+}

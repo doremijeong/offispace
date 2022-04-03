@@ -1,0 +1,99 @@
+package kr.co.offispace.service.mail;
+
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import kr.co.offispace.command.Criteria;
+import kr.co.offispace.command.MailCriteria;
+import kr.co.offispace.command.MailPageMaker;
+import kr.co.offispace.command.PageMaker;
+import kr.co.offispace.dao.mail.MailDAO;
+import kr.co.offispace.dto.EmployeeVO;
+import kr.co.offispace.dto.MailVO;
+import kr.co.offispace.service.employee.EmployeeService;
+
+public class MailServiceImpl implements MailService{
+
+	private MailDAO mailDAO;
+	
+	public void setMailDAO(MailDAO mailDAO) {
+		this.mailDAO = mailDAO;
+	}
+	
+	private EmployeeService employeeService;
+	
+	public void setEmployeeService(EmployeeService employeeService) {
+		this.employeeService = employeeService;
+	}
+
+
+	@Override
+	public Map<String, Object> getAllMailList(MailCriteria mailCri) throws SQLException {
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		
+		List<MailVO> mailList = mailDAO.selectAllMailList(mailCri);
+		
+		int totalCount = mailDAO.selectAllMailListTotalCount(mailCri);
+		
+		MailPageMaker pageMaker = new MailPageMaker();
+		pageMaker.setMailCri(mailCri);
+		pageMaker.setTotalCount(totalCount);
+		
+		for (MailVO mail : mailList) {
+			
+			String toID = mail.getMailTo();
+			String FromID = mail.getMailFrom();
+
+			EmployeeVO employeeTo = employeeService.getEmployee(toID);
+			EmployeeVO employeeFrom = employeeService.getEmployee(FromID);
+			
+			mail.setMailToName(employeeTo.getEmpName());
+			mail.setMailFromName(employeeFrom.getEmpName());
+		}
+		
+		dataMap.put("mailList", mailList);
+		dataMap.put("pageMaker", pageMaker);
+		
+		return dataMap;
+	}
+
+
+	@Override
+	public int getNotReadMailCount(MailCriteria cri) throws SQLException {
+		
+		int cnt = mailDAO.selcetDoNotReadMailCount(cri);
+		
+		return cnt;
+	}
+
+
+	@Override
+	public MailVO getMailByMailCode(String mailCode) throws SQLException {
+		
+		MailVO mail = mailDAO.selectMailByMailCode(mailCode);
+		
+		String toID = mail.getMailTo();
+		String FromID = mail.getMailFrom();
+
+		EmployeeVO employeeTo = employeeService.getEmployee(toID);
+		EmployeeVO employeeFrom = employeeService.getEmployee(FromID);
+		
+		mail.setMailToName(employeeTo.getEmpName());
+		mail.setMailFromName(employeeFrom.getEmpName());
+		
+		return mail;
+	}
+
+
+	@Override
+	public void modifyImportance(String mailCode) throws SQLException {
+		
+		MailVO mail = getMailByMailCode(mailCode);
+		
+		mailDAO.updateImportance(mail);
+	}
+	
+	
+}

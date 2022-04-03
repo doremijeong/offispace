@@ -1,0 +1,1058 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Approval-Mapper">
+
+	<sql id="state">
+		<if test="option == 'e'.toString()">
+			AND APV_EMERGENCY = 'Y'
+		</if>
+		<if test="option == 'i'.toString()">
+			AND APV_IMPORTANCE = 'Y'
+		</if>
+		<if test="option == 'w'.toString()">
+			AND APV_STATE = 'J101'
+		</if>
+		<if test="option == 'g'.toString()">
+			AND APV_STATE = 'J102'
+		</if>
+		<if test="option == 'd'.toString()">
+			AND APV_STATE = 'J103'
+		</if>
+	</sql>
+
+	<sql id="form">
+		<if test="formKind != null and formKind != ''">
+			AND APV_FORM_CODE = #{formKind}
+		</if>
+		<if test="keyword != null and keyword != ''">
+			AND APV_TITLE = #{keyword}
+		</if>
+	</sql>
+
+	<sql id="wait">
+		<if test="searchType == 'apvYet'.toString()">
+			AND APV_CONFIRM = 'U'
+		</if>
+		<if test="searchType == 'habYet'.toString()">
+			AND APV_CONFIRM = 'A'
+		</if>
+		<if test="searchType == 'apvIng'.toString()">
+			AND APV_CONFIRM = 'A'
+			OR	APV_CONFIRM = 'R'
+			 OR	APV_CONFIRM = 'Y'
+			 OR	APV_CONFIRM = 'N'
+		</if>
+		<if test="searchType == 'hab'.toString()">
+			AND APV_KIND_CODE = 'AK0002'
+		</if>
+		<if test="searchType == 'apv'.toString()">
+			AND APV_KIND_CODE = 'AK0001'
+		</if>
+	</sql>
+
+	<sql id="apvCount">
+		<if test="searchType == 'weeklyWaiting'.toString()">
+		AND  TO_CHAR(APV_DRAFT_DT,'YYYY-MM-DD') >= (SELECT TO_CHAR(SYSDATE - ((SELECT TO_CHAR (SYSDATE, 'D')
+	                                                                               FROM DUAL) -2), 'YYYY-MM-DD')
+	                                                    FROM DUAL)
+	    AND  TO_CHAR(APV_DRAFT_DT, 'YYYY-MM-DD') <![CDATA[<]]>= (SELECT TO_CHAR(SYSDATE - ((SELECT TO_CHAR (SYSDATE, 'D')
+	                                                                               			    FROM DUAL) -2)+4, 'YYYY-MM-DD')
+	                                                                 FROM DUAL)
+	    AND  APV_CONFIRM = 'U'
+	    AND  APV_KIND_CODE = 'AK0001'
+	    AND  (APV_STATE = 'J101' OR  APV_STATE = 'J102')
+
+		</if>
+		<if test="searchType == 'weeklyWorking'.toString()">
+		AND  TO_CHAR(APV_DRAFT_DT,'YYYY-MM-DD') >= (SELECT TO_CHAR(SYSDATE - ((SELECT TO_CHAR (SYSDATE, 'D')
+	                                                                               FROM DUAL) -2), 'YYYY-MM-DD')
+	                                                    FROM DUAL)
+	    AND  TO_CHAR(APV_DRAFT_DT, 'YYYY-MM-DD') <![CDATA[<]]>= (SELECT TO_CHAR(SYSDATE - ((SELECT TO_CHAR (SYSDATE, 'D')
+	                                                                               			    FROM DUAL) -2)+4, 'YYYY-MM-DD')
+	                                                                 FROM DUAL)
+	    AND  APV_CONFIRM != 'U'
+	    AND  APV_KIND_CODE = 'AK0001'
+	    AND  APV_STATE = 'J102'
+		</if>
+		<if test="searchType == 'weeklyDone'.toString()">
+		AND  TO_CHAR(APV_DRAFT_DT,'YYYY-MM-DD') >= (SELECT TO_CHAR(SYSDATE - ((SELECT TO_CHAR (SYSDATE, 'D')
+	                                                                               FROM DUAL) -2), 'YYYY-MM-DD')
+	                                                    FROM DUAL)
+	    AND  TO_CHAR(APV_DRAFT_DT, 'YYYY-MM-DD') <![CDATA[<]]>= (SELECT TO_CHAR(SYSDATE - ((SELECT TO_CHAR (SYSDATE, 'D')
+	                                                                               			    FROM DUAL) -2)+4, 'YYYY-MM-DD')
+	                                                                 FROM DUAL)
+	    AND  APV_KIND_CODE = 'AK0001'
+	    AND  APV_STATE = 'J103'
+		</if>
+		<if test="searchType == 'weeklyTotal'.toString()">
+		AND  TO_CHAR(APV_DRAFT_DT,'YYYY-MM-DD') >= (SELECT TO_CHAR(SYSDATE - ((SELECT TO_CHAR (SYSDATE, 'D')
+	                                                                               FROM DUAL) -2), 'YYYY-MM-DD')
+	                                                    FROM DUAL)
+	    AND  TO_CHAR(APV_DRAFT_DT, 'YYYY-MM-DD') <![CDATA[<]]>= (SELECT TO_CHAR(SYSDATE - ((SELECT TO_CHAR (SYSDATE, 'D')
+	                                                                               			    FROM DUAL) -2)+4, 'YYYY-MM-DD')
+	                                                                 FROM DUAL)
+	   	AND  APV_KIND_CODE = 'AK0001'
+		</if>
+		<if test="searchType == 'monthlyWaiting'.toString()">
+	    AND  TO_CHAR(APV_DRAFT_DT,'YYYY-MM-DD') >= (SELECT TO_CHAR(A.START_DT,'YYYY-MM-DD')
+	                                                    FROM (SELECT TRUNC(SYSDATE, 'MM') AS START_DT
+	                                                            FROM   DUAL) A)
+	    AND  TO_CHAR(APV_DRAFT_DT, 'YYYY-MM-DD') <![CDATA[<]]> = (SELECT TO_CHAR(A.LAST_DT,'YYYY-MM-DD')
+	                                                    			 FROM (SELECT LAST_DAY(SYSDATE) AS LAST_DT
+																			 FROM   DUAL) A)
+	    AND  APV_CONFIRM = 'U'
+	    AND  APV_KIND_CODE = 'AK0001'
+	    AND  (APV_STATE = 'J101' OR  APV_STATE = 'J102')
+	     </if>
+	     <if test="searchType == 'monthlyWorking'.toString()">
+	    AND  TO_CHAR(APV_DRAFT_DT,'YYYY-MM-DD') >= (SELECT TO_CHAR(A.START_DT,'YYYY-MM-DD')
+	                                                    FROM (SELECT TRUNC(SYSDATE, 'MM') AS START_DT
+	                                                            FROM   DUAL) A)
+	    AND  TO_CHAR(APV_DRAFT_DT, 'YYYY-MM-DD') <![CDATA[<]]> = (SELECT TO_CHAR(A.LAST_DT,'YYYY-MM-DD')
+	                                                    			 FROM (SELECT LAST_DAY(SYSDATE) AS LAST_DT
+																			 FROM   DUAL) A)
+	    AND  APV_CONFIRM != 'U'
+	    AND  APV_KIND_CODE = 'AK0001'
+	    AND  APV_STATE = 'J102'
+	     </if>
+	     <if test="searchType == 'monthlyDone'.toString()">
+	    AND  TO_CHAR(APV_DRAFT_DT,'YYYY-MM-DD') >= (SELECT TO_CHAR(A.START_DT,'YYYY-MM-DD')
+	                                                    FROM (SELECT TRUNC(SYSDATE, 'MM') AS START_DT
+	                                                            FROM   DUAL) A)
+	    AND  TO_CHAR(APV_DRAFT_DT, 'YYYY-MM-DD') <![CDATA[<]]> = (SELECT TO_CHAR(A.LAST_DT,'YYYY-MM-DD')
+	                                                    			 FROM (SELECT LAST_DAY(SYSDATE) AS LAST_DT
+																			 FROM   DUAL) A)
+	    AND  APV_KIND_CODE = 'AK0001'
+	    AND  APV_STATE = 'J103'
+	     </if>
+	     <if test="searchType == 'monthlyTotal'.toString()">
+	    AND  TO_CHAR(APV_DRAFT_DT,'YYYY-MM-DD') >= (SELECT TO_CHAR(A.START_DT,'YYYY-MM-DD')
+	                                                    FROM (SELECT TRUNC(SYSDATE, 'MM') AS START_DT
+	                                                            FROM   DUAL) A)
+	    AND  TO_CHAR(APV_DRAFT_DT, 'YYYY-MM-DD') <![CDATA[<]]> = (SELECT TO_CHAR(A.LAST_DT,'YYYY-MM-DD')
+	                                                    			 FROM (SELECT LAST_DAY(SYSDATE) AS LAST_DT
+																			 FROM   DUAL) A)
+	   	AND  APV_KIND_CODE = 'AK0001'
+	     </if>
+	</sql>
+
+	<!-- 인증 방식 등록 쿼리 -->
+	<update id="insertCerfity" parameterType="approvalCertify">
+		INSERT
+		INTO
+			APPROVAL_MANAGE
+		(
+			EMP_CODE
+		)
+		VALUES(
+			#{empCode}
+		)
+	</update>
+
+	<!-- 인증 방식 수정 쿼리 -->
+	<update id="updateCertify" parameterType="approvalCertify">
+		UPDATE
+			APPROVAL_MANAGE
+		SET
+			APV_CERTIFY = #{apvCertify}
+		WHERE
+			EMP_CODE = #{empCode}
+	</update>
+
+	<!-- 인증방식 조회하는 쿼리 -->
+	<select id="selectCerfity" parameterType="str" resultType="approvalCertify">
+		SELECT
+			EMP_CODE,
+			APV_CERTIFY,
+			APV_STAMP
+		FROM
+			APPROVAL_MANAGE
+		WHERE
+			EMP_CODE = #{empCode}
+	</select>
+
+	<!-- 결재 비밀번호 생성  -->
+	<update id="insertApprovalPwd" parameterType="approvalCertify">
+		INSERT
+		INTO
+			APPROVAL_PWD
+		(
+			EMP_CODE,
+			APV_PASSWORD
+		)
+		VALUES(
+			#{empCode},
+			#{apvPassword}
+		)
+	</update>
+
+	<!-- 결재 비밀번호 수정  -->
+	<update id="updateApprovalPwd" parameterType="approvalCertify">
+		UPDATE
+			APPROVAL_PWD
+		SET
+			APV_PASSWORD = #{apvPassword}
+		WHERE
+			EMP_CODE = #{empCode}
+	</update>
+
+	<!-- 구글 otp 키 생성  -->
+	<update id="insertApprovalOtp" parameterType="approvalCertify">
+		INSERT
+		INTO
+			APPROVAL_OTP
+		(
+			EMP_CODE,
+			OTP_KEY
+		)
+		VALUES(
+			#{empCode},
+			#{otpKey}
+		)
+	</update>
+
+	<!-- 구글 otp 키 수정  -->
+	<update id="updateApprovalOtp" parameterType="approvalCertify">
+		UPDATE
+			APPROVAL_OTP
+		SET
+			OTP_KEY = #{otpKey}
+		WHERE
+			EMP_CODE = #{empCode}
+	</update>
+
+	<!-- otp 가져오는 쿼리 -->
+	<select id="selectOtpKeyByEmpCode" resultType="str">
+		SELECT
+			OTP_KEY
+		FROM
+			APPROVAL_OTP
+		WHERE
+			EMP_CODE = #{empCode}
+	</select>
+
+	<!-- otp 가져오는 쿼리 -->
+	<select id="selectApvPwdByEmpCode" resultType="str">
+		SELECT
+			APV_PASSWORD
+		FROM
+			APPROVAL_PWD
+		WHERE
+			EMP_CODE = #{empCode}
+	</select>
+
+	<!-- form 조회하기 -->
+	<select id="selectApprovalForm" resultType="approvalForm">
+		SELECT
+			A.APV_FOM_GR_CODE,
+			A.APV_FOM_GR_NAME,
+			B.APV_FORM_CODE,
+			B.APV_FORM_NAME,
+			B.APV_FORM_MARKUP,
+			B.APV_FORM_CNT
+		FROM
+			APPROVAL_FORM B, APPROVAL_FOM_GR A
+		WHERE
+			A.APV_FOM_GR_CODE = B.APV_FOM_GR_CODE
+	</select>
+
+	<!-- form 그룹을 조회하기 -->
+	<select id="selectApvFormGr" resultType="approvalForm">
+		SELECT
+			APV_FOM_GR_CODE,
+			APV_FOM_GR_NAME
+		FROM
+			APPROVAL_FOM_GR
+	</select>
+
+	<!-- form 그룹코드로 승인폼을 조회하기 -->
+	<select id="selectApvFormByFormGr" resultType="approvalForm">
+		SELECT
+			APV_FORM_CODE,
+			APV_FORM_NAME,
+			APV_FORM_MARKUP,
+			APV_FOM_GR_CODE,
+			APV_FORM_CNT
+		FROM
+			APPROVAL_FORM
+		WHERE
+			APV_FOM_GR_CODE = #{apvFomGrCode}
+	</select>
+
+	<!-- form코드로 승인 폼 조회하기 -->
+	<select id="selectApvFormByFormCode" resultType="approvalForm">
+		SELECT
+			APV_FORM_CODE,
+			APV_FORM_NAME,
+			APV_FORM_MARKUP,
+			APV_FOM_GR_CODE,
+			APV_FORM_CNT,
+			APV_FORM_CNT_H
+		FROM
+			APPROVAL_FORM
+		WHERE
+			APV_FORM_CODE = #{apvFormCode}
+	</select>
+
+	<!-- 결재코드 따로 빼오는 쿼리문 -->
+	<select id="selectApcCodeNextVal" resultType="str">
+		SELECT
+			'AP'||LPAD(APPROVAL_SEQ.NEXTVAL,4, 0)
+		FROM
+			DUAL
+	</select>
+
+	<!-- approval테이블에 insert하는 쿼리 -->
+	<update id="insertApproval" parameterType="apv">
+		INSERT
+			INTO
+			APPROVAL
+			(
+				APV_CODE,
+				APV_DRAFT_DT,
+				APV_END_DT,
+				APV_EMERGENCY,
+				APV_IMPORTANCE,
+				APV_TEMPORARY,
+				APV_MARKUP,
+				APV_FORM_CODE,
+				EMP_CODE,
+				APV_TITLE
+			)
+		VALUES
+			(
+				#{apvCode},
+				SYSDATE,
+				#{apvEndDt},
+				#{apvEmergency},
+				#{apvImportance},
+				#{apvTemporary},
+				#{apvMarkup},
+				#{apvFormCode},
+				#{empCode},
+				#{apvTitle}
+			)
+	</update>
+
+	<!-- approval line테이블에 insert하는 쿼리 -->
+	<update id="insertApprovalLine" parameterType="apvLine">
+		INSERT
+			INTO
+			APPROVAL_LINE
+			(
+				APV_LINE_CODE,
+				EMP_CODE,
+				APV_CONFIRM,
+				APV_CODE,
+				APV_KIND_CODE,
+				APV_LINE_ORDER
+			)
+		VALUES
+			(
+				'AL'||LPAD(APPROVAL_LINE_SEQ.NEXTVAL,4,0),
+				#{empCode},
+				'U' ,
+				#{apvCode},
+				#{apvKindCode},
+				#{apvLineOrder}
+			)
+	</update>
+
+	<!-- 임시 보관함 리스트 불러오는 쿼리문 -->
+	<select id="selectTempApvList" resultType="apv">
+		SELECT
+			APV_CODE,
+			APV_DRAFT_DT,
+			APV_FINISH_DT,
+			APV_END_DT,
+			APV_EMERGENCY,
+			APV_IMPORTANCE,
+			APV_AGENCY,
+			APV_DELAY,
+			APV_TEMPORARY,
+			APV_REFUSE,
+			APV_STATE,
+			APV_MARKUP,
+			APV_FORM_CODE,
+			EMP_CODE,
+			APV_TITLE
+		FROM
+			APPROVAL
+		WHERE
+			EMP_CODE = #{loginEmpCode}
+		AND
+			APV_TEMPORARY = 'Y'
+		<include refid="state"></include>
+		<include refid="form"></include>
+		ORDER BY
+			APV_DRAFT_DT DESC
+	</select>
+
+	<!-- 임시 보관함 리스트 갯수 불러오는 쿼리문 -->
+	<select id="selectTempApvListCount" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			APPROVAL
+		WHERE
+			EMP_CODE = #{loginEmpCode}
+		AND
+			APV_TEMPORARY = 'Y'
+		<include refid="state"></include>
+		<include refid="form"></include>
+	</select>
+
+
+	<!-- 내가 결재선에 속한 결재문서 중 대기,진행상태인 결재문서의 결재코드 조회하는 쿼리문 -->
+	<select id="selectApvCodeByEmpCodeFromApvLine" resultType="str">
+		SELECT APV_CODE
+		  FROM APPROVAL
+		 WHERE (APV_STATE = 'J101'
+		 	OR APV_STATE = 'J102')
+		   AND APV_TEMPORARY = 'N'
+		   <include refid="state"></include>
+		   <include refid="form"></include>
+		INTERSECT
+		SELECT APV_CODE
+		  FROM APPROVAL_LINE
+		 WHERE EMP_CODE = #{loginEmpCode}
+		   AND APV_KIND_CODE != 'AK0003'
+		   <include refid="wait"></include>
+	</select>
+
+	<!-- 결재코드로 결재문서 조회하는 쿼리문 -->
+	<select id="selectAppovalByApvCode" resultType="apv">
+		SELECT APV_CODE
+		       ,APV_DRAFT_DT
+		       ,APV_FINISH_DT
+		       ,APV_END_DT
+		       ,APV_EMERGENCY
+		       ,APV_IMPORTANCE
+		       ,APV_AGENCY
+		       ,APV_DELAY
+		       ,APV_TEMPORARY
+		       ,APV_REFUSE
+		       ,APV_STATE
+		       ,APV_MARKUP
+		       ,APV_FORM_CODE
+		       ,EMP_CODE
+		       ,APV_TITLE
+		  FROM APPROVAL
+		 WHERE APV_CODE = #{apvCode}
+	</select>
+
+	<!-- 결재대기문서 개수 -->
+	<select id="selectWaitApvListCount" resultType="int">
+		SELECT count(*)
+	      FROM (
+		        SELECT APV_CODE
+		        FROM APPROVAL
+		        WHERE APV_STATE = 'J101'
+		           OR APV_STATE = 'J102'
+		          AND APV_TEMPORARY = 'N'
+		           <include refid="state"></include>
+		           <include refid="form"></include>
+			    INTERSECT
+			    SELECT APV_CODE
+			    FROM APPROVAL_LINE
+			    WHERE EMP_CODE = #{loginEmpCode}
+			      AND APV_KIND_CODE != 'AK0003'
+		           <include refid="wait"></include>)
+	</select>
+
+	<!-- 결재 합의 개수 -->
+	<select id="selectWaitApvListHapCount" resultType="int">
+		SELECT count(*)
+	      FROM (
+		        SELECT APV_CODE
+		        FROM APPROVAL
+		        WHERE APV_STATE = 'J101'
+		           OR APV_STATE = 'J102'
+		          AND APV_TEMPORARY = 'N'
+		           <include refid="state"></include>
+		           <include refid="form"></include>
+			    INTERSECT
+			    SELECT APV_CODE
+			    FROM APPROVAL_LINE
+			    WHERE EMP_CODE = #{loginEmpCode}
+			      AND APV_KIND_CODE = 'AK0002'
+
+		           <include refid="wait"></include>)
+	</select>
+
+	<!-- 결재 개수 -->
+	<select id="selectWaitApvListNowCount" resultType="int">
+		SELECT count(*)
+	      FROM (
+		        SELECT APV_CODE
+		        FROM APPROVAL
+		        WHERE APV_STATE = 'J101'
+		           OR APV_STATE = 'J102'
+		          AND APV_TEMPORARY = 'N'
+		           <include refid="state"></include>
+		           <include refid="form"></include>
+			    INTERSECT
+			    SELECT APV_CODE
+			    FROM APPROVAL_LINE
+			    WHERE EMP_CODE = #{loginEmpCode}
+			      AND APV_KIND_CODE = 'AK0001'
+
+		           <include refid="wait"></include>)
+	</select>
+
+
+	<!-- 결재 하나만 가져오기 -->
+	<select id="selectApproval" resultType="apv" parameterType="str">
+		SELECT
+			APV_CODE,
+			APV_DRAFT_DT,
+			APV_FINISH_DT,
+			APV_END_DT,
+			APV_EMERGENCY,
+			APV_IMPORTANCE,
+			APV_AGENCY,
+			APV_DELAY,
+			APV_TEMPORARY,
+			APV_REFUSE,
+			APV_STATE,
+			APV_MARKUP,
+			APV_FORM_CODE,
+			EMP_CODE,
+			APV_TITLE
+		FROM
+			APPROVAL
+		WHERE
+			APV_CODE = #{apvCode}
+	</select>
+
+	<!-- 결재선 가져오기 -->
+	<select id="selectApprovalLine" resultType="apvLine" parameterType="str">
+		SELECT
+			APV_LINE_CODE,
+			EMP_CODE,
+			APV_CONFIRM,
+			APV_CONFIRM_DT,
+			APV_CODE,
+			APV_KIND_CODE,
+			APV_LINE_ORDER
+		FROM
+			APPROVAL_LINE
+		WHERE
+			APV_CODE = #{apvCode}
+	</select>
+
+	<!-- 임시저장하고 수정할때 결재선 삭제 -->
+	<update id="deleteApprovalLine" parameterType="str">
+		DELETE
+		FROM
+			APPROVAL_LINE
+		WHERE
+			APV_CODE = #{apvCode}
+	</update>
+
+	<!-- 임시저장하고 수정할때 결재선 삭제 -->
+	<update id="deleteApproval" parameterType="str">
+		DELETE
+		FROM
+			APPROVAL
+		WHERE
+			APV_CODE = #{apvCode}
+	</update>
+
+	<update id="updateApproval" parameterType="apv">
+		UPDATE
+			APPROVAL
+		SET
+			APV_DRAFT_DT = SYSDATE,
+			APV_END_DT = #{apvEndDt},
+			APV_EMERGENCY = #{apvEmergency},
+			APV_IMPORTANCE = #{apvImportance},
+			APV_TEMPORARY = #{apvTemporary},
+			APV_MARKUP = #{apvMarkup},
+			APV_TITLE = #{apvTitle}
+		WHERE
+			APV_CODE = #{apvCode}
+	</update>
+
+	<!-- 현재 결재자가 누군지 가져오는 쿼리 -->
+	<select id="selectNowApvLine" resultType="apvLine">
+		SELECT
+			APV_LINE_ORDER,
+			EMP_CODE
+		FROM
+			APPROVAL_LINE
+		WHERE
+			APV_CODE = #{apvCode}
+		AND
+			APV_CONFIRM = 'U'
+		AND
+			APV_KIND_CODE = 'AK0001'
+		ORDER BY APV_LINE_ORDER ASC
+	</select>
+
+	<!-- 내 결재순서가 몇번째인지 가져오는 쿼리 -->
+	<select id="selectMyApvLineOrder" resultType="int">
+		SELECT APV_LINE_ORDER
+		  FROM APPROVAL_LINE
+		 WHERE EMP_CODE = #{empCode}
+		   AND APV_CODE = #{apvCode}
+	</select>
+
+	<!-- 자주쓰는 결재선 조회 -->
+	<select id="selectJApvLine" resultType="jApvLine" parameterType="str">
+		SELECT
+			J_APV_LINE_CODE,
+			J_APV_LINE_NAME
+		FROM
+			J_APV_LINE
+		WHERE
+			EMP_CODE = #{empCode}
+	</select>
+
+	<!-- 자주쓰는 결재선 인서트 -->
+	<update id="insertJApvLine" parameterType="jApvLine">
+		INSERT
+		INTO
+			J_APV_LINE
+		(
+			J_APV_LINE_CODE,
+			J_APV_LINE_NAME,
+			EMP_CODE
+		)
+		VALUES
+		(
+			#{jApvLineCode},
+			#{jApvLineName},
+			#{empCode}
+		)
+	</update>
+	<update id="insertJApvLineInfo" parameterType="jApvLine">
+		INSERT
+		INTO
+			J_APV_LINE_INFO
+		(
+			J_APV_LINE_INFO_CODE,
+			J_APV_LINE_INFO_EMP_CODE,
+			J_APV_LINE_INFO_ORDER,
+			J_APV_LINE_INFO_KIND
+		)
+		VALUES(
+			#{jApvLineInfoCode},
+			#{jApvLineInfoEmpCode},
+			#{jApvLineInfoOrder},
+			#{jApvLineInfoKind}
+		)
+	</update>
+
+	<!-- 자주쓰는 결재선 코드로 결재라인 조회 -->
+	<select id="selectJApvLineInfo" resultType="jApvLine">
+		SELECT
+			J_APV_LINE_INFO_CODE,
+			J_APV_LINE_INFO_EMP_CODE,
+			J_APV_LINE_INFO_ORDER,
+			J_APV_LINE_INFO_KIND
+		FROM
+			J_APV_LINE_INFO
+		WHERE
+			J_APV_LINE_INFO_CODE = #{jApvLineInfoCode}
+	</select>
+
+	<select id="selectJApvLineSeqNextval" resultType="str">
+		SELECT
+			J_APV_LINE_CODE_SEQ.NEXTVAL
+		FROM DAUL
+	</select>
+
+	<!-- 자주쓰는 결재선 삭제 쿼리 -->
+	<delete id="deleteJApvLine" parameterType="str">
+		DELETE
+		FROM
+			J_APV_LINE
+		WHERE
+			J_APV_LINE_CODE = #{jApvLineCode}
+	</delete>
+
+	<delete id="deleteJApvLineInfo" parameterType="str">
+		DELETE
+			J_APV_LINE_INFO
+		WHERE
+			J_APV_LINE_INFO_CODE = #{jApvLineInfoCode}
+
+	</delete>
+
+	<!-- 결재/합의 처리시 결재문서 수정 쿼리 -->
+	<update id="updateApprovalForProcess" parameterType="apvProCmd">
+		UPDATE
+			APPROVAL
+		SET
+			APV_STATE = NVL(#{apvState},''),
+			APV_MARKUP = #{apvMarkup},
+			APV_REFUSE = NVL(#{apvRefuse},'')
+		WHERE
+			APV_CODE = #{apvCode}
+	</update>
+
+	<!-- 결재/합의 처리시 결재선 수정 쿼리 -->
+	<update id="updateApprovalLineForProcess" parameterType="apvProCmd">
+		UPDATE
+			APPROVAL_LINE
+		SET
+			APV_CONFIRM = #{apvConfirm},
+			APV_CONFIRM_DT = sysdate
+		WHERE
+			APV_CODE = #{apvCode}
+		  AND
+		    EMP_CODE = #{empCode}
+	</update>
+
+	<!-- 마지막 결재순번 가져오는 쿼리  -->
+	<select id="selectLastApvOrder" resultType="int">
+		SELECT MAX(APV_LINE_ORDER)
+		  FROM APPROVAL_LINE
+		 WHERE APV_CODE = #{apvCode}
+	</select>
+
+	<!-- 대결자 지정하는 쿼리문 -->
+	<update id="insertAgency" parameterType="agency">
+		INSERT
+			INTO
+			AGENCY
+		(
+			EMP_CODE,
+			AGEN_START_DT,
+			AGEN_END_DT,
+			AGEN_REASON,
+			GIVE_EMP_CODE
+		)
+		VALUES
+		(
+			#{empCode},
+			#{agenStartDt},
+			#{agenEndDt},
+			#{agenReason},
+			#{giveEmpCode}
+		)
+	</update>
+
+	<!-- 대결자 목록 조회하는 쿼리 -->
+	<select id="selectAgencyList" resultType="agency">
+<![CDATA[
+		SELECT
+			EMP_CODE,
+			AGEN_START_DT,
+			AGEN_END_DT,
+			AGEN_REASON,
+			GIVE_EMP_CODE
+		FROM
+			AGENCY
+		WHERE
+			EMP_CODE = #{empCode}
+		AND
+			(AGEN_END_DT >= SYSDATE
+		OR
+			to_char(AGEN_END_DT,'yyyyMMdd') like to_char(SYSDATE,'yyyyMMdd')||'%')
+		ORDER BY
+			AGEN_START_DT ASC
+]]>
+	</select>
+
+	<!-- 반려함 리스트 가져오는 쿼리 -->
+	<select id="selectRefuseApvList" resultType="apv">
+		SELECT
+			APV_CODE,
+			APV_DRAFT_DT,
+			APV_FINISH_DT,
+			APV_END_DT,
+			APV_EMERGENCY,
+			APV_IMPORTANCE,
+			APV_AGENCY,
+			APV_DELAY,
+			APV_TEMPORARY,
+			APV_REFUSE,
+			APV_STATE,
+			APV_MARKUP,
+			APV_FORM_CODE,
+			EMP_CODE,
+			APV_TITLE
+		FROM
+			APPROVAL
+		WHERE
+			APV_TEMPORARY = 'N'
+		AND
+			APV_STATE = 'J104'
+		AND
+			EMP_CODE = #{loginEmpCode}
+		<include refid="state"></include>
+		<include refid="form"></include>
+		ORDER BY
+			APV_DRAFT_DT DESC
+	</select>
+
+    <!-- 요청함 리스트 가져오기 -->
+	<select id="selectRequestApvList" resultType="apv">
+		SELECT
+			APV_CODE,
+			APV_DRAFT_DT,
+			APV_FINISH_DT,
+			APV_END_DT,
+			APV_EMERGENCY,
+			APV_IMPORTANCE,
+			APV_AGENCY,
+			APV_DELAY,
+			APV_TEMPORARY,
+			APV_REFUSE,
+			APV_STATE,
+			APV_MARKUP,
+			APV_FORM_CODE,
+			EMP_CODE,
+			APV_TITLE
+		FROM
+			APPROVAL
+		WHERE
+			APV_TEMPORARY = 'N'
+		AND
+			APV_STATE != 'J104'
+		AND
+			EMP_CODE = #{loginEmpCode}
+		<include refid="state"></include>
+		<include refid="form"></include>
+		ORDER BY
+			APV_DRAFT_DT DESC
+	</select>
+
+	<!-- 반려함 리스트 개수 가져오기 -->
+	<select id="selectRefuseApvListCount" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			APPROVAL
+		WHERE
+			APV_TEMPORARY = 'N'
+		AND
+			APV_STATE = 'J104'
+		AND
+			EMP_CODE = #{loginEmpCode}
+		<include refid="state"></include>
+		<include refid="form"></include>
+		ORDER BY
+			APV_DRAFT_DT DESC
+	</select>
+
+	<!-- 요청함 리스트 갯수 -->
+	<select id="selectRequestApvListCount" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			APPROVAL
+		WHERE
+			APV_TEMPORARY = 'N'
+		AND
+			APV_STATE != 'J104'
+		AND
+			EMP_CODE = #{loginEmpCode}
+		<include refid="state"></include>
+		<include refid="form"></include>
+		ORDER BY
+			APV_DRAFT_DT DESC
+	</select>
+
+	<!-- 결재 상태 코드 이름 가져오는 쿼리 -->
+	<select id="selectApvState" resultType="str" parameterType="str">
+		SELECT
+			COM_CODE1
+		FROM
+			COMMON_CODE
+		WHERE
+			COM_CODE = #{comCode}
+	</select>
+
+	<!-- 결재 코드로 최종결재자 empcode가져오는 쿼리 -->
+	<select id="selectFinalEmpCodeByApvCode" resultType="str" parameterType="str">
+		SELECT
+			EMP_CODE
+		FROM
+				APPROVAL_LINE
+		WHERE
+			APV_CODE = #{apvCode}
+			AND APV_LINE_ORDER =(
+			SELECT
+				MAX(APV_LINE_ORDER)
+			FROM
+				APPROVAL_LINE
+			WHERE
+				APV_CODE = #{apvCode})
+	</select>
+
+	<!-- 반려한 사원 코드 가져오는 쿼리 -->
+	<select id="selectRefuseEmpCode" resultType="str" parameterType="str">
+		SELECT
+			EMP_CODE
+		FROM
+			APPROVAL_LINE
+		WHERE APV_CODE = #{apvCode}
+		AND
+			APV_CONFIRM = 'R'
+	</select>
+
+	<update id="updateApvForAgain" parameterType="apv">
+		UPDATE
+			APPROVAL
+		SET
+			APV_DRAFT_DT = SYSDATE,
+			APV_END_DT = #{apvEndDt},
+			APV_EMERGENCY = #{apvEmergency},
+			APV_IMPORTANCE = #{apvImportance},
+			APV_TEMPORARY = #{apvTemporary},
+			APV_REFUSE = '',
+			APV_STATE = 'J101' ,
+			APV_MARKUP = #{apvMarkup},
+			APV_TITLE = #{apvTitle}
+		WHERE
+			APV_CODE = #{apvCode}
+
+	</update>
+
+	<!-- 참조/열람함 리스트 결재코드 조회하는 쿼리문 -->
+	<select id="selectRefApvList" resultType="str">
+		SELECT APV_CODE
+		  FROM APPROVAL
+		 WHERE (APV_STATE = 'J101'
+		   OR APV_STATE = 'J102')
+		   AND APV_TEMPORARY = 'N'
+		   <include refid="state"></include>
+		   <include refid="form"></include>
+		INTERSECT
+		SELECT APV_CODE
+		  FROM APPROVAL_LINE
+		 WHERE EMP_CODE = #{loginEmpCode}
+		   AND APV_KIND_CODE = 'AK0003'
+	</select>
+
+	<!-- 참조/열람문서 개수 -->
+	<select id="selectRefApvListCount" resultType="int">
+		SELECT count(*)
+	      FROM (
+		        SELECT APV_CODE
+		        FROM APPROVAL
+		        WHERE (APV_STATE = 'J101'
+		           OR APV_STATE = 'J102')
+		          AND APV_TEMPORARY = 'N'
+		         <include refid="state"></include>
+		         <include refid="form"></include>
+			    INTERSECT
+			    SELECT APV_CODE
+			    FROM APPROVAL_LINE
+			    WHERE EMP_CODE = #{loginEmpCode}
+			      AND APV_KIND_CODE = 'AK0003')
+	</select>
+
+	<!-- 결재완료함 리스트 결재코드 조회하는 쿼리문 -->
+	<select id="selectCompleteApvList" resultType="str">
+		SELECT APV_CODE
+		  FROM APPROVAL
+		 WHERE APV_STATE = 'J103'
+		   AND APV_TEMPORARY = 'N'
+		   <include refid="state"></include>
+		   <include refid="form"></include>
+		INTERSECT
+		SELECT APV_CODE
+		  FROM APPROVAL_LINE
+		 WHERE EMP_CODE = #{loginEmpCode}
+	</select>
+
+	<!-- 결재완료문서 개수 -->
+	<select id="selectCompleteApvListCount" resultType="int">
+		SELECT count(*)
+	      FROM (
+		        SELECT APV_CODE
+		        FROM APPROVAL
+		        WHERE APV_STATE = 'J103'
+		          AND APV_TEMPORARY = 'N'
+		         <include refid="state"></include>
+		         <include refid="form"></include>
+			    INTERSECT
+			    SELECT APV_CODE
+			    FROM APPROVAL_LINE
+			    WHERE EMP_CODE = #{loginEmpCode}
+			    )
+	</select>
+
+	<!-- 메인 결재할 문서들 가져오는 리스트 -->
+	<select id="selectListForMain" resultType="apv">
+		 	SELECT A.APV_CODE
+			FROM APPROVAL B, (SELECT APV_CODE
+				  FROM APPROVAL_LINE
+				 WHERE EMP_CODE =  #{loginEmpCode}
+				   AND APV_KIND_CODE != 'AK0003'
+				   AND APV_CONFIRM = 'U'
+				 INTERSECT
+				SELECT APV_CODE
+				  FROM APPROVAL
+				 WHERE APV_STATE = 'J101'
+				 	OR APV_STATE = 'J102'
+				   AND APV_TEMPORARY = 'N'
+				  ) A
+			WHERE A.APV_CODE = B.APV_CODE
+			ORDER BY APV_END_DT ASC
+	</select>
+
+		<!-- 대결자 가져오는지 확인 -->
+	<select id="selectAgency" resultType="agency">
+<![CDATA[
+		SELECT
+			EMP_CODE,
+			GIVE_EMP_CODE
+		FROM
+			AGENCY
+		WHERE
+			EMP_CODE = #{empCode}
+		AND
+			AGEN_START_DT <= SYSDATE
+		AND
+			(AGEN_END_DT >= SYSDATE
+		OR
+			to_char(AGEN_END_DT,'yyyyMMdd') like to_char(SYSDATE,'yyyyMMdd')||'%')
+		ORDER BY
+			AGEN_START_DT ASC
+]]>
+	</select>
+
+	<!-- 메인 그래프 COUNT -->
+	<select id="selectApvCount" resultType="int">
+		SELECT  COUNT(DISTINCT APV_CODE)
+		  FROM  APV_COUNT_VIEW
+		 WHERE  1 = 1
+           AND  EMP_CODE=#{empCode}
+           <include refid="apvCount"/>
+	</select>
+	
+	<!-- 합의자 리스트 가져오는 쿼리 -->
+	<select id="selectHabLineList" parameterType="str" resultType="str">
+		SELECT
+			EMP_CODE 
+		FROM 
+			APPROVAL_LINE 
+		WHERE 
+			APV_KIND_CODE = 'AK0002'
+		AND 
+			APV_CODE = #{apvCode}
+	</select>
+
+	<!-- 내가 승인한 결재의 다음 결재자를 가져오는 쿼리  -->
+	<select id="selectNextApvEmpCode" parameterType="apvLine" resultType="str">
+		SELECT
+			EMP_CODE 
+		FROM 
+			APPROVAL_LINE 
+		WHERE  
+			APV_CODE = #{apvCode}
+		AND 
+			APV_LINE_ORDER = #{apvLineOrder} + 1
+		AND
+			APV_KIND_CODE = 'AK0001'
+	</select>
+
+</mapper>

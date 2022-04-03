@@ -1,0 +1,14 @@
+package kr.co.offispace.dao.scheduler;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import kr.co.offispace.dto.SchedulerVO;
+
+public interface SchedulerDAO {
+
+	//분류별 일정 조회
+	List<SchedulerVO> SelectSchedulerList(String empCode) throws SQLException;
+	//일정분류명 별 색깔
+	SchedulerVO selectSchedulerColorList(String empCode) throws SQLException;
+}

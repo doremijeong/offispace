@@ -1,0 +1,120 @@
+package kr.co.offispace.controller;
+
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import kr.co.offispace.command.Criteria;
+import kr.co.offispace.command.CriteriaCommand;
+import kr.co.offispace.command.MailCriteria;
+import kr.co.offispace.command.MailCriteriaCommand;
+import kr.co.offispace.dto.MailVO;
+import kr.co.offispace.service.mail.MailService;
+
+@Controller
+@RequestMapping("/mail")
+public class MailController {
+	
+	@Resource(name="mailService")
+	private MailService service;
+	
+	@RequestMapping("/main")
+	public String mailMain() {
+		String url="mail/main";
+		return url;
+	}
+	
+	@RequestMapping("/writeForm")
+	public String writeMail() {
+		String url="mail/writeForm";
+		return url;
+	}
+	
+	@RequestMapping("/writeToMeForm")
+	public String writeMailToMe() {
+		String url="mail/writeToMeForm";
+		return url;
+	}
+	
+	@RequestMapping("/readMail")
+	public String readMail() {
+		String url="mail/detail";
+		return url;
+	}
+	
+	@RequestMapping("/list")
+	public ModelAndView recievedList(MailCriteriaCommand criCmd, ModelAndView mnv) throws Exception {
+		String url = null;
+		
+		MailCriteria mailCri = criCmd.toMailCriteria();
+		
+		mailCri.setPerPageNum(20);
+		mailCri.setLoginUser("mihi"); // session의 로그인 유저를 담아줘야함
+		
+		Map<String, Object> dataMap = service.getAllMailList(mailCri);
+		
+		if(mailCri.getKindOfMail().equals("recieved")) {
+			url = "mail/recievedList";
+		}else if(mailCri.getKindOfMail().equals("send")){
+			url = "mail/sendList";
+		}else if(mailCri.getKindOfMail().equals("sendToMe")){
+			url = "mail/sendToMeList";
+		}else if(mailCri.getKindOfMail().equals("temporary")){
+			url = "mail/temporaryList";
+		}else if(mailCri.getKindOfMail().equals("store")){
+			url = "mail/storeList";
+		}else if(mailCri.getKindOfMail().equals("trash")){
+			url = "mail/trashList";
+		}
+		
+		mnv.addObject("dataMap",dataMap);
+		mnv.setViewName(url);
+		
+		return mnv;
+	}
+	
+	@RequestMapping("/detail")
+	public ModelAndView mailDetail(String mailCode, ModelAndView mnv) throws Exception{
+		
+		String url = "mail/detail";
+		
+		MailVO mail = service.getMailByMailCode(mailCode);
+		
+		mnv.setViewName(url);
+		mnv.addObject("mail", mail);
+		
+		return mnv;
+	}
+	
+	@RequestMapping(value="/modifyImportance", produces = "application/text; charset=UTF-8")
+	@ResponseBody
+	public ResponseEntity<String> modifyImportance(String mailCode){
+		ResponseEntity<String> result = null;
+		Map<String, String> message = new HashMap<String, String>();
+		
+		try {
+			
+			service.modifyImportance(mailCode);
+			
+			result = new ResponseEntity<String>("변경을 완료하였습니다.", HttpStatus.OK);
+			
+		} catch (SQLException e) {
+			result = new ResponseEntity<String>("서버 장애로 변경이 불가합니다.",HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return result;
+		
+	}
+}

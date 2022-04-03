@@ -1,0 +1,212 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ page trimDirectiveWhitespaces="true"%>
+<!DOCTYPE html>
+<div class="content-wrapper">
+
+	<section class="content-header">
+		<div class="container-fluid">
+			<div class="row mb-2">
+				<div class="col-sm-6">
+					<h1>연차내역(이미정)</h1>
+				</div>
+				<div class="col-sm-6">
+					<ol class="breadcrumb float-sm-right">
+						<li class="breadcrumb-item"><a href="#">Home</a></li>
+						<li class="breadcrumb-item active">연차내역</li>
+					</ol>
+				</div>
+			</div>
+		</div>
+		<!-- /.container-fluid -->
+	</section>
+	<!-- Default box -->
+
+	<section class="content">
+		<div class="container-fluid">
+			<div class="card card-info card-outline">
+
+
+				<div>
+					<h2 class="title" style="text-align: center; margin-top: 2%;">
+						<a href="#"><i class="fas fa-chevron-left"></i></a>&nbsp;&nbsp;&nbsp;2021.01&nbsp;&nbsp;&nbsp;<a
+							href="#"><i class="fas fa-chevron-right"></i></a>
+					</h2>
+				</div>
+
+				<br /> <br />
+
+				<div class="row" style="justify-content: space-between;">
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;연차 사용기간 : 2022-01-01 ~
+						2022-12-31</p>
+					<div>
+						<p>
+							<a href="#"><i class="far fa-file-alt"></i>연차신청서&nbsp;&nbsp;&nbsp;&nbsp;</a>
+						</p>
+					</div>
+				</div>
+
+
+
+				<div class="card-body">
+					<div class="row">
+						<div class="col-12">
+							<div class="row">
+								<div class="col-12 col-md-12">
+									<div class="info-box bg-light">
+										<div class="info-box-content">
+											<div class="row">
+												<div class="col-12 col-md-2"
+													style="text-align: center; margin-top: 15px;">
+													<img src="images/pro.jpg"
+														style="object-fit: cover; width: 30px; height: 30px;"
+														class="img-size-50 mr-3 img-circle" alt="User Image">이미정
+													사원
+												</div>
+												<div class="col-12 col-md-2">
+													발생연차<br /> 15개
+												</div>
+												<div class="col-12 col-md-2">
+													발생월차<br /> 3개
+												</div>
+												<div class="col-12 col-md-2">
+													총 연차<br /> 3개
+												</div>
+												<div class="col-12 col-md-2">
+													사용연차<br /> 3개
+												</div>
+												<div class="col-12 col-md-2">
+													잔여연차<br /> 3개
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /.card-body -->
+			</div>
+			<div class="card">
+				<div class="card-header">
+					<h3 class="card-title">사용내역</h3>
+				</div>
+				<!-- /.card-header -->
+				<div class="card-body table-responsive p-0" style="height: 300px;">
+					<table class="table table-head-fixed text-nowrap">
+						<thead>
+							<tr>
+								<th>이름</th>
+								<th>부서명</th>
+								<th>휴가종류</th>
+								<th>연차 사용기간</th>
+								<th>사용 연차</th>
+								<th>내용</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>이미정</td>
+								<td>총무부</td>
+								<td>연차 초기설정</td>
+								<td>2022-01-05~2022-01-05</td>
+								<td>1</td>
+								<td>연차 초기설정</td>
+							</tr>
+							<tr>
+								<td>이미정</td>
+								<td>총무부</td>
+								<td>연차 초기설정</td>
+								<td>2022-01-05~2022-01-05</td>
+								<td>1</td>
+								<td>연차 초기설정</td>
+							</tr>
+							<tr>
+								<td>이미정</td>
+								<td>총무부</td>
+								<td>연차 초기설정</td>
+								<td>2022-01-05~2022-01-05</td>
+								<td>1</td>
+								<td>연차 초기설정</td>
+							</tr>
+							<tr>
+								<td>이미정</td>
+								<td>총무부</td>
+								<td>연차 초기설정</td>
+								<td>2022-01-05~2022-01-05</td>
+								<td>1</td>
+								<td>연차 초기설정</td>
+							</tr>
+							<tr>
+								<td>이미정</td>
+								<td>총무부</td>
+								<td>연차 초기설정</td>
+								<td>2022-01-05~2022-01-05</td>
+								<td>1</td>
+								<td>연차 초기설정</td>
+							</tr>
+							<tr>
+								<td>이미정</td>
+								<td>총무부</td>
+								<td>연차 초기설정</td>
+								<td>2022-01-05~2022-01-05</td>
+								<td>1</td>
+								<td>연차 초기설정</td>
+							</tr>
+							<tr>
+								<td>이미정</td>
+								<td>총무부</td>
+								<td>연차 초기설정</td>
+								<td>2022-01-05~2022-01-05</td>
+								<td>1</td>
+								<td>연차 초기설정</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<!-- /.card-body -->
+			</div>
+
+			<div class="card">
+				<div class="card-header">
+					<h3 class="card-title">생성 내역</h3>
+				</div>
+				<!-- /.card-header -->
+				<div class="card-body table-responsive p-0" style="height: auto;">
+					<table class="table table-head-fixed text-nowrap">
+						<thead>
+							<tr>
+								<th>등록일</th>
+								<th>사용 기간</th>
+								<th>발생 일수</th>
+								<th>내용</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>2022-01-01</td>
+								<td>2022-12-31</td>
+								<td>15</td>
+								<td>2022년 연차 등록</td>
+							</tr>
+							<tr>
+								<td>2022-01-01</td>
+								<td>2022-12-31</td>
+								<td>15</td>
+								<td>2022년 연차 등록</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<!-- /.card-body -->
+			</div>
+		</div>
+		<!-- /.card -->
+	</section>
+
+
+
+
+</div>

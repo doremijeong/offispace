@@ -1,0 +1,16 @@
+package kr.co.offispace.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/organizationChart")
+public class OrganizationChartController {
+
+	@RequestMapping("main")
+	public String main() throws Exception
+	{
+		String url="organizationChart/main";
+		return url;
+	}
+}

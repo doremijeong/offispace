@@ -1,0 +1,12 @@
+package kr.co.offispace.dao.mail;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import kr.co.offispace.dto.MailVO;
+
+public interface MailDAO {
+	
+	public List<MailVO> selectAllMailList() throws SQLException;
+	
+}

@@ -1,0 +1,38 @@
+package kr.co.offispace.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class MessageController {
+
+	@RequestMapping("/fromList")
+	public String fromList() {
+		String url = "message/fromList";
+		return url;
+	}
+	
+	@RequestMapping("/toList")
+	public String toList() {
+		String url = "message/toList";
+		return url;
+	}
+	
+	@RequestMapping("/personal")
+	public String personal() {
+		String url = "message/personal";
+		return url;
+	}
+	
+	@RequestMapping("/work")
+	public String work() {
+		String url = "message/work";
+		return url;
+	}
+	
+	@RequestMapping("/trash")
+	public String trash() {
+		String url = "message/trash";
+		return url;
+	}
+}

@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Message-Mapper">
+
+	<sql id="search">
+		<if test="searchType == 'content'.toString()">
+			and MSG_CONTENT like '%'||#{keyword}||'%'
+		</if>
+		<if test="searchType == 'from'.toString()">
+			and MSG_FROMNAME like '%'||#{keyword}||'%'
+		</if>
+		<if test="searchType == 'to'.toString()">
+			and MSG_TONAME like '%'||#{keyword}||'%'
+		</if>
+	</sql>
+
+	
+	<!-- 받은 쪽지 목록 -->
+	<sql id="recieved">
+		AND
+			MSG_TO = #{loginUser}
+		AND
+			MSG_CLASS = 'r'
+		ORDER BY 
+			MSG_DT DESC
+	</sql>
+	
+	<!-- 보낸 쪽지 목록 -->
+	<sql id="send">
+		AND
+			MSG_FROM = #{loginUser}
+		AND
+			MSG_CLASS = 'r'
+		ORDER BY 
+			MSG_DT DESC
+	</sql>
+	
+	<!-- 개인 쪽지 목록 -->
+	<sql id="personal">
+		AND
+			(MSG_FROM = #{loginUser} OR MSG_TO = #{loginUser})
+		AND
+			MSG_CLASS = 'p'
+		AND
+			MSG_PERSONAL = 1
+		ORDER BY 
+			MSG_DT DESC
+	</sql>
+	
+	<!-- 업무 쪽지 목록 -->
+	<sql id="work">
+		AND
+			(MSG_FROM = #{loginUser} OR MSG_TO = #{loginUser})
+		AND
+			MSG_CLASS = 'w'
+		AND
+			MSG_WORK = 1
+		ORDER BY 
+			MSG_DT DESC
+	</sql>
+	
+	<!-- 휴지통 목록 -->
+	<sql id="trash">
+		AND
+			MSG_CLASS = 'b'
+		ORDER BY 
+			MSG_DT DESC
+	</sql>
+	
+	
+	<!-- 쪽지 목록 -->
+	<select id="selectAllMsgList" resultType="message">
+		select MSG_CODE
+				, MSG_IMPT 
+				, MSG_READ 
+				, MSG_CONTENT 
+				, MSG_DT 
+				, MSG_FROM 
+				, MSG_TO 
+				, MSG_CLASS 
+				, MSG_PERSONAL
+				, MSG_WORK
+				, MSG_FROMNAME
+        , MSG_TONAME
+        , MSG_FROMTEAM
+        , MSG_FROMPOSITION
+        , MSG_TOTEAM
+        , MSG_TOPOSITION
+			from message
+	    WHERE MSG_CODE IS NOT NULL
+	    
+	    <include refid="search"/>
+
+	    <if test="kindOfMsg == 'recieved'.toString()">
+	    	<include refid="recieved"/>
+	    </if>
+	    <if test="kindOfMsg == 'send'.toString()">
+	    	<include refid="send"/>
+	    </if>
+	    <if test="kindOfMsg == 'personal'.toString()">
+	    	<include refid="personal"/>
+	    </if>
+	    <if test="kindOfMsg == 'work'.toString()">
+	    	<include refid="work"/>
+	    </if>
+	    <if test="kindOfMsg == 'trash'.toString()">
+	    	<include refid="trash"/>
+	    </if>
+	</select>
+	
+	<!-- 쪽지 개수 -->
+	<select id="selectAllMsgListTotalCount" resultType="int">
+		select count(*) 
+		from message 
+		where MSG_CODE is not null
+	    
+    <include refid="search"/>
+    
+    <if test="kindOfMsg == 'recieved'.toString()">
+    	<include refid="recieved"/>
+    </if>
+    <if test="kindOfMsg == 'send'.toString()">
+    	<include refid="send"/>
+    </if>
+    <if test="kindOfMsg == 'personal'.toString()">
+    	<include refid="personal"/>
+    </if>
+    <if test="kindOfMsg == 'work'.toString()">
+    	<include refid="work"/>
+    </if>
+    <if test="kindOfMsg == 'trash'.toString()">
+    	<include refid="trash"/>
+    </if>
+	</select>
+	
+	
+	<!-- 쪽지 코드로 상세보기 -->
+	<select id="selectMsgByMsgCode" resultType="message" parameterType="str">
+		select MSG_CODE
+				, MSG_IMPT 
+				, MSG_READ 
+				, MSG_CONTENT 
+				, MSG_DT 
+				, MSG_FROM 
+				, MSG_TO 
+				, MSG_CLASS 
+				, MSG_PERSONAL
+				, MSG_WORK
+				, MSG_FROMNAME
+        , MSG_TONAME
+        , MSG_FROMTEAM
+        , MSG_FROMPOSITION
+        , MSG_TOTEAM
+        , MSG_TOPOSITION
+			from message
+			where MSG_CODE = #{msgCode}
+	</select>
+	
+	
+	<!-- 읽음 표시  -->
+	<update id="updateRead" parameterType="str">
+		update 
+		message 
+		set 
+		MSG_READ = 1
+		where MSG_CODE = #{msgCode}
+	</update>
+	
+	
+	<!-- 휴지통 이동  -->
+	<update id="updateBin" parameterType="str">
+		update 
+		message 
+		set 
+		MSG_CLASS = 'b'
+		where MSG_CODE = #{msgCode}
+	</update>
+	
+	
+	<!-- 개인보관함 이동  -->
+	<update id="updatePersonal" parameterType="str">
+		update 
+		message 
+		set 
+		MSG_CLASS = 'p'
+		, MSG_PERSONAL = 1
+		, MSG_WORK = null
+		where MSG_CODE = #{msgCode}
+	</update>
+	
+	
+	<!-- 업무보관함 이동  -->
+	<update id="updateWork" parameterType="str">
+		update 
+		message 
+		set 
+		MSG_CLASS = 'w'
+		, MSG_WORK = 1
+		, MSG_PERSONAL = null
+		where MSG_CODE = #{msgCode}
+	</update>
+	
+	
+	<!-- 받은 쪽지함 이동  -->
+	<update id="updateFrom" parameterType="str">
+		update 
+		message 
+		set 
+		MSG_CLASS = 'r'
+		, MSG_WORK = null
+		, MSG_PERSONAL = null
+		where MSG_CODE = #{msgCode}
+	</update>
+	
+	
+		<!-- 받은 쪽지함 이동  -->
+	<update id="updateTo" parameterType="str">
+		update 
+		message 
+		set 
+		MSG_CLASS = 'r'
+		, MSG_WORK = null
+		, MSG_PERSONAL = null
+		where MSG_CODE = #{msgCode}
+	</update>
+
+
+	<!-- 쪽지 영구 삭제 -->
+	<update id="deleteMsg" parameterType="str">
+		delete 
+		from message 
+		where MSG_CODE = #{msgCode}
+	</update>
+	
+	
+	<!-- 쪽지 보내기 -->
+	<insert id="insertMessage" parameterType="message">
+		INSERT INTO
+			MESSAGE
+			( 
+				 MSG_CODE
+	     , MSG_IMPT
+	     , MSG_CONTENT
+	     , MSG_DT
+	     , MSG_READ
+	     , MSG_CLASS
+	     , MSG_FROM
+	     , MSG_FROMNAME
+	     , MSG_FROMTEAM
+	     , MSG_FROMPOSITION
+	     , MSG_TO
+	     , MSG_TONAME
+	     , MSG_TOTEAM
+	     , MSG_TOPOSITION
+	     )
+	     VALUES
+	     ( 
+	        #{msgCode}
+	      , #{msgImpt}
+	      , #{msgContent}
+	      , SYSDATE
+	      , 0
+	      , 'r'
+	      , #{msgFrom}
+	      , #{msgFromName}
+	      , #{msgFromTeam}
+	      , #{msgFromPosition}
+	      , #{msgTo}
+	      , #{msgToName}
+	      , #{msgToTeam}
+	      , #{msgToPosition}
+	      )
+	</insert>
+	
+	<select id="selectMsgCodeToRegister" resultType="str">
+		SELECT 'MG'||LPAD(MESSAGE_SEQ.NEXTVAL,4,0)
+		  FROM DUAL
+	</select>
+	
+	<select id="selectReceivedMsgList" resultType="message">
+		select MSG_CODE
+				, MSG_IMPT 
+				, MSG_READ 
+				, MSG_CONTENT 
+				, MSG_DT 
+				, MSG_FROM 
+				, MSG_TO 
+				, MSG_CLASS 
+				, MSG_PERSONAL
+				, MSG_WORK
+				, MSG_FROMNAME
+        , MSG_TONAME
+        , MSG_FROMTEAM
+        , MSG_FROMPOSITION
+        , MSG_TOTEAM
+        , MSG_TOPOSITION
+			from message
+	    WHERE MSG_CODE IS NOT NULL
+	    AND
+				MSG_TO = #{loginUser}
+			AND
+				MSG_CLASS = 'r'
+			ORDER BY 
+				MSG_DT DESC
+	</select>
+	
+	
+	<select id="selectSendMsgList" resultType="message">
+		select MSG_CODE
+				, MSG_IMPT 
+				, MSG_READ 
+				, MSG_CONTENT 
+				, MSG_DT 
+				, MSG_FROM 
+				, MSG_TO 
+				, MSG_CLASS 
+				, MSG_PERSONAL
+				, MSG_WORK
+				, MSG_FROMNAME
+        , MSG_TONAME
+        , MSG_FROMTEAM
+        , MSG_FROMPOSITION
+        , MSG_TOTEAM
+        , MSG_TOPOSITION
+			from message
+	    WHERE MSG_CODE IS NOT NULL
+	    AND
+				MSG_FROM = #{loginUser}
+			AND
+				MSG_CLASS = 'r'
+			ORDER BY 
+				MSG_DT DESC
+	</select>
+	
+	
+	<select id="selectPersonalMsgList" resultType="message">
+			select MSG_CODE
+				, MSG_IMPT 
+				, MSG_READ 
+				, MSG_CONTENT 
+				, MSG_DT 
+				, MSG_FROM 
+				, MSG_TO 
+				, MSG_CLASS 
+				, MSG_PERSONAL
+				, MSG_WORK
+				, MSG_FROMNAME
+        , MSG_TONAME
+        , MSG_FROMTEAM
+        , MSG_FROMPOSITION
+        , MSG_TOTEAM
+        , MSG_TOPOSITION
+			from message
+	    WHERE 
+			(MSG_FROM = #{loginUser} OR MSG_TO = #{loginUser})
+	    AND
+				MSG_CLASS = 'p'
+			AND
+				MSG_PERSONAL = 1
+			ORDER BY 
+				MSG_DT DESC
+	</select>
+	
+	
+	<select id="selectWorkMsgList" resultType="message">
+			select MSG_CODE
+				, MSG_IMPT 
+				, MSG_READ 
+				, MSG_CONTENT 
+				, MSG_DT 
+				, MSG_FROM 
+				, MSG_TO 
+				, MSG_CLASS 
+				, MSG_PERSONAL
+				, MSG_WORK
+				, MSG_FROMNAME
+        , MSG_TONAME
+        , MSG_FROMTEAM
+        , MSG_FROMPOSITION
+        , MSG_TOTEAM
+        , MSG_TOPOSITION
+			from message
+	    WHERE 
+			(MSG_FROM = #{loginUser} OR MSG_TO = #{loginUser})
+	    AND
+				MSG_CLASS = 'w'
+			AND
+				MSG_WORK = 1
+			ORDER BY 
+				MSG_DT DESC
+	</select>
+	
+	
+	<!-- 받은 쪽지 개수 -->
+	<select id="selectReceivedMsgTotalCount" resultType="int">
+		select
+  		count(*)
+		from 
+			message
+     WHERE
+      MSG_TO = #{loginUser}
+	</select>
+	
+	<!-- 보낸 쪽지 개수 -->
+	<select id="selectSendMsgTotalCount" resultType="int">
+		select
+  		count(*)
+		from 
+			message
+     WHERE
+      MSG_FROM = #{loginUser}
+	</select>
+	
+	<!-- 개인보관함 쪽지 개수 -->
+	<select id="selectPersonalMsgTotalCount" resultType="int">
+		select
+  		count(*)
+		from 
+			message
+     WHERE
+      (MSG_FROM = #{loginUser} or MSG_TO = #{loginUser})
+     AND
+     	MSG_CLASS = 'p'
+     AND
+     	MSG_PERSONAL = 1
+	</select>
+	
+	<!-- 업무보관함 쪽지 개수 -->
+	<select id="selectWorkMsgTotalCount" resultType="int">
+		select
+  		count(*)
+		from 
+			message
+     WHERE
+      (MSG_FROM = #{loginUser} or MSG_TO = #{loginUser})
+     AND
+     	MSG_CLASS = 'w'
+     AND
+     	MSG_WORK = 1
+	</select>
+	
+	<!-- 안 읽은 쪽지 개수 -->
+	<select id="selectUnreadMsgTotalCount" resultType="int">
+		select
+  		count(*)
+		from 
+			message
+    WHERE 
+       MSG_READ = 0
+     AND
+      MSG_TO = #{loginUser}
+	</select>
+	
+	<!-- 중요 쪽지 개수 -->
+	<select id="selectImptMsgTotalCount" resultType="int">
+		select
+  		count(*)
+		from 
+			message
+    WHERE 
+       MSG_IMPT = 1
+     AND
+      MSG_TO = #{loginUser}
+	</select>
+	
+	
+</mapper>

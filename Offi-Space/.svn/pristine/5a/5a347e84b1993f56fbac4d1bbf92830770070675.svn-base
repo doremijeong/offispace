@@ -1,0 +1,60 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page trimDirectiveWhitespaces="true"%>
+
+<head></head>
+
+<title></title>
+
+<body>
+	<div class="content-wrapper" style="background-color:#fff;">
+		<iframe name="ifr" src="" frameborder="0" style="width:100%;height:85vh;">
+		</iframe>
+	</div>
+
+	<script>
+		function goPage(url,mCode) //아이프레임 결정자.
+		{
+			$('iframe[name="ifr"]').attr("src",url);
+			
+			if(typeof(history.pushState)=='function')
+			{
+				//현재 주소를 가져온다.
+				var renewURL=location.href;
+
+				//현재 주소 중 .do의! 뒤 부분이 있다면 날려버린다.
+				renewURL=renewURL.substring(0,renewURL.indexOf(".do")+3);
+
+				if(mCode!='M000000') //메인이 아니면
+				{
+					renewURL+="?mCode="+mCode;
+				}
+				
+				//페이지를 리로드하지 않고 페이지 주소만 변경할 때 사용.
+				history.pushState(mCode,null,renewURL); //변화없음.
+
+			}
+			else
+			{
+				location.hash="#"+mCode; //#뒤에를 value 취급한다.
+			}
+		}
+
+		window.onload=function(){ 
+			goPage('<%=request.getContextPath()%>${menu.murl}','${menu.mcode}'); //프로토 타입이기 때문에 바로호출.
+			
+			const parentNavNode = document.querySelectorAll('.parentNav');
+			parentNavNode.forEach(parentNav=>{
+				parentNav.addEventListener('click',()=>{
+					let str = parentNav.href;
+					let url = str.substring(0,str.indexOf("*"));
+					let mCode = str.substring(str.lastIndexOf("*")+1)
+					goPage(url,mCode);
+				})
+			})
+		}
+		
+
+	</script>
+
+</body>

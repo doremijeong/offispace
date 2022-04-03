@@ -1,0 +1,20 @@
+package kr.co.offispace.dao.mail;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import kr.co.offispace.command.MailCriteria;
+import kr.co.offispace.dto.MailVO;
+
+public interface MailDAO {
+	
+	public List<MailVO> selectAllMailList(MailCriteria cri) throws SQLException;
+	
+	public int selectAllMailListTotalCount(MailCriteria cri) throws SQLException;
+	
+	public int selcetDoNotReadMailCount(MailCriteria cri) throws SQLException;
+	
+	public MailVO selectMailByMailCode(String mailCode) throws SQLException;
+	
+	public void updateImportance(MailVO mail) throws SQLException;
+}

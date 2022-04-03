@@ -1,0 +1,77 @@
+package kr.co.offispace.dto;
+
+public class SchedulerVO {
+
+	private String scdContent;
+	private String scdAllday;
+	private String scdHollyday;
+	private String scdStartDt;
+	private String scdTitle;
+	private String empCode;
+	private String scdGrCode;
+	private String scdEndDt;
+	private String scdImport;
+	private String scdCode;
+	
+	public void setScdContent(String scdContent) {
+		this.scdContent = scdContent; 
+	}
+	public String getScdContent() {
+		return scdContent; 
+	}
+	public void setScdAllday(String scdAllday) {
+		this.scdAllday = scdAllday; 
+	}
+	public String getScdAllday() {
+		return scdAllday; 
+	}
+	public void setScdHollyday(String scdHollyday) {
+		this.scdHollyday = scdHollyday; 
+	}
+	public String getScdHollyday() {
+		return scdHollyday; 
+	}
+	public void setScdStartDt(String scdStartDt) {
+		this.scdStartDt = scdStartDt; 
+	}
+	public String getScdStartDt() {
+		return scdStartDt; 
+	}
+	public void setScdTitle(String scdTitle) {
+		this.scdTitle = scdTitle; 
+	}
+	public String getScdTitle() {
+		return scdTitle; 
+	}
+	public void setEmpCode(String empCode) {
+		this.empCode = empCode; 
+	}
+	public String getEmpCode() {
+		return empCode; 
+	}
+	public void setScdGrCode(String scdGrCode) {
+		this.scdGrCode = scdGrCode; 
+	}
+	public String getScdGrCode() {
+		return scdGrCode; 
+	}
+	public void setScdEndDt(String scdEndDt) {
+		this.scdEndDt = scdEndDt; 
+	}
+	public String getScdEndDt() {
+		return scdEndDt; 
+	}
+	public void setScdImport(String scdImport) {
+		this.scdImport = scdImport; 
+	}
+	public String getScdImport() {
+		return scdImport; 
+	}
+	public void setScdCode(String scdCode) {
+		this.scdCode = scdCode; 
+	}
+	public String getScdCode() {
+		return scdCode; 
+	}
+
+}

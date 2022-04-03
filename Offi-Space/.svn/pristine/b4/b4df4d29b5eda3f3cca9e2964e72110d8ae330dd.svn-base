@@ -1,0 +1,56 @@
+package kr.co.offispace.dao.mail;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import org.apache.ibatis.session.RowBounds;
+import org.apache.ibatis.session.SqlSession;
+
+import kr.co.offispace.command.MailCriteria;
+import kr.co.offispace.dto.MailVO;
+
+public class MailDAOImpl implements MailDAO{
+	
+	private SqlSession sqlSession;
+	
+	public void setSqlSession(SqlSession sqlSession) {
+		this.sqlSession = sqlSession;
+	}
+
+	@Override
+	public List<MailVO> selectAllMailList(MailCriteria cri) throws SQLException {
+		int offset = cri.getStartRowNum();
+		int limit = cri.getPerPageNum();
+		System.out.println(cri.getSearchType());
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		List<MailVO> mailList = sqlSession.selectList("Mail-Mapper.selectAllMailList", cri, rowBounds);
+		
+		
+		return mailList;
+	}
+
+	@Override
+	public int selectAllMailListTotalCount(MailCriteria cri) throws SQLException {
+		int totalCount = sqlSession.selectOne("Mail-Mapper.selectAllMailListTotalCount", cri);
+		return totalCount;
+	}
+
+	@Override
+	public int selcetDoNotReadMailCount(MailCriteria cri) throws SQLException {
+			int cnt = sqlSession.selectOne("Mail-Mapper.selectNotRreadMailCount", cri);
+		return cnt;
+	}
+
+	@Override
+	public MailVO selectMailByMailCode(String mailCode) throws SQLException {
+		MailVO mail = sqlSession.selectOne("Mail-Mapper.selectMailByMailCode",mailCode);
+		return mail;
+	}
+
+	@Override
+	public void updateImportance(MailVO mail) throws SQLException {
+		sqlSession.update("Mail-Mapper.updateImportance", mail);
+	}
+	
+}

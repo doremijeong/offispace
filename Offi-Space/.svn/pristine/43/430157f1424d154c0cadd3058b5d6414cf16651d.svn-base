@@ -1,0 +1,59 @@
+package kr.co.offispace.controller;
+
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import kr.co.offispace.command.Criteria;
+import kr.co.offispace.dto.MailVO;
+import kr.co.offispace.service.mail.MailService;
+
+@Controller
+@RequestMapping("/mail")
+public class MailController {
+	
+	@Resource(name="mailService")
+	private MailService service;
+	
+	@RequestMapping("/main")
+	public String mailMain() {
+		String url="mail/main";
+		return url;
+	}
+	
+	@RequestMapping("/writeForm")
+	public String writeMail() {
+		String url="mail/writeForm";
+		return url;
+	}
+	
+	@RequestMapping("/writeToMeForm")
+	public String writeMailToMe() {
+		String url="mail/writeToMeForm";
+		return url;
+	}
+	
+	@RequestMapping("/readMail")
+	public String readMail() {
+		String url="mail/detail";
+		return url;
+	}
+	
+	@RequestMapping("/recievedList")
+	public ModelAndView recievedList(Criteria cri, ModelAndView mnv) throws Exception {
+		String url="mail/recievedList";
+		
+		Map<String, Object> dataMap = service.getAllMailList(cri);
+		
+		mnv.addObject("dataMap",dataMap);
+		mnv.setViewName(url);
+		
+		return mnv;
+	}
+}

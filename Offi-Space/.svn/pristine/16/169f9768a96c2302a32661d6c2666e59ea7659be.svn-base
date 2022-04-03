@@ -1,0 +1,32 @@
+package kr.co.offispace.service.message;
+
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.session.SqlSession;
+
+import kr.co.offispace.command.Criteria;
+import kr.co.offispace.dao.message.MessageDAO;
+import kr.co.offispace.dto.MessageVO;
+
+public class MessageServiceImpl implements MessageService {
+	
+	private MessageDAO messageDAO;
+	
+	
+	public void setMessageDAO(MessageDAO messageDAO) {
+		this.messageDAO = messageDAO;
+	}
+
+	@Override
+	public Map<String, Object> getFromList(Criteria cri) throws SQLException {
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		
+		List<MessageVO> fromList = messageDAO.selectMsgFromList(cri);
+		
+		return null;
+	}
+
+}

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="IP-Mapper">
+	
+	<select id="selectIPAddrByEmpCode" resultType="ip">
+		SELECT
+			IP_ADDR
+		FROM
+			IP
+		WHERE
+			EMP_CODE =#{empCode}
+		AND
+			IP_AVAILABLE =#{IPAvailable}
+		AND
+			IP_ADDR =#{IPAddr}
+	</select>
+	
+	<update id="insertAttend" parameterType="attend">
+
+	INSERT
+	INTO
+		ATTEND(
+		ATT_CODE
+		, ATT_DT
+		, ATT_TIME
+		, ATT_LEAV_TIME
+		, ATT_REAL_WORK_TIME
+		, ATT_EX_WORK_TIME
+		, ATT_TOTAL_WORK_TIME
+		, ATT_TLCOM_ST
+		, ATT_JOB_ST_CODE
+		, ATT_PER_ST_CODE
+		,ATT_TYPE_CODE
+		, EMP_CODE
+		, APV_CODE
+		, YEAR_VAC_EMPCODE
+		)
+	VALUES(
+		'SC'||LPAD(SCHEDULE_SEQ.NEXTVAL,4,0)
+		,TO_CHAR(SYSDATE,'YYYY/MM/DD')
+		,TO_CHAR(SYSDATE,'YYYY/MM/DD')||' '||TRIM(TO_CHAR(SYSDATE,'HH24:MI:SS'))
+		,TO_CHAR(SYSDATE,'YYYY/MM/DD')||' '||TRIM(TO_CHAR(SYSDATE,'HH24:MI:SS'))
+		,#{attRealWorkTime}
+		,#{attExWorkTime}
+		,#{attTotalWorkTime}
+		,#{attTlcomSt}
+		,#{attJobStCode}
+		,#{attPerStCode}
+		,#{attTypeCode}
+		,#{empCode}
+		,#{apvCode}
+		,#{yearVacEmpCode}
+		)
+	
+	</update>
+
+</mapper>

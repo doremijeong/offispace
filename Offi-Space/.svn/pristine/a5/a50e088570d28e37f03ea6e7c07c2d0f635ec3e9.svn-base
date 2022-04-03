@@ -1,0 +1,6 @@
+package kr.co.offispace.dto;
+
+public class SchedulerVO {
+
+	
+}

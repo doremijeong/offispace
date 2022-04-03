@@ -1,0 +1,600 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Report-Mapper">
+
+<sql id="search">
+	<if test="searchType == 'reportCode'.toString()">
+		AND REPORT.REPORT_CODE = #{keyword}
+	</if>
+		<if test="searchType == 'teamCode'.toString()">
+		AND REPORT.REPORT_TEAM_CODE = #{keyword}
+	</if>
+</sql>
+<sql id="managerReportList">
+	<if test="searchType == 'present'.toString()">
+		SELECT TO_CHAR(SYSDATE,'YYYY-MM-')||LPAD(LEVEL,2,'0') REPORT_DT
+          FROM DUAL
+       CONNECT BY LEVEL <![CDATA[<]]>=  TO_CHAR((SYSDATE),'dd')
+	</if>
+	<if test="searchType == 'past'.toString()">
+		SELECT SUBSTR(#{lastDay},1,5)||SUBSTR(#{lastDay},6,3)||LPAD(LEVEL,2,'0') REPORT_DT
+          FROM DUAL
+       CONNECT BY LEVEL <![CDATA[<]]>=  TO_CHAR(LAST_DAY(#{lastDay}),'dd')
+	</if>
+</sql>
+<sql id="searchDoc">
+	<if test="searchType == 'rptTitle'.toString()">
+		AND REPORT_TITLE LIKE '%'||#{keyword}||'%'
+	</if>
+	<if test="searchType == 'rptDate'.toString()">
+		AND REPORT_DOC_DT LIKE '%'||#{keyword}||'%'
+	</if>
+	<if test="searchType == 'rptDocTitle'.toString()">
+		AND REPORT_DOC_TITLE LIKE '%'||#{keyword}||'%'
+	</if>
+	<if test="searchType == 'rptManager'.toString()">
+		AND MANAGER_EMP_NAME LIKE '%'||#{keyword}||'%'
+	</if>
+	<if test="searchType == 'rptWriter'.toString()">
+		AND WRITER_EMP_NAME LIKE '%'||#{keyword}||'%'
+	</if>
+</sql>
+
+
+
+<select id="selectReportCodeToRegister" resultType="str">
+	SELECT 'RP'||LPAD(REPORT_SEQ.NEXTVAL,4,0)
+	  FROM DUAL
+</select>
+
+<select id="selectReportDocCodeToRegister" resultType="str">
+	SELECT 'RD'||LPAD(REPORT_DOC_SEQ.NEXTVAL,4,0)
+	  FROM DUAL
+</select>
+
+<insert id="insertReport" >
+INSERT INTO REPORT ( REPORT_CODE
+                    ,REPORT_TITLE
+                    ,REPORT_DETAIL
+                    ,REPORT_MANAGER
+                    ,REPORT_MARKUP
+                    ,REPORT_TYPE
+                    ,REPORT_TEAM_CODE
+                    ,REPORT_OPEN)
+		VALUES (#{reportCode}
+				,#{reportTitle}
+				,#{reportDetail}
+				,#{reportManager}
+				,#{reportMarkup}
+				,#{reportType}
+				,#{reportTeamCode}
+				,#{reportOpen})
+</insert>
+<update id="updateReport" >
+UPDATE REPORT
+   SET REPORT_TITLE = #{reportTitle}
+       ,REPORT_DETAIL = #{reportDetail}
+       ,REPORT_MANAGER = #{reportManager}
+       ,REPORT_MARKUP = #{reportMarkup}
+       ,REPORT_TYPE = #{reportType}
+       ,REPORT_TEAM_CODE = #{reportTeamCode}
+       ,REPORT_OPEN = #{reportOpen}
+
+  WHERE REPORT_CODE = #{reportCode}
+</update>
+<insert id="insertReportRule">
+INSERT INTO REPORT_RULE ( REPORT_CODE
+						 ,REPORT_TYPE
+						 ,REPORT_DAY)
+	 VALUES (#{reportCode}
+	 		,#{reportType}
+	 		,#{reportDay})
+</insert>
+<delete id="deleteReportRule">
+DELETE REPORT_RULE
+ WHERE REPORT_CODE = #{reportCode}
+</delete>
+
+<insert id="insertReportDoc" >
+	INSERT INTO REPORT_DOCUMENT
+				(REPORT_DOC_CODE
+			   	 ,REPORT_DOC_MARKUP
+				 ,REPORT_DOC_DT
+				 ,REPORT_DOC_WRITER
+				 ,REPORT_TYPE
+				 ,REPORT_CODE
+				 ,REPORT_DOC_TEAM_CODE
+				 ,JOB_CODE
+				 ,REPORT_OPEN
+				 ,REPORT_DOC_TITLE
+				 ,REPORT_DOC_TEMP)
+		VALUES (#{reportDocCode}
+        		,#{reportDocMarkup}
+        		,sysdate
+        		,#{reportDocWriter}
+        		,#{reportType}
+        		,#{reportCode}
+        		,#{reportDocTeamCode}
+        		,NVL(#{jobCode},'')
+        		,#{reportOpen}
+        		,#{reportDocTitle}
+        		,#{reportDocTemp})
+</insert>
+
+<select id="selectReportList" resultType="report">
+	SELECT REPORT_CODE
+	      ,REPORT_TITLE
+	      ,REPORT_DETAIL
+	      ,REPORT_MANAGER
+	      ,REPORT_MARKUP
+	      ,REPORT_TYPE
+	      ,REPORT_TEAM_CODE
+	      ,JOB_CODE
+	      ,REPORT_OPEN
+          ,EMPLOYEE_VIEW.EMP_NAME AS REPORT_MANAGER_NAME
+          ,EMPLOYEE_VIEW.TEAM_VALUE AS REPORT_TEAM_NAME
+          ,EMPLOYEE_VIEW.POSITION_VALUE AS REPORT_MANAGER_POSITION
+      FROM REPORT,EMPLOYEE_VIEW
+     WHERE REPORT.REPORT_MANAGER = EMPLOYEE_VIEW.EMP_CODE
+     <include refid="search" />
+</select>
+
+<select id="selectReport" resultType="report">
+	SELECT REPORT_CODE
+	      ,REPORT_TITLE
+	      ,REPORT_DETAIL
+	      ,REPORT_MANAGER
+	      ,REPORT_MARKUP
+	      ,REPORT_TYPE
+	      ,REPORT_TEAM_CODE
+	      ,JOB_CODE
+	      ,REPORT_OPEN
+          ,EMPLOYEE_VIEW.EMP_NAME AS REPORT_MANAGER_NAME
+          ,EMPLOYEE_VIEW.TEAM_VALUE AS REPORT_TEAM_NAME
+          ,EMPLOYEE_VIEW.POSITION_VALUE AS REPORT_MANAGER_POSITION
+      FROM REPORT,EMPLOYEE_VIEW
+     WHERE REPORT.REPORT_MANAGER = EMPLOYEE_VIEW.EMP_CODE
+     <include refid="search" />
+</select>
+
+<select id="selectReportDayList" resultType="str">
+  SELECT REPORT_DAY
+    FROM REPORT_RULE
+   WHERE REPORT_CODE = #{reportCode}
+</select>
+
+<select id="selectReportWriterList" resultType="employee">
+  SELECT *
+    FROM EMPLOYEE_VIEW, REPORT_WRITER
+   WHERE EMPLOYEE_VIEW.EMP_CODE = REPORT_WRITER.REPORT_WRITER
+     AND REPORT_WRITER.REPORT_CODE = #{reportCode}
+</select>
+
+<select id="selectRegularReportListToWrite" resultType="report">
+SELECT REPORT_CODE
+         ,REPORT_TITLE
+         ,REPORT_DETAIL
+         ,REPORT_MANAGER
+         ,REPORT_MARKUP
+         ,REPORT_TYPE
+         ,REPORT_TEAM_CODE
+         ,JOB_CODE
+         ,REPORT_OPEN
+         ,EMPLOYEE_VIEW.EMP_NAME AS REPORT_MANAGER_NAME
+        ,EMPLOYEE_VIEW.TEAM_VALUE AS REPORT_TEAM_NAME
+   FROM REPORT,EMPLOYEE_VIEW
+  WHERE REPORT.REPORT_MANAGER = EMPLOYEE_VIEW.EMP_CODE
+    AND REPORT.REPORT_CODE IN (SELECT REPORT_CALENDAR_EMP.REPORT_CODE
+                                FROM
+                                    (SELECT REPORT_CALENDAR.REPORT_DT
+                                           ,REPORT_CALENDAR.DAY_NUM
+                                           ,REPORT_CALENDAR.REPORT_CODE
+                                           ,WRITER.REPORT_WRITER
+                                            FROM  (
+                                                    SELECT CALENDAR.REPORT_DT
+                                                          ,TO_CHAR(TO_DATE(CALENDAR.REPORT_DT),'d') AS DAY_NUM
+                                                          ,RULE.REPORT_CODE
+                                                      FROM (
+                                                             SELECT TO_CHAR(SYSDATE,'YYYY-MM-')||LPAD(LEVEL,2,'0') REPORT_DT
+                                                               FROM DUAL
+                                                            CONNECT BY LEVEL <![CDATA[<]]>=  TO_CHAR(LAST_DAY(SYSDATE),'dd')
+                                                            ) CALENDAR
+                                                            , REPORT_RULE RULE
+                                                     WHERE TO_CHAR(TO_DATE(CALENDAR.REPORT_DT),'d') = RULE.REPORT_DAY(+)
+                                                     ORDER BY CALENDAR.REPORT_DT ASC
+                                                    ) REPORT_CALENDAR
+                                                    , (SELECT REPORT_WRITER
+                                                             ,REPORT_CODE
+                                                         FROM REPORT_WRITER
+                                                        WHERE REPORT_WRITER.REPORT_WRITER = #{empCode}) WRITER
+                                     WHERE REPORT_CALENDAR.REPORT_CODE(+) = WRITER.REPORT_CODE) REPORT_CALENDAR_EMP
+                             WHERE REPORT_CALENDAR_EMP.REPORT_WRITER NOT IN (SELECT REPORT_DOC_WRITER
+                                                                                  FROM REPORT_DOCUMENT
+                                                                                 WHERE REPORT_DOC_WRITER =#{empCode}
+                                                                                   AND TO_CHAR(REPORT_DOC_DT,'YYYY-MM-DD') = TO_CHAR(SYSDATE,'YYYY-MM-DD')
+                                                                                   AND REPORT_DOCUMENT.REPORT_CODE  IN(
+                                                                                                                        SELECT REPORT_CODE
+                                                                                                                        FROM REPORT_WRITER
+                                                                                                                        WHERE REPORT_WRITER =#{empCode})
+
+                                                                                   )
+                              AND REPORT_CALENDAR_EMP.REPORT_DT = TO_CHAR(SYSDATE,'YYYY-MM-DD'))
+
+</select>
+
+<select id="selectIrregularReportListByTeam" resultType="report">
+	SELECT REPORT_CODE
+		   ,REPORT_TITLE
+		   ,REPORT_DETAIL
+		   ,REPORT_MANAGER
+		   ,REPORT_MARKUP
+		   ,REPORT_TYPE
+		   ,REPORT_TEAM_CODE
+		   ,JOB_CODE
+		   ,REPORT_OPEN
+	 FROM REPORT
+	WHERE REPORT_TEAM_CODE = #{teamCode}
+	  AND REPORT_TYPE = 'I'
+</select>
+
+
+<select id="selectReportMarkup" resultType="str">
+	SELECT REPORT_MARKUP
+	  FROM REPORT
+	 WHERE REPORT_CODE = #{reportCode}
+</select>
+
+<select id="selectReportDocMarkup" resultType="str">
+	SELECT REPORT_DOC_MARKUP
+	  FROM REPORT_DOCUMENT
+	 WHERE REPORT_DOC_CODE = #{reportDocCode}
+</select>
+
+
+
+
+
+<select id="selectManagerReportList" resultType="managerReport">
+
+	SELECT  REPORT.REPORT_CODE
+           ,REPORT.REPORT_TITLE
+           ,REPORT.REPORT_DETAIL
+           ,REPORT.REPORT_MANAGER
+           ,REPORT.REPORT_TYPE
+           ,REPORT.REPORT_TEAM_CODE
+           ,REPORT.JOB_CODE
+           ,REPORT.REPORT_OPEN
+           ,EMPLOYEE_VIEW.EMP_NAME AS REPORT_MANAGER_NAME
+           ,EMPLOYEE_VIEW.POSITION_VALUE AS REPORT_MANAGER_POSITION
+           ,EMPLOYEE_VIEW.TEAM_VALUE AS REPORT_TEAM_NAME
+           ,MANAGER_REPORT_CALENDAR.REPORT_DT AS REPORT_DT
+     FROM  REPORT, EMPLOYEE_VIEW,
+                                 (SELECT  REPORT_CALENDAR.REPORT_DT
+                                         ,REPORT_CALENDAR.REPORT_CODE
+                                    FROM  (
+                                           SELECT CALENDAR.REPORT_DT
+                                                 ,TO_CHAR(TO_DATE(CALENDAR.REPORT_DT),'d') AS DAY_NUM
+                                                 ,RULE.REPORT_CODE
+                                             FROM (
+											<include refid="managerReportList" />
+                                                   ) CALENDAR
+                                                   , REPORT_RULE RULE
+                                             WHERE TO_CHAR(TO_DATE(CALENDAR.REPORT_DT),'d') = RULE.REPORT_DAY(+)
+                                             ORDER BY CALENDAR.REPORT_DT ASC
+                                            ) REPORT_CALENDAR, REPORT
+                                   WHERE  REPORT.REPORT_CODE = REPORT_CALENDAR.REPORT_CODE
+                                     AND  REPORT.REPORT_MANAGER = #{empCode}) MANAGER_REPORT_CALENDAR
+    WHERE  REPORT.REPORT_MANAGER = EMPLOYEE_VIEW.EMP_CODE
+      AND  REPORT.REPORT_CODE = MANAGER_REPORT_CALENDAR.REPORT_CODE
+    ORDER  BY REPORT_DT DESC
+</select>
+
+<select id="selectManagerReport" resultType="managerReport">
+SELECT  REPORT.REPORT_CODE
+           ,REPORT.REPORT_TITLE
+           ,REPORT.REPORT_DETAIL
+           ,REPORT.REPORT_MANAGER
+           ,REPORT.REPORT_TYPE
+           ,REPORT.REPORT_TEAM_CODE
+           ,REPORT.JOB_CODE
+           ,REPORT.REPORT_OPEN
+           ,EMPLOYEE_VIEW.EMP_NAME AS REPORT_MANAGER_NAME
+           ,EMPLOYEE_VIEW.POSITION_VALUE AS REPORT_MANAGER_POSITION
+           ,EMPLOYEE_VIEW.TEAM_VALUE AS REPORT_TEAM_NAME
+           ,MANAGER_REPORT_CALENDAR.REPORT_DT AS REPORT_DT
+     FROM  REPORT, EMPLOYEE_VIEW,
+                                 (SELECT  REPORT_CALENDAR.REPORT_DT
+                                         ,REPORT_CALENDAR.REPORT_CODE
+                                    FROM  (
+                                           SELECT CALENDAR.REPORT_DT
+                                                 ,TO_CHAR(TO_DATE(CALENDAR.REPORT_DT),'d') AS DAY_NUM
+                                                 ,RULE.REPORT_CODE
+                                             FROM (
+												SELECT SUBSTR(#{reportDt},1,5)||SUBSTR(#{reportDt},6,3)||LPAD(LEVEL,2,'0') REPORT_DT
+                                                        FROM DUAL
+                                                        CONNECT BY LEVEL <![CDATA[<]]>=  TO_CHAR(LAST_DAY(#{reportDt}),'dd')
+                                                   ) CALENDAR
+                                                   , REPORT_RULE RULE
+                                             WHERE TO_CHAR(TO_DATE(CALENDAR.REPORT_DT),'d') = RULE.REPORT_DAY(+)
+                                             ORDER BY CALENDAR.REPORT_DT ASC
+                                            ) REPORT_CALENDAR, REPORT
+                                   WHERE  REPORT.REPORT_CODE = REPORT_CALENDAR.REPORT_CODE
+                                     AND  REPORT.REPORT_MANAGER = #{empCode}) MANAGER_REPORT_CALENDAR
+    WHERE  REPORT.REPORT_MANAGER = EMPLOYEE_VIEW.EMP_CODE
+      AND  REPORT.REPORT_CODE = MANAGER_REPORT_CALENDAR.REPORT_CODE
+      AND  REPORT_DT =#{reportDt}
+      AND REPORT.REPORT_CODE =#{reportCode}
+
+</select>
+
+
+
+
+<select id="selectManagerReportedList" resultType="employee">
+ SELECT EMP_CODE
+       ,EMP_ID
+       ,EMP_PASSWORD
+       ,EMP_NAME
+       ,EMP_TELEPHONE
+       ,EMP_REGINUM
+       ,EMP_EMAIL
+       ,EMP_ADDRESS
+       ,EMP_HIRE_DT
+       ,STATUS_CODE
+       ,STATUS_VALUE
+       ,EMP_ST_UPDATE_DT
+       ,HEAD_OFFICE_CODE
+       ,HEAD_OFFICE_VALUE
+       ,GROUP_CODE
+       ,GROUP_VALUE
+       ,TEAM_CODE
+       ,TEAM_VALUE
+       ,POSITION_CODE
+       ,POSITION_VALUE
+       ,CHARGE_CODE
+       ,CHARGE_VALUE
+       ,AUTHORITY_CODE
+       ,AUTHORITY_VALUE
+  FROM (SELECT REPORT_CODE_DATE_WRITER.REPORT_WRITER
+         FROM (SELECT REPORT_CALENDAR.REPORT_DT
+                     ,REPORT_CALENDAR.DAY_NUM
+                     ,REPORT_CALENDAR.REPORT_CODE
+                     ,REPORT_WRITER.REPORT_WRITER
+                FROM  (SELECT CALENDAR.REPORT_DT
+                             ,TO_CHAR(TO_DATE(CALENDAR.REPORT_DT),'d') AS DAY_NUM
+                             ,RULE.REPORT_CODE
+                         FROM (SELECT SUBSTR(#{reportDt},1,5)||SUBSTR(#{reportDt},6,3)||LPAD(LEVEL,2,'0') REPORT_DT
+					             FROM DUAL
+					          CONNECT BY LEVEL <![CDATA[<]]>=  TO_CHAR(LAST_DAY(#{reportDt}),'dd')
+                              ) CALENDAR
+                              , REPORT_RULE RULE
+                        WHERE TO_CHAR(TO_DATE(CALENDAR.REPORT_DT),'d') = RULE.REPORT_DAY(+)
+                		  AND RULE.REPORT_CODE =#{reportCode}
+                		ORDER BY CALENDAR.REPORT_DT ASC
+               			) REPORT_CALENDAR , REPORT_WRITER
+        	  WHERE REPORT_CALENDAR.REPORT_CODE(+) = REPORT_WRITER.REPORT_CODE
+           		AND REPORT_CALENDAR.REPORT_DT = #{reportDt}
+        		) REPORT_CODE_DATE_WRITER
+ 		 WHERE REPORT_CODE_DATE_WRITER.REPORT_WRITER IN ( SELECT REPORT_DOC_WRITER
+  											                FROM REPORT_DOCUMENT
+                		                                   WHERE REPORT_CODE = #{reportCode}
+                        		                             AND TO_CHAR(REPORT_DOC_DT,'YYYY-MM-DD') =  #{reportDt})
+         )REPORTERS,EMPLOYEE_VIEW
+  WHERE EMPLOYEE_VIEW.EMP_CODE = REPORTERS.REPORT_WRITER
+
+</select>
+
+<select id="selectManagerNotReportedList" resultType="employee">
+ SELECT EMP_CODE
+       ,EMP_ID
+       ,EMP_PASSWORD
+       ,EMP_NAME
+       ,EMP_TELEPHONE
+       ,EMP_REGINUM
+       ,EMP_EMAIL
+       ,EMP_ADDRESS
+       ,EMP_HIRE_DT
+       ,STATUS_CODE
+       ,STATUS_VALUE
+       ,EMP_ST_UPDATE_DT
+       ,HEAD_OFFICE_CODE
+       ,HEAD_OFFICE_VALUE
+       ,GROUP_CODE
+       ,GROUP_VALUE
+       ,TEAM_CODE
+       ,TEAM_VALUE
+       ,POSITION_CODE
+       ,POSITION_VALUE
+       ,CHARGE_CODE
+       ,CHARGE_VALUE
+       ,AUTHORITY_CODE
+       ,AUTHORITY_VALUE
+  FROM (SELECT REPORT_CODE_DATE_WRITER.REPORT_WRITER
+         FROM (SELECT REPORT_CALENDAR.REPORT_DT
+                     ,REPORT_CALENDAR.DAY_NUM
+                     ,REPORT_CALENDAR.REPORT_CODE
+                     ,REPORT_WRITER.REPORT_WRITER
+                FROM  (SELECT CALENDAR.REPORT_DT
+                             ,TO_CHAR(TO_DATE(CALENDAR.REPORT_DT),'d') AS DAY_NUM
+                             ,RULE.REPORT_CODE
+                         FROM (SELECT SUBSTR(#{reportDt},1,5)||SUBSTR(#{reportDt},6,3)||LPAD(LEVEL,2,'0') REPORT_DT
+					             FROM DUAL
+					          CONNECT BY LEVEL <![CDATA[<]]>=  TO_CHAR(LAST_DAY(#{reportDt}),'dd')
+                              ) CALENDAR
+                              , REPORT_RULE RULE
+                        WHERE TO_CHAR(TO_DATE(CALENDAR.REPORT_DT),'d') = RULE.REPORT_DAY(+)
+                		  AND RULE.REPORT_CODE =#{reportCode}
+                		ORDER BY CALENDAR.REPORT_DT ASC
+               			) REPORT_CALENDAR , REPORT_WRITER
+        	  WHERE REPORT_CALENDAR.REPORT_CODE(+) = REPORT_WRITER.REPORT_CODE
+           		AND REPORT_CALENDAR.REPORT_DT = #{reportDt}
+        		) REPORT_CODE_DATE_WRITER
+ 		 WHERE REPORT_CODE_DATE_WRITER.REPORT_WRITER NOT IN ( SELECT REPORT_DOC_WRITER
+  											                FROM REPORT_DOCUMENT
+                		                                   WHERE REPORT_CODE = #{reportCode}
+                        		                             AND TO_CHAR(REPORT_DOC_DT,'YYYY-MM-DD') =  #{reportDt})
+         )REPORTERS,EMPLOYEE_VIEW
+  WHERE EMPLOYEE_VIEW.EMP_CODE = REPORTERS.REPORT_WRITER
+
+</select>
+
+
+<select id="selectReportInfoByEmpcodeForRegistDoc" resultType="report">
+	SELECT REPORT_TYPE,
+		   JOB_CODE,
+		   REPORT_TITLE,
+		   REPORT_OPEN,
+		   REPORT_MANAGER
+	  FROM REPORT
+	 WHERE REPORT_CODE = #{reportCode}
+</select>
+
+
+<select id="selectReportDocListByEmpCode" resultType="reportDoc">
+	SELECT
+		  REPORT_DOC_CODE
+		, REPORT_DOC_MARKUP
+		, REPORT_DOC_DT
+		, REPORT_DOC_WRITER
+		, REPORT_TYPE
+		, REPORT_CODE
+		, REPORT_DOC_TEAM_CODE
+		, JOB_CODE
+		, REPORT_OPEN
+		, REPORT_DOC_TITLE
+		, REPORT_DOC_TEMP
+	FROM REPORT_VIEW
+   WHERE REPORT_DOC_WRITER = #{loginEmpCode}
+    AND REPORT_DOC_TEMP = 'N'
+   <include refid="searchDoc" />
+   ORDER BY REPORT_DOC_DT DESC
+</select>
+
+<select id="selectReportDocTotalCount" resultType="int">
+	SELECT COUNT(*)
+	  FROM REPORT_DOCUMENT
+     WHERE REPORT_DOC_CODE IS NOT NULL
+       AND REPORT_DOC_WRITER = #{empCode}
+</select>
+
+<select id="selectReportDocListByTeamCode" resultType="reportDoc">
+	SELECT
+		REPORT_DOC_CODE
+		, REPORT_DOC_MARKUP
+		, REPORT_DOC_DT
+		, REPORT_DOC_WRITER
+		, REPORT_TYPE
+		, REPORT_CODE
+		, REPORT_DOC_TEAM_CODE
+		, JOB_CODE
+		, REPORT_OPEN
+		, REPORT_DOC_TITLE
+		, REPORT_DOC_TEMP
+	FROM REPORT_VIEW
+   WHERE REPORT_DOC_TEAM_CODE = #{teamCode}
+   AND REPORT_DOC_TEMP = 'N'
+   <include refid="searchDoc" />
+   ORDER BY REPORT_DOC_DT DESC
+</select>
+
+<select id="selectReportDocTotalCountByTeamCode" resultType="int">
+	SELECT COUNT(*)
+	  FROM REPORT_DOCUMENT
+     WHERE REPORT_DOC_CODE IS NOT NULL
+       AND REPORT_DOC_TEAM_CODE = #{teamCode}
+       AND REPORT_OPEN = 'Y'
+</select>
+
+
+<select id="selectReportFromManager" resultType="reportDoc">
+	SELECT *
+	  FROM REPORT_DOCUMENT
+	 WHERE REPORT_CODE=#{reportCode}
+	   AND REPORT_DOC_WRITER=#{empCode}
+	   AND TO_CHAR(REPORT_DOC_DT,'YYYY-MM-DD')=#{reportDt}
+</select>
+
+<update id="updateReportDocMarkupTemp" parameterType="reportDoc">
+
+	UPDATE REPORT_DOCUMENT
+	SET REPORT_DOC_MARKUP = #{reportDocMarkup}
+	    ,REPORT_DOC_TEMP = #{reportDocTemp}
+	WHERE REPORT_DOC_CODE = #{reportDocCode}
+
+</update>
+
+<select id="selectReportDocListByEmpCodeTemp" resultType="reportDoc">
+	SELECT
+		REPORT_DOC_CODE
+		, REPORT_DOC_MARKUP
+		, REPORT_DOC_DT
+		, REPORT_DOC_WRITER
+		, REPORT_TYPE
+		, REPORT_CODE
+		, REPORT_DOC_TEAM_CODE
+		, JOB_CODE
+		, REPORT_OPEN
+		, REPORT_DOC_TITLE
+		, REPORT_DOC_TEMP
+	FROM REPORT_VIEW
+   WHERE REPORT_DOC_WRITER = #{loginEmpCode}
+     AND REPORT_DOC_TEMP = 'Y'
+     <include refid="searchDoc" />
+   ORDER BY REPORT_DOC_DT DESC
+</select>
+
+<select id="selectReportDocTotalCountForTemp" resultType="int">
+	SELECT COUNT(*)
+	  FROM REPORT_DOCUMENT
+     WHERE REPORT_DOC_CODE IS NOT NULL
+       AND REPORT_DOC_WRITER = #{empCode}
+       AND REPORT_DOC_TEMP = 'Y'
+</select>
+
+<select id="selectReportDocAll" resultType="reportDoc">
+	SELECT
+		REPORT_DOC_CODE
+		, REPORT_DOC_MARKUP
+		, REPORT_DOC_DT
+		, REPORT_DOC_WRITER
+		, REPORT_TYPE
+		, REPORT_CODE
+		, REPORT_DOC_TEAM_CODE
+		, JOB_CODE
+		, REPORT_OPEN
+		, REPORT_DOC_TITLE
+		, REPORT_DOC_TEMP
+	FROM REPORT_DOCUMENT
+	WHERE REPORT_OPEN ='Y'
+</select>
+
+<select id="selectReportDocByReportDocCode" resultType="reportDoc">
+	SELECT  REPORT_DOC_CODE
+			,REPORT_DOC_MARKUP
+			,REPORT_DOC_DT
+			,REPORT_DOC_WRITER
+			,REPORT_DOCUMENT.REPORT_TYPE AS REPORT_TYPE
+			,REPORT_DOCUMENT.REPORT_CODE AS REPORT_CODE
+			,REPORT_DOC_TEAM_CODE
+			,REPORT_DOCUMENT.JOB_CODE AS JOB_CODE
+			,REPORT_DOCUMENT.REPORT_OPEN AS REPORT_OPEN
+			,REPORT_DOC_TITLE
+			,REPORT_DOC_TEMP
+    	    ,REPORT.REPORT_MANAGER AS MANAGER_EMP_CODE
+	 FROM  REPORT_DOCUMENT, REPORT
+	WHERE  REPORT_DOCUMENT.REPORT_CODE = REPORT.REPORT_CODE
+	  AND  REPORT_DOC_CODE = #{reportDocCode}
+</select>
+
+<update id="updateReportDocMarkup" parameterType="reportDoc">
+	UPDATE REPORT_DOCUMENT
+	   SET REPORT_DOC_MARKUP = #{reportDocMarkup}
+ 	 WHERE REPORT_DOC_CODE = #{reportDocCode}
+</update>
+
+
+
+</mapper>

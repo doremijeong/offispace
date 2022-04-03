@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Notification-Mapper">
+
+<sql id="search">
+	<if test="searchType == 'headerNotificationList'.toString()">
+		AND NT_CONFIRM ='N'
+		AND NT_TITLE != '재택근무 확인 요청'
+	</if>
+	<if test="searchType == 'instantNotification'.toString()">
+		AND NT_NEW ='Y'
+		AND NT_CONFIRM='N'
+	</if>
+</sql>
+
+<sql id="update">
+	<if test="searchType == 'headerNotificationList'.toString()">
+		AND NT_CONFIRM ='N'
+	</if>
+	<if test="searchType == 'instantNotification'.toString()">
+		AND NT_NEW ='Y'
+		AND NT_CONFIRM='N'
+	</if>
+</sql>
+
+<sql id="confirm">
+	<if test="confirmType == 'all'.toString()">
+	</if>
+	<if test="confirmType == 'one'.toString()">
+		AND NT_CODE = #{ntCode}
+	</if>
+</sql>
+<select id="selectNotificationList" resultType="notification">
+	SELECT NT_CODE
+      ,NT_FROM_EMP_CODE
+      ,NT_LINK_PATH
+      ,NT_NEW
+      ,EMP_CODE
+      ,NT_CONFIRM
+      ,NT_DT
+      ,NT_MSG
+      ,NT_ICON
+      ,NT_MSEC
+      ,NT_TITLE
+      ,NT_IMPORTANT
+ FROM NOTIFICATION
+WHERE EMP_CODE = #{empCode}
+<include refid="search"/>
+ORDER BY NT_DT ASC
+</select>
+
+<update id="updateIsConfrim">
+UPDATE NOTIFICATION
+   SET NT_CONFIRM = 'Y',
+       NT_NEW = 'N'
+ WHERE EMP_CODE = #{empCode}
+<include refid="confirm"/>
+</update>
+
+
+<update id="updateIsNotNew">
+UPDATE NOTIFICATION
+   SET NT_NEW = 'N'
+ WHERE NT_CODE IN (SELECT NT_CODE
+                     FROM NOTIFICATION
+                    WHERE EMP_CODE = #{empCode}
+ <include refid="update"/>
+                      )
+</update>
+
+<insert id="insertNotification">
+INSERT INTO NOTIFICATION(
+		 NT_CODE
+		,NT_FROM_EMP_CODE
+		,NT_LINK_PATH
+		,NT_NEW
+		,EMP_CODE
+		,NT_CONFIRM
+		,NT_DT
+		,NT_MSG
+		,NT_ICON
+		,NT_MSEC
+		,NT_TITLE
+		,NT_IMPORTANT
+		)
+VALUES(
+		#{ntCode}
+		,#{ntFromEmpCode}
+		,#{ntLinkPath}
+		,#{ntNew}
+		,#{empCode}
+		,#{ntConfirm}
+		,SYSDATE
+		,#{ntMsg}
+		,#{ntIcon}
+		,#{ntMsec}
+		,#{ntTitle}
+		,#{ntImportant}
+)
+</insert>
+
+<select id="selectNotiCodeToRegister" resultType="str">
+	SELECT 'NT'||LPAD(NOTI_SEQ.NEXTVAL,4,0)
+	  FROM DUAL
+</select>
+</mapper>

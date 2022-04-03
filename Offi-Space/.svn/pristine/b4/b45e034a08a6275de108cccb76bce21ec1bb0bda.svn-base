@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="Mail-Mapper">
+	<select id="selectAllMailList" >
+SELECT
+		MAIL_CODE
+		, MAIL_FROM
+		, MAIL_TO
+		, MAIL_DT
+		, MAIL_TITLE
+		, MAIL_CONTENT
+		, MAIL_STATUS
+		, MAIL_TEMPORARY
+		, MAIL_IMPORTANCE
+		, MAIL_ENABLED
+		, MAIL_REFERENCE
+		, MAIL_STORE
+	FROM
+		MAIL
+    WHERE
+		MAIL_ENABLED='Y'
+</select>
+</mapper>

@@ -1,0 +1,296 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ page trimDirectiveWhitespaces="true"%>
+<!DOCTYPE html>
+<body>
+	<div class="content-wrapper">
+		<section class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h5>개인근태</h5>
+					</div>
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item"><a href="#">Home</a></li>
+							<li class="breadcrumb-item active">개인근태</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+
+		<section class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-12">
+						<div class="card card-info card-outline">
+
+							<div>
+								<h2 class="title" style="text-align: center; margin-top: 1%;">
+									<a href="#"><i class="fas fa-chevron-left"></i></a>&nbsp;&nbsp;&nbsp;2021.01&nbsp;&nbsp;&nbsp;<a
+										href="#"><i class="fas fa-chevron-right"></i></a>
+								</h2>
+							</div>
+							<!-- ./card-header -->
+
+							<div class="card-body">
+								<div class="row">
+									<div class="col-12">
+										<div class="row">
+											<div class="col-md-3 col-sm-6 col-12">
+												<div class="info-box bg-success">
+													<!-- <span class="info-box-icon"><i class="far fa-bookmark"></i></span> -->
+													<div class="info-box-content">
+														<span class="info-box-number text-center"><h3
+																style="margin: 0px;">30시간</h3></span> <span
+															class="info-box-text text-center text-bold">이번달 총
+															근무</span>
+													</div>
+													<!-- /.info-box-content -->
+												</div>
+												<!-- /.info-box -->
+											</div>
+											<!-- /.col -->
+											<div class="col-md-3 col-sm-6 col-12">
+												<div class="info-box bg-warning">
+													<div class="info-box-content">
+														<span class="info-box-number text-center"><h3
+																style="margin: 0px;">1</h3></span> <span
+															class="info-box-text text-center text-bold">지각</span>
+													</div>
+													<!-- /.info-box-content -->
+												</div>
+												<!-- /.info-box -->
+											</div>
+											<!-- /.col -->
+											<div class="col-md-3 col-sm-6 col-12">
+												<div class="info-box bg-info">
+													<div class="info-box-content">
+														<span class="info-box-number text-center"><h3
+																style="margin: 0px;">1</h3></span> <span
+															class="info-box-text text-center text-bold">조퇴</span>
+													</div>
+													<!-- /.info-box-content -->
+												</div>
+												<!-- /.info-box -->
+											</div>
+											<!-- /.col -->
+											<div class="col-md-3 col-sm-6 col-12">
+												<div class="info-box bg-danger">
+													<div class="info-box-content">
+														<span class="info-box-number text-center"><h3
+																style="margin: 0px;">1</h3></span> <span
+															class="info-box-text text-center text-bold">결근</span>
+													</div>
+													<!-- /.info-box-content -->
+												</div>
+												<!-- /.info-box -->
+											</div>
+											<!-- /.col -->
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- /.card-body -->
+							<div class="card">
+							<div class="card-body p-0">
+								<div class="col-12 d-flex justify-content-between">
+									<div style="margin-top: 2%;">
+										<p>(근무타입)A형</p>
+									</div>
+									<div class="row" style="margin-top: 2%;">
+										<span><a href="#"><i class="far fa-file-alt"></i>선택적근무신청서</a></span>&nbsp;&nbsp;
+										<span><a href="#"><i class="far fa-file-alt"></i>재택근무신청서</a></span>&nbsp;&nbsp;
+									</div>
+								</div>
+
+
+								<table class="table table-hover">
+									<tbody>
+										<div class="p-0" style="display: none;">
+											<table class="table table-hover">
+												<tbody>
+													<tr>
+														<th>26일(일)</th>
+														<th>27일(월)</th>
+														<th>28일(화)</th>
+														<th>29일(수)</th>
+														<th>30일(목)</th>
+														<th>31일(금)</th>
+														<th>1일(토)</th>
+													</tr>
+													<tr>
+														<td></td>
+														<td></td>
+														<td></td>
+														<td></td>
+														<td></td>
+														<td>
+															<span class="badge badge-info">조퇴</span>
+														</td>
+														<td></td>
+													</tr>
+													
+													<tr>
+														<th>2일(일)</th>
+														<th>3일(월)</th>
+														<th>4일(화)</th>
+														<th>5일(수)</th>
+														<th>6일(목)</th>
+														<th>7일(금)</th>
+														<th>8일(토)</th>
+													</tr>
+													<tr>
+														<td></td>
+														<td>
+															<span class="badge badge-success">정상</span>
+														</td>
+														<td>
+															<span class="badge badge-danger">결근</span>
+														</td>
+														<td>
+															<span class="badge badge-success">정상</span>
+														</td>
+														<td>
+															<span class="badge badge-success">정상</span>
+														</td>
+														<td>
+															<span class="badge badge-success">정상</span>
+														</td>
+														<td></td>
+													</tr>
+													
+													<tr>
+														<th>9일(일)</th>
+														<th>10일(월)</th>
+														<th>11일(화)</th>
+														<th>12일(수)</th>
+														<th>13일(목)</th>
+														<th>14일(금)</th>
+														<th>15일(토)</th>
+													</tr>
+													<tr>
+														<td></td>
+														<td>
+															<span class="badge badge-success">정상</span>
+														</td>
+														<td>
+															<span class="badge badge-success">정상</span>
+														</td>
+														<td>
+															<span class="badge badge-success">정상</span>
+														</td>
+														<td>
+															<span class="badge badge-success">정상</span>
+														</td>
+														<td>
+															<span class="badge badge-success">정상</span>
+														</td>
+														<td></td>
+													</tr>
+													
+													<tr>
+														<th>16일(일)</th>
+														<th>17일(월)</th>
+														<th>18일(화)</th>
+														<th>19일(수)</th>
+														<th>20일(목)</th>
+														<th>21일(금)</th>
+														<th>22일(토)</th>
+													</tr>
+													<tr>
+														<td></td>
+														<td>
+															<span class="badge badge-success">정상</span>
+														</td>
+														<td>
+															<span class="badge badge-success">정상</span>
+														</td>
+														<td>
+															<span class="badge badge-warning">지각</span>
+														</td>
+														<td>
+															<span class="badge badge-success">정상</span>
+														</td>
+														<td>
+															<span class="badge badge-success">정상</span>
+														</td>
+														<td></td>
+													</tr>
+													
+													<tr>
+														<th>23일(일)</th>
+														<th>24일(월)</th>
+														<th>25일(화)</th>
+														<th>26일(수)</th>
+														<th>27일(목)</th>
+														<th>28일(금)</th>
+														<th>29일(토)</th>
+													</tr>
+													<tr>
+														<td></td>
+														<td>
+															<span class="badge badge-success">정상</span>
+														</td>
+														<td>
+															<span class="badge badge-success">정상</span>
+														</td>
+														<td>
+															<span class="badge badge-success">정상</span>
+														</td>
+														<td>
+															<span class="badge badge-success">정상</span>
+														</td>
+														<td>
+															<span class="badge badge-success">정상</span>
+														</td>
+														<td></td>
+													</tr>
+													
+													<tr>
+														<th>30일(일)</th>
+														<th>31일(월)</th>
+														<th>1일(화)</th>
+														<th>2일(수)</th>
+														<th>3일(목)</th>
+														<th>4일(금)</th>
+														<th>5일(토)</th>
+													</tr>
+													<tr>
+														<td></td>
+														<td>
+															<span class="badge badge-success">정상</span>
+														</td>
+														<td>
+															<span class="badge badge-success">정상</span>
+														</td>
+														<td>
+															<span class="badge badge-success">정상</span>
+														</td>
+														<td>
+															<span class="badge badge-success">정상</span>
+														</td>
+														<td>
+															<span class="badge badge-success">정상</span>
+														</td>
+														<td></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<!-- /.card-body -->
+						</div>
+
+						
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+</body>

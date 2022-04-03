@@ -1,0 +1,15 @@
+package kr.co.offispace.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
+import kr.co.offispace.service.employee.EmployeeService;
+
+@Controller
+public class EmployeeController {
+
+	@Autowired
+	private EmployeeService employeeService;
+	
+	
+}

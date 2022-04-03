@@ -1,0 +1,11 @@
+package kr.co.offispace.service.message;
+
+import java.sql.SQLException;
+import java.util.Map;
+
+import kr.co.offispace.command.Criteria;
+
+public interface MessageService {
+	
+	Map<String, Object> getFromList(Criteria cri) throws SQLException;
+}

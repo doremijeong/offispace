@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+
+<style>
+.textarea-input{
+	height: 100%;
+	 width: 100%;
+	 border: #ddd;
+	 resize: none;
+ }
+
+textarea::-webkit-scrollbar {
+   display: none;
+}
+
+.autoInput{
+	height: 100%;
+	 width: 100%;
+	border: #ddd;
+}
+</style>
+<input class="report-doc-title" type="hidden" value="일일 업무 계획 보고서">
+<table class="__se_tbl" style="width: 800px; border-collapse: collapse !important; color: black; background: white; border: 0px solid black; font-size: 12px; font-family: malgun gothic,dotum,arial,tahoma;"><!-- Header -->
+	<tbody>
+		<tr>
+			<td style="width:300px; padding: 3px !important; border: 0px solid black; height: 90px !important; font-size: 22px; font-weight: bold; text-align: center; vertical-align: middle;"
+			colspan="2"
+			class="dext_table_border_t dext_table_border_r dext_table_border_b dext_table_border_l">
+				일일 업무 계획 보고서
+			</td>
+		</tr>
+		<tr>
+			<td style="width:300px; border: 0; padding: 0 !important"
+			class="dext_table_border_t dext_table_border_r dext_table_border_b dext_table_border_l">
+
+				<table class="__se_tbl"
+				style="background: white; margin: 0px; border: 1px solid black; border-image: none; color: black; font-family: malgun gothic,dotum,arial,tahoma; font-size: 12px; border-collapse: collapse !important;"><!-- User -->
+
+					<tbody>
+						<tr>
+							<td style="width: 100px; height: 22px; vertical-align: middle; border: 1px solid black; text-align: center; font-weight: bold; background: rgb(221, 221, 221); padding: 3px !important;">
+								보고자
+							</td>
+							<td style="width: 200px; height: 22px; vertical-align: middle; border: 1px solid black; text-align: left; padding: 3px !important;">
+									<input class="autoInput" name="reportDocWriter" readonly  data-code="" value=""></input>
+							</td>
+						</tr>
+						<tr>
+							<td style="width:100px;padding: 3px !important; height: 22px; vertical-align: middle; border: 1px solid black; text-align: center; font-weight: bold; background: #ddd;">
+								보고일
+							</td>
+							<td style="width: 200px; height: 22px; vertical-align: middle; border: 1px solid black; text-align: left; padding: 3px !important;">
+								<input class="autoInput" name="reportDocDt" readonly data-code="" value=""></input>
+							</td>
+						</tr>
+						<tr>
+							<td style="width:100px;padding: 3px !important; height: 22px; vertical-align: middle; border: 1px solid black; text-align: center; font-weight: bold; background: #ddd;">
+								소속
+							</td>
+							<td style="width:200px;padding: 3px !important; height: 22px; vertical-align: middle; border: 1px solid black; text-align: left;">
+								<input class="autoInput" name="reportDocGroupTeam" readonly data-code="" value=""></input>
+							</td>
+						</tr>
+						<tr>
+							<td style="width:100px;padding: 3px !important; height: 22px; vertical-align: middle; border: 1px solid black; text-align: center; font-weight: bold; background: #ddd;">
+								운영자
+							</td>
+							<td style="width:200px;padding: 3px !important; height: 22px; vertical-align: middle; border: 1px solid black; text-align: left;">
+								<input class="autoInput" name="reportManager" readonly data-code="" value=""></input>
+							</td>
+						</tr>
+							<tr>
+								<td style="width:100px;padding: 3px !important; height: 22px; vertical-align: middle; border: 1px solid black; text-align: center; font-weight: bold; background: #ddd;">
+									문서번호
+								</td>
+								<td style="width: 200px; height: 22px; vertical-align: middle; border: 1px solid black; text-align: left; padding: 3px !important;">
+										<input class="autoInput" name="reportDocCode" readonly data-code="" value=""></input>
+								</td>
+							</tr>
+					</tbody>
+				</table>
+
+			</td>
+			<td style="text-align: right; padding: 0px!important; border: 0!important; vertical-align: top !important" class="dext_table_border_t dext_table_border_r dext_table_border_b dext_table_border_l">
+
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<br>
+
+<table style="width: 800px; margin-top:10px; border-collapse: collapse !important; color: #000; background: #fff; font-size: 12px; border: 0; font-family: malgun gothic,dotum,arial,tahoma;">
+	<colgroup>
+		<col width="10%">
+		<col width="50%">
+		<col width="10%">
+		<col width="20%">
+ </colgroup>
+
+ <tbody>
+	 <tr>
+		 <td colspan="4" style="padding: 3px; height: 20px;  vertical-align: middle" class="dext_table_border_t dext_table_border_r dext_table_border_b dext_table_border_l">
+
+1. 주간업무목표
+		 </td>
+	 </tr>
+	 <tr>
+		 <td style="padding: 3px; height: 20px; border: 1px solid #000; vertical-align: middle; background: #ddd; text-align: center">
+			분류
+		 </td>
+		 <td style="padding: 3px; height: 20px; border: 1px solid #000; vertical-align: middle; background: #ddd; text-align: center">
+			목표
+	 	</td>
+	 	<td style="padding: 3px; height: 20px; border: 1px solid #000; vertical-align: middle; background: #ddd; text-align: center">
+			진척도(%)
+ 		</td>
+ 		<td style="padding: 3px; height: 20px; border: 1px solid #000; vertical-align: middle; background: #ddd; text-align: center">
+			비고
+		</td>
+		<tr style="height: 130px;">
+			<td style="padding: 3px; height: 20px; border: 1px solid #000; vertical-align: middle; text-align: center;" >
+				주간 <br/> 업무 목표
+			</td>
+			<td style="padding: 3px; height: 20px; border: 1px solid #000; vertical-align: middle" >
+				<textarea class="textarea-input" data-content></textarea>
+			</td>
+			<td style="padding: 3px; height: 20px; border: 1px solid #000; vertical-align: middle" >
+				<textarea class="textarea-input" data-content></textarea>
+			</td>
+			<td style="padding: 3px; height: 20px; border: 1px solid #000; vertical-align: middle" >
+				<textarea class="textarea-input" data-content></textarea>
+			</td>
+		</tr>
+
+
+ </tbody>
+</table>
+
+
+<table style="width: 800px; margin-top:10px; border-collapse: collapse !important; color: #000; background: #fff; font-size: 12px; border: 0; font-family: malgun gothic,dotum,arial,tahoma;">
+	<colgroup>
+			<col width="11%">
+			<col width="35%">
+			<col width="35%">
+			<col width="19%">
+	 </colgroup>
+
+ <tbody>
+	 <tr>
+		 <td colspan="4" style="padding: 3px; height: 20px; vertical-align: middle" class="dext_table_border_t dext_table_border_r dext_table_border_b dext_table_border_l">
+
+2. 금일업무 계획 및 진행현황
+		 </td>
+	 </tr>
+	 <tr>
+		<td style="padding: 3px; height: 20px; border: 1px solid #000; vertical-align: middle; background: #ddd; text-align: center">
+		 분류
+		</td>
+		<td style="padding: 3px; height: 20px; border: 1px solid #000; vertical-align: middle; background: #ddd; text-align: center">
+		 오전
+		</td>
+		<td style="padding: 3px; height: 20px; border: 1px solid #000; vertical-align: middle; background: #ddd; text-align: center">
+		 오후
+		</td>
+		<td style="padding: 3px; height: 20px; border: 1px solid #000; vertical-align: middle; background: #ddd; text-align: center">
+		 비고
+	 </td>
+	 <tr style="height: 200px;">
+		 <td style="padding: 3px; height: 20px; border: 1px solid #000; vertical-align: middle;  text-align: center;" >
+			금일 <br/> 업무 계획
+		</td>
+		<td style="padding: 3px; height: 20px; border: 1px solid #000; vertical-align: middle" >
+			<textarea class="textarea-input" data-content></textarea>
+		</td>
+		<td style="padding: 3px; height: 20px; border: 1px solid #000; vertical-align: middle" >
+			<textarea class="textarea-input" data-content></textarea>
+		</td>
+		<td style="padding: 3px; height: 20px; border: 1px solid #000; vertical-align: middle" >
+			<textarea class="textarea-input" data-content></textarea>
+		</td>
+	 </tr>
+	 <tr style="height: 200px;">
+		<td style="padding: 3px; height: 20px; border: 1px solid #000; vertical-align: middle;  text-align: center;" >
+			금일 <br/> 진행 현황
+		</td>
+		<td style="padding: 3px; height: 20px; border: 1px solid #000; vertical-align: middle" >
+			<textarea class="textarea-input" data-content></textarea>
+		</td>
+		<td style="padding: 3px; height: 20px; border: 1px solid #000; vertical-align: middle" >
+				<textarea class="textarea-input" data-content></textarea>
+		</td>
+		<td style="padding: 3px; height: 20px; border: 1px solid #000; vertical-align: middle" >
+				<textarea class="textarea-input" data-content></textarea>
+		</td>
+	</tr>
+
+
+
+ </tbody>
+</table>
+
+
+<table style="width: 800px; margin-top:10px; border-collapse: collapse !important; color: #000; background: #fff; font-size: 12px; border: 0; font-family: malgun gothic,dotum,arial,tahoma;">
+
+		<colgroup>
+			<col width="11%">
+			<col width="35%">
+			<col width="35%">
+			<col width="19%">
+		 </colgroup>
+
+
+ <tbody>
+	 <tr>
+		 <td colspan="4" style="padding: 3px; height: 20px; vertical-align: middle" class="dext_table_border_t dext_table_border_r dext_table_border_b dext_table_border_l">
+
+3. 익일예정사항
+		 </td>
+	 </tr>
+	 <tr>
+		<td style="padding: 3px; height: 20px; border: 1px solid #000; vertical-align: middle; background: #ddd; text-align: center">
+		 분류
+		</td>
+		<td style="padding: 3px; height: 20px; border: 1px solid #000; vertical-align: middle; background: #ddd; text-align: center">
+		 오전
+		</td>
+		<td style="padding: 3px; height: 20px; border: 1px solid #000; vertical-align: middle; background: #ddd; text-align: center">
+		 오후
+		</td>
+		<td style="padding: 3px; height: 20px; border: 1px solid #000; vertical-align: middle; background: #ddd; text-align: center">
+		 비고
+	 </td>
+	 <tr  style="height: 130px;">
+		 <td style="padding: 3px; height: 20px; border: 1px solid #000; vertical-align: middle;  text-align: center;" >
+			익일  <br/>업무 계획
+		</td>
+		<td style="padding: 3px; height: 20px; border: 1px solid #000; vertical-align: middle" >
+				<textarea class="textarea-input" data-content></textarea>
+		</td>
+		<td style="padding: 3px; height: 20px; border: 1px solid #000; vertical-align: middle" >
+				<textarea class="textarea-input" data-content></textarea>
+		</td>
+		<td style="padding: 3px; height: 20px; border: 1px solid #000; vertical-align: middle" >
+				<textarea class="textarea-input" data-content></textarea>
+		</td>
+	 </tr>
+ </tbody>
+</table>
+
+
+
+</span>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

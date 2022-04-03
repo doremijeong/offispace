@@ -1,0 +1,32 @@
+package kr.co.offispace.dao.message;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+
+import kr.co.offispace.command.Criteria;
+import kr.co.offispace.dto.MessageVO;
+
+public class MessageDAOImpl implements MessageDAO {
+	
+	private SqlSession session;
+	private MessageDAO messageDAO;
+	
+	public void setSession(SqlSession session) {
+		this.session = session;
+	}
+	
+	public void setMessageDAO(MessageDAO messageDAO) {
+		this.messageDAO = messageDAO;
+	}
+	
+	
+	
+	@Override
+	public List<MessageVO> selectMsgFromList(Criteria cri) throws SQLException {
+		List<MessageVO> list = session.selectList("Message-Mapper.selectMsgFromList",cri);
+		return messageDAO.selectMsgFromList(cri);
+	}
+
+}

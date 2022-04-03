@@ -1,0 +1,519 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<head></head>
+
+<body>
+	<div class="content-wrapper">
+		<section class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<div class="row">
+							<h1>받은메일함</h1>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<ol class="breadcrumb float-sm-left" style="margin-top: 10px;">
+								<li class="breadcrumb-item">
+									<span style="color: blue;">안읽은 메일수</span>
+								</li>
+								<li class="breadcrumb-item active">전체메일 수</li>
+							</ol>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item">
+								<a href="#">HOME</a>
+							</li>
+							<li class="breadcrumb-item active">사내메일함</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+		<section class="content">
+			<div class="card card-info card-outline">
+				<div class="card-header">
+					<div class="row">
+						<div class="col-md-6 ">
+							<div class="mailbox-controls">
+								<!-- Check all button -->
+								<!-- /.btn-group -->
+								<div class="btn-group">
+									<button type="button" class="btn btn-default btn-sm checkbox-toggle">
+										<i class="far fa-square"></i>
+									</button>
+									<button type="button" class="btn btn-default btn-sm">
+										<i class="far fa-trash-alt"></i>
+										삭제
+									</button>
+									<button type="button" class="btn btn-default btn-sm">답장</button>
+									<button type="button" class="btn btn-default btn-sm">전달</button>
+									<button type="button" class="btn btn-default btn-sm">보관</button>
+									<button type="button" class="btn btn-default btn-sm">중요메일보기</button>
+									<button type="button" class="btn btn-default btn-sm">
+										<i class="fas fa-sync-alt"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="card-tools">
+								<div class="input-group input-group-sm">
+									<button type="button" class="btn btn-default btn-sm" id="btn_detail_search">상세검색</button>
+									<select class="custom-select input-group input-group-sm" >
+										<option>전체검색</option>
+										<option>받는 사람</option>
+										<option>보낸 사람</option>
+										<option>제목</option>
+										<option>내용</option>
+									</select>
+									<input type="text" class="form-control input-group-sm float-right" style="width: 100px;" placeholder="Search Mail">
+									<div class="input-group-append input-group-sm">
+										<button type="button" class="btn btn-info btn-sm">
+											<i class="fas fa-search"></i>
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- /.card-tools -->
+					</div>
+				</div>
+				<!-- /.card-header -->
+				<div class="card-body p-0">
+
+					<div class="table-responsive mailbox-messages">
+						<table class="table table-sm table-hover table-striped">
+							<tbody>
+								<tr class="">
+									<td>
+										<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+										</div>
+									</td>
+									<td class="mailbox-star">
+										<i class="fas fa-star text-warning"></i>
+									</td>
+									<td class="mailbox-name">
+										<a href="read-mail.html">김미희</a>
+									</td>
+									<td class="mailbox-subject">
+										안읽음&nbsp;|&nbsp;<b>여러분 내일은 피자 회식이 있습니다.</b>
+									</td>
+									<td class="mailbox-attachment">
+										<i class="fas fa-paperclip"></i>
+									</td>
+									<td class="mailbox-date">2021년 1월 6일</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+										</div>
+									</td>
+									<td class="mailbox-star">
+										<i class="fas fa-star text-warning"></i>
+									</td>
+									<td class="mailbox-name">
+										<a href="read-mail.html">김미희</a>
+									</td>
+									<td class="mailbox-subject">
+										안읽음&nbsp;|&nbsp;<b>여러분 내일은 피자 회식이 있습니다.</b>
+									</td>
+									<td class="mailbox-attachment">
+										<i class="fas fa-paperclip"></i>
+									</td>
+									<td class="mailbox-date">2021년 1월 6일</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+										</div>
+									</td>
+									<td class="mailbox-star">
+										<i class="fas fa-star text-warning"></i>
+									</td>
+									<td class="mailbox-name">
+										<a href="read-mail.html">김미희</a>
+									</td>
+									<td class="mailbox-subject">
+										안읽음&nbsp;|&nbsp;<b>여러분 내일은 피자 회식이 있습니다.</b>
+									</td>
+									<td class="mailbox-attachment">
+										<i class="fas fa-paperclip"></i>
+									</td>
+									<td class="mailbox-date">2021년 1월 6일</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+										</div>
+									</td>
+									<td class="mailbox-star">
+										<i class="fas fa-star text-warning"></i>
+									</td>
+									<td class="mailbox-name">
+										<a href="read-mail.html">김미희</a>
+									</td>
+									<td class="mailbox-subject">
+										안읽음&nbsp;|&nbsp;<b>여러분 내일은 피자 회식이 있습니다.</b>
+									</td>
+									<td class="mailbox-attachment">
+										<i class="fas fa-paperclip"></i>
+									</td>
+									<td class="mailbox-date">2021년 1월 6일</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+										</div>
+									</td>
+									<td class="mailbox-star">
+										<i class="fas fa-star text-warning"></i>
+									</td>
+									<td class="mailbox-name">
+										<a href="read-mail.html">김미희</a>
+									</td>
+									<td class="mailbox-subject">
+										안읽음&nbsp;|&nbsp;<b>여러분 내일은 피자 회식이 있습니다.</b>
+									</td>
+									<td class="mailbox-attachment">
+										<i class="fas fa-paperclip"></i>
+									</td>
+									<td class="mailbox-date">2021년 1월 6일</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+										</div>
+									</td>
+									<td class="mailbox-star">
+										<i class="fas fa-star text-warning"></i>
+									</td>
+									<td class="mailbox-name">
+										<a href="read-mail.html">김미희</a>
+									</td>
+									<td class="mailbox-subject">
+										안읽음&nbsp;|&nbsp;<b>여러분 내일은 피자 회식이 있습니다.</b>
+									</td>
+									<td class="mailbox-attachment">
+										<i class="fas fa-paperclip"></i>
+									</td>
+									<td class="mailbox-date">2021년 1월 6일</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+										</div>
+									</td>
+									<td class="mailbox-star">
+										<i class="fas fa-star text-warning"></i>
+									</td>
+									<td class="mailbox-name">
+										<a href="read-mail.html">김미희</a>
+									</td>
+									<td class="mailbox-subject">
+										안읽음&nbsp;|&nbsp;<b>여러분 내일은 피자 회식이 있습니다.</b>
+									</td>
+									<td class="mailbox-attachment">
+										<i class="fas fa-paperclip"></i>
+									</td>
+									<td class="mailbox-date">2021년 1월 6일</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+										</div>
+									</td>
+									<td class="mailbox-star">
+										<i class="fas fa-star text-warning"></i>
+									</td>
+									<td class="mailbox-name">
+										<a href="read-mail.html">김미희</a>
+									</td>
+									<td class="mailbox-subject">
+										안읽음&nbsp;|&nbsp;<b>여러분 내일은 피자 회식이 있습니다.</b>
+									</td>
+									<td class="mailbox-attachment">
+										<i class="fas fa-paperclip"></i>
+									</td>
+									<td class="mailbox-date">2021년 1월 6일</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+										</div>
+									</td>
+									<td class="mailbox-star">
+										<i class="fas fa-star text-warning"></i>
+									</td>
+									<td class="mailbox-name">
+										<a href="read-mail.html">김미희</a>
+									</td>
+									<td class="mailbox-subject">
+										안읽음&nbsp;|&nbsp;<b>여러분 내일은 피자 회식이 있습니다.</b>
+									</td>
+									<td class="mailbox-attachment">
+										<i class="fas fa-paperclip"></i>
+									</td>
+									<td class="mailbox-date">2021년 1월 6일</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+										</div>
+									</td>
+									<td class="mailbox-star">
+										<i class="fas fa-star text-warning"></i>
+									</td>
+									<td class="mailbox-name">
+										<a href="read-mail.html">김미희</a>
+									</td>
+									<td class="mailbox-subject">
+										안읽음&nbsp;|&nbsp;<b>여러분 내일은 피자 회식이 있습니다.</b>
+									</td>
+									<td class="mailbox-attachment">
+										<i class="fas fa-paperclip"></i>
+									</td>
+									<td class="mailbox-date">2021년 1월 6일</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+										</div>
+									</td>
+									<td class="mailbox-star">
+										<i class="fas fa-star text-warning"></i>
+									</td>
+									<td class="mailbox-name">
+										<a href="read-mail.html">김미희</a>
+									</td>
+									<td class="mailbox-subject">
+										안읽음&nbsp;|&nbsp;<b>여러분 내일은 피자 회식이 있습니다.</b>
+									</td>
+									<td class="mailbox-attachment">
+										<i class="fas fa-paperclip"></i>
+									</td>
+									<td class="mailbox-date">2021년 1월 6일</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+										</div>
+									</td>
+									<td class="mailbox-star">
+										<i class="fas fa-star text-warning"></i>
+									</td>
+									<td class="mailbox-name">
+										<a href="read-mail.html">김미희</a>
+									</td>
+									<td class="mailbox-subject">
+										안읽음&nbsp;|&nbsp;<b>여러분 내일은 피자 회식이 있습니다.</b>
+									</td>
+									<td class="mailbox-attachment">
+										<i class="fas fa-paperclip"></i>
+									</td>
+									<td class="mailbox-date">2021년 1월 6일</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+										</div>
+									</td>
+									<td class="mailbox-star">
+										<i class="fas fa-star text-warning"></i>
+									</td>
+									<td class="mailbox-name">
+										<a href="read-mail.html">김미희</a>
+									</td>
+									<td class="mailbox-subject">
+										안읽음&nbsp;|&nbsp;<b>여러분 내일은 피자 회식이 있습니다.</b>
+									</td>
+									<td class="mailbox-attachment">
+										<i class="fas fa-paperclip"></i>
+									</td>
+									<td class="mailbox-date">2021년 1월 6일</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+										</div>
+									</td>
+									<td class="mailbox-star">
+										<i class="fas fa-star text-warning"></i>
+									</td>
+									<td class="mailbox-name">
+										<a href="read-mail.html">김미희</a>
+									</td>
+									<td class="mailbox-subject">
+										안읽음&nbsp;|&nbsp;<b>여러분 내일은 피자 회식이 있습니다.</b>
+									</td>
+									<td class="mailbox-attachment">
+										<i class="fas fa-paperclip"></i>
+									</td>
+									<td class="mailbox-date">2021년 1월 6일</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+										</div>
+									</td>
+									<td class="mailbox-star">
+										<i class="fas fa-star text-warning"></i>
+									</td>
+									<td class="mailbox-name">
+										<a href="read-mail.html">김미희</a>
+									</td>
+									<td class="mailbox-subject">
+										안읽음&nbsp;|&nbsp;<b>여러분 내일은 피자 회식이 있습니다.</b>
+									</td>
+									<td class="mailbox-attachment">
+										<i class="fas fa-paperclip"></i>
+									</td>
+									<td class="mailbox-date">2021년 1월 6일</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+										</div>
+									</td>
+									<td class="mailbox-star">
+										<i class="fas fa-star text-warning"></i>
+									</td>
+									<td class="mailbox-name">
+										<a href="read-mail.html">김미희</a>
+									</td>
+									<td class="mailbox-subject">
+										안읽음&nbsp;|&nbsp;<b>여러분 내일은 피자 회식이 있습니다.</b>
+									</td>
+									<td class="mailbox-attachment">
+										<i class="fas fa-paperclip"></i>
+									</td>
+									<td class="mailbox-date">2021년 1월 6일</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+										</div>
+									</td>
+									<td class="mailbox-star">
+										<i class="fas fa-star text-warning"></i>
+									</td>
+									<td class="mailbox-name">
+										<a href="read-mail.html">김미희</a>
+									</td>
+									<td class="mailbox-subject">
+										안읽음&nbsp;|&nbsp;<b>여러분 내일은 피자 회식이 있습니다.</b>
+									</td>
+									<td class="mailbox-attachment">
+										<i class="fas fa-paperclip"></i>
+									</td>
+									<td class="mailbox-date">2021년 1월 6일</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+										</div>
+									</td>
+									<td class="mailbox-star">
+										<i class="fas fa-star text-warning"></i>
+									</td>
+									<td class="mailbox-name">
+										<a href="read-mail.html">김미희</a>
+									</td>
+									<td class="mailbox-subject">
+										안읽음&nbsp;|&nbsp;<b>여러분 내일은 피자 회식이 있습니다.</b>
+									</td>
+									<td class="mailbox-attachment">
+										<i class="fas fa-paperclip"></i>
+									</td>
+									<td class="mailbox-date">2021년 1월 6일</td>
+								</tr>
+							</tbody>
+						</table>
+						<!-- /.table -->
+					</div>
+					<!-- /.mail-box-messages -->
+				</div>
+				<!-- /.card-body -->
+				<div class="card-footer p-10">
+					<div class="d-flex justify-content-center">
+						<ul class="pagination pagination-sm m-0">
+							<li class="page-item">
+								<a class="page-link" href="#">«</a>
+							</li>
+							<li class="page-item">
+								<a class="page-link" href="#">1</a>
+							</li>
+							<li class="page-item">
+								<a class="page-link" href="#">2</a>
+							</li>
+							<li class="page-item">
+								<a class="page-link" href="#">3</a>
+							</li>
+							<li class="page-item">
+								<a class="page-link" href="#">4</a>
+							</li>
+							<li class="page-item">
+								<a class="page-link" href="#">5</a>
+							</li>
+							<li class="page-item">
+								<a class="page-link" href="#">6</a>
+							</li>
+							<li class="page-item">
+								<a class="page-link" href="#">7</a>
+							</li>
+							<li class="page-item">
+								<a class="page-link" href="#">8</a>
+							</li>
+							<li class="page-item">
+								<a class="page-link" href="#">9</a>
+							</li>
+							<li class="page-item">
+								<a class="page-link" href="#">10</a>
+							</li>
+							<li class="page-item">
+								<a class="page-link" href="#">»</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!-- /.card -->
+		</section>
+	</div>
+</body>

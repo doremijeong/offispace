@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Message-Mapper">
+
+	<sql id="search">
+		<if test="searchType == 'content'.toString()">
+			and MSG_CONTENT like '%'||#{keyword}||'%'
+		</if>
+		<if test="searchType == 'from'.toString()">
+			and MSG_FROM like '%'||#{keyword}||'%'
+		</if>
+		<if test="searchType == 'to'.toString()">
+			and MSG_TO like '%'||#{keyword}||'%'
+		</if>
+	</sql>
+
+
+	
+	<!-- 받은 쪽지함 목록 : 받는사람 loginUser-->
+	<select id="selectMsgFromList" resultType="message">
+			select MSG_CODE
+				, MSG_IMPT 
+				, MSG_READ 
+				, MSG_CONTENT 
+				, MSG_DT 
+				, MSG_FROM 
+				, MSG_TO 
+				, MSG_CLASS 
+				, MSG_BIN 
+				, MSG_TEMP 
+			from message
+			where MSG_TO = #{loginUser}
+			<include refid="search" />
+			order by MSG_CODE desc
+	</select>
+
+
+	<select id="selectAllMsgListTotalCount" resultType="int">
+		select count(*) 
+		from message 
+		where MSG_CODE is not null
+		<include refid="search" />
+		order by MSG_CODE desc
+	</select>
+
+</mapper>

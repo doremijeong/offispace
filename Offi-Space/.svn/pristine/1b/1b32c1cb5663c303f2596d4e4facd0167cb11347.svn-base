@@ -1,0 +1,40 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+<script>
+	function summernote_go(target) {
+		console.log(target)
+		target.summernote({
+			placeholder : "여기에 내용을 적으세요",
+			lang : "kr-kr",
+			height : 250,
+			disableResizeEditor : true,
+			callbacks : {
+				onImageUpload : function(files, editor, welEditable) {
+
+					for(var file of files){
+
+						if(file.size > 1024*1024*5){
+							alert("이미지는 5MB 미만입니다.")
+							return;
+						}
+						
+						if(file.name.substring(file.name.lastIndexOf(".") + 1).toUpperCase() != "JPG"){
+							alert("JPG 이미지 형식만 가능합니다.");
+							return;
+						}
+					}
+
+					for(var file of files){
+						sendFile(file, this);
+					}
+				},
+				onMediaDelete : function(target) {
+					
+					deleteFile(target[0].src); 
+				
+				}
+			}
+		})
+	}
+</script>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+	</settings>
+	
+	<typeAliases>
+		<typeAlias type="java.lang.String" alias="str"/>
+		<typeAlias type="java.lang.Integer" alias="int"/>
+
+		<typeAlias type="kr.co.offispace.dto.MenuVO" alias="menu"/>
+		<typeAlias type="kr.co.offispace.dto.AttachmentVO" alias="attachment"/>
+		<typeAlias type="kr.co.offispace.dto.MailVO" alias="mail"/>
+		<typeAlias type="kr.co.offispace.dto.SchedulerVO" alias="scheduler"/>
+
+		<typeAlias type="kr.co.offispace.dto.MessageVO" alias="message"/>
+		
+	</typeAliases>
+	
+
+</configuration>

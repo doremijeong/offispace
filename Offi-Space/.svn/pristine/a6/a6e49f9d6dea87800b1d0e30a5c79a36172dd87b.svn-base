@@ -1,0 +1,1161 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page trimDirectiveWhitespaces="true"%>
+
+<head></head>
+
+<title>마이페이지</title>
+
+<body>
+	<!-- Content Header (Page header) -->
+            <!-- 마진을 위한 div -->
+            <div style="height: 20px;"></div>
+
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+                    <div id="toastsContainerTopRight" class="toasts-top-right fixed">
+
+                    </div>
+<!-- 알림관련 스크립트 -->
+    <script>
+        let number = 1;
+        window.onload= function(){
+            document.querySelector('#toastBtn').addEventListener('click', function() {
+                makeNotification();
+            })
+
+        }
+
+
+        function makeNotification() {
+                number++;
+                let noti = `<div class="toast fade show" id="toast${number}" role="alert" aria-live="assertive" aria-atomic="true" style="position: relative;">
+                            <div class="toast-header">
+                              <i class="mr-2 fas fa-envelope fa-lg"></i>
+                              <strong class="mr-auto"> 메일 도착 </strong>
+                              <button data-dismiss="toast" type="button" class="ml-2 mb-1 close notification-close" aria-label="Close" onclick="removeNow('#toast${number}');">
+                                <span aria-hidden="true">×</span>
+                              </button>
+                            </div>
+                            <div class="toast-body">
+                              <div class="row" >
+                                <div class="col-lg-3" style="border:none; justify-content:center">
+                                  <div class="image">
+                                    <img src="<%=request.getContextPath() %>/resources/images/01.jpg" style="object-fit: cover;
+                                    width: 60px;
+                                    height: 60px;" class="img-size-50 mr-3 img-circle" alt="User Image">
+                                  </div>
+                                </div>
+                                <div class="notification-body col-lg-9">
+                                  <p class="text-sm">
+                                    <strong>임나리 부장</strong>으로 부터 새로운 메일이 도착했습니다.<br/>
+                                      지금 확인 하시겠습니까?
+                                  </p>
+                                  <div class="notification-btn-box" style="display:flex; justify-content: space-around">
+                                    <button type="button" class="btn bg-gradient-primary btn-sm col-lg-4">이 동</button>
+                                    <button type="button" class="btn bg-gradient-secondary btn-sm col-lg-4" onclick="removeNow('#toast${number}');">닫 기</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- Message End -->
+                          </div>`;
+                document.querySelector('#toastsContainerTopRight').insertAdjacentHTML("afterbegin", noti);
+
+                removeLater(document.querySelector(`#toast${number}`));
+
+            }
+
+            function removeNow(targetId) {
+                document.querySelector(targetId).remove();
+            }
+
+            function removeLater(target) {
+                setTimeout(function(){
+                    target.remove();
+                }, 3000)
+            }
+
+    </script>
+
+
+
+                    <!-- 마진을 위한 div -->
+                    <div style="height: 0px;"></div>
+
+                    <div class="row">
+                        <!-- 마이페이지 좌측 컨텐츠 -->
+                        <div class="col-lg-3">
+                            <div class="flex-column" id="toastBtn">
+                                <div class="card bg-gradient-info" >
+                                    <div class="card-header border-0 ui-sortable-handle" style="cursor: move;">
+                                    </div>
+                                    <div class="card-body box-profile">
+                                        <div class="text-center">
+                                            <img class="profile-user-img img-fluid img-circle bg-light" style="object-fit: cover;
+                                            width: 128px;
+                                            height: 128px;" src="<%=request.getContextPath() %>/resources/images/01.jpg" alt="User profile picture">
+                                        </div>
+
+                                    </div>
+                                    <!-- /.card-body -->
+                                    <div class="card-footer bg-transparent">
+                                        <h3 class="profile-username text-center">임나리 부장</h3>
+                                        <p class="text-center">기획전략팀</p>
+                                    </div>
+                                    <!-- /.card-footer -->
+                                </div>
+                                <!-- / .card -->
+                                <!-- row for icon -->
+                                <div class="row">
+                                    <div class="col-lg-12" style="display: flex; flex-direction: row;">
+                                        <div class="col-lg-6" style="padding: 2px;">
+                                            <div class="info-box shadow-none"  style="margin: 0; "  >
+                                                <div class="info-box-content" >
+                                                    <button type="button" class="btn btn-default btn-sm bg-gradient-info">
+                                                        <i class="far fa-envelope"></i>
+                                                    </button>
+                                                    <span class="info-box-text text-center" style="font-size: 0.8em;">메일쓰기</span>
+                                                </div>
+                                                <!-- /.info-box-content -->
+                                            </div>
+                                            <!-- / .info-box -->
+                                        </div>
+                                        <!-- /. col-lg-6 -->
+                                        <div class="col-lg-6" style="padding: 2px;">
+                                            <div class="info-box shadow-none " style="margin: 0;">
+                                                <div class="info-box-content">
+                                                    <button type="button" class="btn btn-default btn-sm bg-warning">
+                                                        <i class="far fa-calendar-alt"></i>
+                                                    </button>
+                                                    <span class="info-box-text text-center" style="font-size: 0.8em;">일정등록</span>
+                                                </div>
+                                                <!-- /.info-box-content -->
+                                            </div>
+                                            <!-- / .info-box -->
+                                        </div>
+                                        <!-- /. col-lg-6 -->
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12" style="display: flex; flex-direction: row;">
+                                        <div class="col-lg-6" style="padding: 2px;">
+                                            <div class="info-box shadow-none">
+                                                <div class="info-box-content">
+                                                    <button type="button" class="btn btn-default btn-sm bg-success">
+                                                        <i class="fas fa-briefcase"></i>
+                                                    </button>
+                                                    <span class="info-box-text text-center" style="font-size: 0.8em;">업무요청</span>
+                                                </div>
+                                                <!-- /.info-box-content -->
+                                            </div>
+                                            <!-- / .info-box -->
+                                        </div>
+                                        <!-- /. col-lg-6 -->
+                                        <div class="col-lg-6" style="padding: 2px;">
+                                            <div class="info-box shadow-none" >
+                                                <div class="info-box-content">
+                                                    <button type="button" class="btn btn-default btn-sm bg-primary">
+                                                        <i class="far fa-clipboard"></i>
+                                                    </button>
+                                                    <span class="info-box-text text-center" style="font-size: 0.8em;">결재요청</span>
+                                                </div>
+                                                <!-- /.info-box-content -->
+                                            </div>
+                                            <!-- / .info-box -->
+                                        </div>
+                                        <!-- /. col-lg-6 -->
+                                    </div>
+                                </div>
+                                <!-- /.row for icon -->
+
+                                <!-- 근태관리 card -->
+                                <div class="card card-info card-outline">
+                                    <div class="card-body">
+                                        <h5><b>근태관리</b></h5>
+                                        <span class="text-muted" style="font-size: 0.8em;">2021년 12월 25일 (토)
+                                            08:58:44</span>
+                                        <ul class="list-group list-group-unbordered mb-3">
+                                            <li class="list-group-item">
+                                                <h2>0h 00m</h2>
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-primary progress-bar-striped"
+                                                        role="progressbar" aria-valuenow="0" aria-valuemin="0"
+                                                        aria-valuemax="100" style="width: 0%">
+                                                        <span class="sr-only">0% Complete (success)</span>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item" style="padding-left:10px; padding-right: 10px;">
+                                                <div class="row" style="justify-content: space-between;">
+                                                    <span>출근시간 :</span><span>미등록</span>
+                                                </div>
+                                                <div class="row" style="justify-content: space-between;">
+                                                    <span>퇴근시간 :</span><span>미등록</span>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <a href="#" class="btn btn-outline-primary btn-block"><b>출근하기</b></a>
+                                            </li>
+                                            <li class="list-group-item ">
+                                                <div class="">
+                                                    <h6><b>부서원 근무 현황</b></h6>
+                                                    <!-- /.card-header -->
+                                                    <div class="card-body table-responsive p-0" style="height: 300px; ">
+                                                        <table class="table table-head-fixed text-nowrap">
+                                                            <tr>
+                                                                <td style="padding: 0;">
+                                                                    <div class="info-box" style="margin: 0px;">
+                                                                        <a data-toggle="dropdown" href="#">
+                                                                        <div class="image">
+                                                                            <img src="<%=request.getContextPath() %>/resources/images/01.jpg" style="object-fit: cover;
+                                                                            width: 50px;
+                                                                            height: 50px;" class="img-size-50 mr-3 img-circle" alt="User Image">
+                                                                        </div>
+                                                                        </a>
+                                                                        <div class="dropdown-menu" style="width: 231px; height :175px; padding: 0; z-index: 1040;">
+                                                                        <div class="card bg-light d-flex flex-fill">
+                                                                            <div class="card-header text-muted border-bottom-0"></div>
+                                                                            <div class="card-body pt-0">
+                                                                            <div class="row">
+                                                                                <div class="col-lg-4 text-center">
+                                                                                <img src="<%=request.getContextPath() %>/resources/images/01.jpg" style="object-fit: cover;
+                                                                                    width: 50px;
+                                                                                    height: 50px;" class="img-size-50 mr-3 img-circle" alt="User Image">
+                                                                                </div>
+                                                                                <div class="col-lg-8">
+                                                                                <h2 class="lead"><b>임나리</b></h2>
+                                                                                    <p class="text-muted text-sm">총무부 부장</p>
+                                                                                </div>
+                                                                            </div>
+                                                                            <!-- /.row -->
+                                                                            <div class="row">
+                                                                                <ul class="ml-4 mb-0 fa-ul text-muted">
+                                                                                <li class="small"><span class="fa-li"><i class="fas fa-lg fa-envelope"></i></span><b>Email</b>: admin@offispace.co.kr</li>
+                                                                                <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span><b>Phone</b>: + 82 - 10 5978 5462</li>
+                                                                                </ul>
+                                                                            </div>
+                                                                            <!-- /.row -->
+                                                                            </div>
+                                                                            <!-- /.card-body -->
+                                                                            <div class="card-footer">
+                                                                            <div class="text-right">
+                                                                                <a href="" class="dropdown-item btn btn-sm bg-teal" style="padding: 0;">
+                                                                                <a href="javascript:alert('쪽지보내기');" class="btn btn-sm bg-teal">
+                                                                                    <i class="fas fa-comment-dots"></i> 쪽지하기
+                                                                                </a>
+                                                                                </a>
+                                                                            </div>
+                                                                            </div>
+                                                                            <!-- /.card footer -->
+                                                                        </div>
+                                                                        <!-- /.card -->
+                                                                        </div>
+                                                                        <!-- /. dropdown-menu -->
+                                                                        <div class="info-box-content" style="height: 50px;">
+                                                                        <span class="info-box-number text-center">임나리 대리</span>
+                                                                        <span class="badge badge-primary">근무중</span>
+                                                                        </div>
+                                                                        <!-- /.info-box-content -->
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="padding: 0;">
+                                                                    <div class="info-box" style="margin: 0px;">
+                                                                        <a data-toggle="dropdown" href="#">
+                                                                        <div class="image">
+                                                                            <img src="<%=request.getContextPath() %>/resources/images/01.jpg" style="object-fit: cover;
+                                                                            width: 50px;
+                                                                            height: 50px;" class="img-size-50 mr-3 img-circle" alt="User Image">
+                                                                        </div>
+                                                                        </a>
+                                                                        <div class="dropdown-menu" style="width: 231px; height :175px; padding: 0;">
+                                                                        <div class="card bg-light d-flex flex-fill">
+                                                                            <div class="card-header text-muted border-bottom-0"></div>
+                                                                            <div class="card-body pt-0">
+                                                                            <div class="row">
+                                                                                <div class="col-lg-4 text-center">
+                                                                                <img src="<%=request.getContextPath() %>/resources/images/01.jpg" style="object-fit: cover;
+                                                                                    width: 50px;
+                                                                                    height: 50px;" class="img-size-50 mr-3 img-circle" alt="User Image">
+                                                                                </div>
+                                                                                <div class="col-lg-8">
+                                                                                <h2 class="lead"><b>임나리</b></h2>
+                                                                                    <p class="text-muted text-sm">총무부 부장</p>
+                                                                                </div>
+                                                                            </div>
+                                                                            <!-- /.row -->
+                                                                            <div class="row">
+                                                                                <ul class="ml-4 mb-0 fa-ul text-muted">
+                                                                                <li class="small"><span class="fa-li"><i class="fas fa-lg fa-envelope"></i></span><b>Email</b>: admin@offispace.co.kr</li>
+                                                                                <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span><b>Phone</b>: + 82 - 10 5978 5462</li>
+                                                                                </ul>
+                                                                            </div>
+                                                                            <!-- /.row -->
+                                                                            </div>
+                                                                            <!-- /.card-body -->
+                                                                            <div class="card-footer">
+                                                                            <div class="text-right">
+                                                                                <a href="" class="dropdown-item btn btn-sm bg-teal" style="padding: 0;">
+                                                                                <a href="javascript:alert('쪽지보내기');" class="btn btn-sm bg-teal">
+                                                                                    <i class="fas fa-comment-dots"></i> 쪽지하기
+                                                                                </a>
+                                                                                </a>
+                                                                            </div>
+                                                                            </div>
+                                                                            <!-- /.card footer -->
+                                                                        </div>
+                                                                        <!-- /.card -->
+                                                                        </div>
+                                                                        <!-- /. dropdown-menu -->
+                                                                        <div class="info-box-content" style="height: 50px;">
+                                                                        <span class="info-box-number text-center">임나리 대리</span>
+                                                                        <span class="badge badge-primary">근무중</span>
+                                                                        </div>
+                                                                        <!-- /.info-box-content -->
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="padding: 0;">
+                                                                    <div class="info-box" style="margin: 0px;">
+                                                                        <a data-toggle="dropdown" href="#">
+                                                                        <div class="image">
+                                                                            <img src="<%=request.getContextPath() %>/resources/images/01.jpg" style="object-fit: cover;
+                                                                            width: 50px;
+                                                                            height: 50px;" class="img-size-50 mr-3 img-circle" alt="User Image">
+                                                                        </div>
+                                                                        </a>
+                                                                        <div class="dropdown-menu" style="width: 231px; height :175px; padding: 0;">
+                                                                        <div class="card bg-light d-flex flex-fill">
+                                                                            <div class="card-header text-muted border-bottom-0"></div>
+                                                                            <div class="card-body pt-0">
+                                                                            <div class="row">
+                                                                                <div class="col-lg-4 text-center">
+                                                                                <img src="<%=request.getContextPath() %>/resources/images/01.jpg" style="object-fit: cover;
+                                                                                    width: 50px;
+                                                                                    height: 50px;" class="img-size-50 mr-3 img-circle" alt="User Image">
+                                                                                </div>
+                                                                                <div class="col-lg-8">
+                                                                                <h2 class="lead"><b>임나리</b></h2>
+                                                                                    <p class="text-muted text-sm">총무부 부장</p>
+                                                                                </div>
+                                                                            </div>
+                                                                            <!-- /.row -->
+                                                                            <div class="row">
+                                                                                <ul class="ml-4 mb-0 fa-ul text-muted">
+                                                                                <li class="small"><span class="fa-li"><i class="fas fa-lg fa-envelope"></i></span><b>Email</b>: admin@offispace.co.kr</li>
+                                                                                <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span><b>Phone</b>: + 82 - 10 5978 5462</li>
+                                                                                </ul>
+                                                                            </div>
+                                                                            <!-- /.row -->
+                                                                            </div>
+                                                                            <!-- /.card-body -->
+                                                                            <div class="card-footer">
+                                                                            <div class="text-right">
+                                                                                <a href="" class="dropdown-item btn btn-sm bg-teal" style="padding: 0;">
+                                                                                <a href="javascript:alert('쪽지보내기');" class="btn btn-sm bg-teal">
+                                                                                    <i class="fas fa-comment-dots"></i> 쪽지하기
+                                                                                </a>
+                                                                                </a>
+                                                                            </div>
+                                                                            </div>
+                                                                            <!-- /.card footer -->
+                                                                        </div>
+                                                                        <!-- /.card -->
+                                                                        </div>
+                                                                        <!-- /. dropdown-menu -->
+                                                                        <div class="info-box-content" style="height: 50px;">
+                                                                        <span class="info-box-number text-center">임나리 대리</span>
+                                                                        <span class="badge badge-primary">근무중</span>
+                                                                        </div>
+                                                                        <!-- /.info-box-content -->
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="padding: 0;">
+                                                                    <div class="info-box" style="margin: 0px;">
+                                                                        <a data-toggle="dropdown" href="#">
+                                                                        <div class="image">
+                                                                            <img src="<%=request.getContextPath() %>/resources/images/01.jpg" style="object-fit: cover;
+                                                                            width: 50px;
+                                                                            height: 50px;" class="img-size-50 mr-3 img-circle" alt="User Image">
+                                                                        </div>
+                                                                        </a>
+                                                                        <div class="dropdown-menu" style="width: 231px; height :175px; padding: 0;">
+                                                                        <div class="card bg-light d-flex flex-fill">
+                                                                            <div class="card-header text-muted border-bottom-0"></div>
+                                                                            <div class="card-body pt-0">
+                                                                            <div class="row">
+                                                                                <div class="col-lg-4 text-center">
+                                                                                <img src="<%=request.getContextPath() %>/resources/images/01.jpg" style="object-fit: cover;
+                                                                                    width: 50px;
+                                                                                    height: 50px;" class="img-size-50 mr-3 img-circle" alt="User Image">
+                                                                                </div>
+                                                                                <div class="col-lg-8">
+                                                                                <h2 class="lead"><b>임나리</b></h2>
+                                                                                    <p class="text-muted text-sm">총무부 부장</p>
+                                                                                </div>
+                                                                            </div>
+                                                                            <!-- /.row -->
+                                                                            <div class="row">
+                                                                                <ul class="ml-4 mb-0 fa-ul text-muted">
+                                                                                <li class="small"><span class="fa-li"><i class="fas fa-lg fa-envelope"></i></span><b>Email</b>: admin@offispace.co.kr</li>
+                                                                                <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span><b>Phone</b>: + 82 - 10 5978 5462</li>
+                                                                                </ul>
+                                                                            </div>
+                                                                            <!-- /.row -->
+                                                                            </div>
+                                                                            <!-- /.card-body -->
+                                                                            <div class="card-footer">
+                                                                            <div class="text-right">
+                                                                                <a href="" class="dropdown-item btn btn-sm bg-teal" style="padding: 0;">
+                                                                                <a href="javascript:alert('쪽지보내기');" class="btn btn-sm bg-teal">
+                                                                                    <i class="fas fa-comment-dots"></i> 쪽지하기
+                                                                                </a>
+                                                                                </a>
+                                                                            </div>
+                                                                            </div>
+                                                                            <!-- /.card footer -->
+                                                                        </div>
+                                                                        <!-- /.card -->
+                                                                        </div>
+                                                                        <!-- /. dropdown-menu -->
+                                                                        <div class="info-box-content" style="height: 50px;">
+                                                                        <span class="info-box-number text-center">임나리 대리</span>
+                                                                        <span class="badge badge-primary">근무중</span>
+                                                                        </div>
+                                                                        <!-- /.info-box-content -->
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="padding: 0;">
+                                                                    <div class="info-box" style="margin: 0px;">
+                                                                        <a data-toggle="dropdown" href="#">
+                                                                        <div class="image">
+                                                                            <img src="<%=request.getContextPath() %>/resources/images/01.jpg" style="object-fit: cover;
+                                                                            width: 50px;
+                                                                            height: 50px;" class="img-size-50 mr-3 img-circle" alt="User Image">
+                                                                        </div>
+                                                                        </a>
+                                                                        <div class="dropdown-menu" style="width: 231px; height :175px; padding: 0;">
+                                                                        <div class="card bg-light d-flex flex-fill">
+                                                                            <div class="card-header text-muted border-bottom-0"></div>
+                                                                            <div class="card-body pt-0">
+                                                                            <div class="row">
+                                                                                <div class="col-lg-4 text-center">
+                                                                                <img src="<%=request.getContextPath() %>/resources/images/01.jpg" style="object-fit: cover;
+                                                                                    width: 50px;
+                                                                                    height: 50px;" class="img-size-50 mr-3 img-circle" alt="User Image">
+                                                                                </div>
+                                                                                <div class="col-lg-8">
+                                                                                <h2 class="lead"><b>임나리</b></h2>
+                                                                                    <p class="text-muted text-sm">총무부 부장</p>
+                                                                                </div>
+                                                                            </div>
+                                                                            <!-- /.row -->
+                                                                            <div class="row">
+                                                                                <ul class="ml-4 mb-0 fa-ul text-muted">
+                                                                                <li class="small"><span class="fa-li"><i class="fas fa-lg fa-envelope"></i></span><b>Email</b>: admin@offispace.co.kr</li>
+                                                                                <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span><b>Phone</b>: + 82 - 10 5978 5462</li>
+                                                                                </ul>
+                                                                            </div>
+                                                                            <!-- /.row -->
+                                                                            </div>
+                                                                            <!-- /.card-body -->
+                                                                            <div class="card-footer">
+                                                                            <div class="text-right">
+                                                                                <a href="" class="dropdown-item btn btn-sm bg-teal" style="padding: 0;">
+                                                                                <a href="javascript:alert('쪽지보내기');" class="btn btn-sm bg-teal">
+                                                                                    <i class="fas fa-comment-dots"></i> 쪽지하기
+                                                                                </a>
+                                                                                </a>
+                                                                            </div>
+                                                                            </div>
+                                                                            <!-- /.card footer -->
+                                                                        </div>
+                                                                        <!-- /.card -->
+                                                                        </div>
+                                                                        <!-- /. dropdown-menu -->
+                                                                        <div class="info-box-content" style="height: 50px;">
+                                                                        <span class="info-box-number text-center">임나리 대리</span>
+                                                                        <span class="badge badge-primary">근무중</span>
+                                                                        </div>
+                                                                        <!-- /.info-box-content -->
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+
+
+
+                                                        </table>
+                                                    </div>
+                                                    <!-- /.card-body -->
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                                <!-- /.card 근태관리-->
+                            </div>
+                        </div>
+                        <!-- /.마이페이지 좌측 컨텐츠 -->
+
+                        <!-- 마이페이지 우측 컨텐츠 -->
+                        <div class="col-lg-9">
+                            <!-- compressed list -->
+                            <div class="row">
+                                <!-- left-list -->
+                                <div class="col-lg-6">
+                                    <div class="card card-info card-outline card-outline-tabs">
+                                        <div class="card-header p-0 border-bottom-0">
+                                            <ul class="nav nav-tabs" id="mypage-tabs-two-tab" role="tablist">
+                                                <li class="nav-item">
+                                                    <a class="nav-link active" id="mypage-tabs-two-wait-tab"
+                                                        data-toggle="pill" href="#mypage-tabs-two-wait" role="tab"
+                                                        aria-controls="mypage-tabs-two-wait" aria-selected="true">대기
+                                                        업무</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="mypage-tabs-two-work-tab" data-toggle="pill"
+                                                        href="#mypage-tabs-two-work" role="tab"
+                                                        aria-controls="mypage-tabs-two-work" aria-selected="false">진행
+                                                        업무</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="card-body" style="padding: 5px 5px;">
+                                            <div class="tab-content" id="mypage-tabs-two-tabContent">
+                                                <div class="tab-pane fade active show" id="mypage-tabs-two-wait"
+                                                    role="tabpanel" aria-labelledby="mypage-tabs-two-wait-tab">
+                                                    <!-- 내부 table card -->
+                                                    <div>
+                                                        <!-- /.card-header -->
+                                                        <div class="card-body p-0">
+                                                            <table class="table table-sm">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th></th>
+                                                                        <th>제목</th>
+                                                                        <th>요청자</th>
+                                                                        <th>요청일자</th>
+
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody style="font-size:0.8em;">
+                                                                    <tr>
+                                                                        <td><span class="badge bg-danger">긴급</span></td>
+                                                                        <td>신입사원관련</td>
+                                                                        <td>김지윤 과장</td>
+                                                                        <td>01-05(화)</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td><span class="badge bg-primary">중요</span>
+                                                                        </td>
+                                                                        <td>신입사원관련</td>
+                                                                        <td>김지윤 과장</td>
+                                                                        <td>01-05(화)</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td><span class="badge bg-primary">중요</span>
+                                                                        </td>
+                                                                        <td>신입사원관련</td>
+                                                                        <td>김지윤 과장</td>
+                                                                        <td>01-05(화)</td>
+                                                                    </tr>
+                                                                    <tr>
+
+                                                                        <td><span class="badge bg-danger"></span></td>
+                                                                        <td>신입사원관련</td>
+                                                                        <td>김지윤 과장</td>
+                                                                        <td>01-05(화)</td>
+                                                                    </tr>
+                                                                    <tr>
+
+                                                                        <td><span class="badge bg-danger"></span></td>
+                                                                        <td>신입사원관련</td>
+                                                                        <td>김지윤 과장</td>
+                                                                        <td>01-05(화)</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td><span class="badge bg-danger"></span></td>
+                                                                        <td>신입사원관련</td>
+                                                                        <td>김지윤 과장</td>
+                                                                        <td>01-05(화)</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td><span class="badge bg-danger"></span></td>
+                                                                        <td>신입사원관련</td>
+                                                                        <td>김지윤 과장</td>
+                                                                        <td>01-05(화)</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <!-- /.card-body -->
+                                                        <div class="float-right">
+                                                            <div class="card-tools">
+                                                                <a href="#" class="btn btn-tool" title="Previous"><i
+                                                                        class="fas fa-chevron-left"></i></a>
+                                                                <a href="#" class="btn btn-tool" title="Next"><i
+                                                                        class="fas fa-chevron-right"></i></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- / .내부 table card -->
+                                                </div>
+                                                <div class="tab-pane fade" id="mypage-tabs-two-work" role="tabpanel"
+                                                    aria-labelledby="mypage-tabs-two-work-tab">
+                                                    <!-- 내부 table card -->
+                                                    <div>
+                                                        <!-- /.card-header -->
+                                                        <div class="card-body p-0">
+                                                            <table class="table table-sm">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th></th>
+                                                                        <th>제목</th>
+                                                                        <th>요청자</th>
+                                                                        <th>마감일자</th>
+                                                                        <th>진척도</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody style="font-size:0.8em;">
+                                                                    <tr>
+                                                                        <td><span class="badge bg-danger">긴급</span></td>
+                                                                        <td>퇴사자관련</td>
+                                                                        <td>김지윤 과장</td>
+                                                                        <td>01-05(화)</td>
+                                                                        <td>
+                                                                            <div class="progress progress-xs"
+                                                                                style="margin-top: 6px;">
+                                                                                <div class="progress-bar progress-bar-danger"
+                                                                                    style="width: 88%"></div>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td><span class="badge bg-primary">중요</span>
+                                                                        </td>
+                                                                        <td>퇴사자관련</td>
+                                                                        <td>김지윤 과장</td>
+                                                                        <td>01-05(화)</td>
+                                                                        <td>
+                                                                            <div class="progress progress-xs"
+                                                                                style="margin-top: 6px;">
+                                                                                <div class="progress-bar progress-bar-striped"
+                                                                                    style="width: 80%"></div>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td><span class="badge bg-primary">중요</span>
+                                                                        </td>
+                                                                        <td>퇴사자관련</td>
+                                                                        <td>김지윤 과장</td>
+                                                                        <td>01-05(화)</td>
+                                                                        <td>
+                                                                            <div class="progress progress-xs"
+                                                                                style="margin-top: 6px;">
+                                                                                <div class="progress-bar progress-bar-striped"
+                                                                                    style="width: 55%"></div>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td><span class="badge bg-danger"></span></td>
+                                                                        <td>퇴사자관련</td>
+                                                                        <td>김지윤 과장</td>
+                                                                        <td>01-05(화)</td>
+                                                                        <td>
+                                                                            <div class="progress progress-xs"
+                                                                                style="margin-top: 6px;">
+                                                                                <div class="progress-bar progress-bar-striped"
+                                                                                    style="width: 45%"></div>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td><span class="badge bg-danger"></span></td>
+                                                                        <td>퇴사자관련</td>
+                                                                        <td>김지윤 과장</td>
+                                                                        <td>01-05(화)</td>
+                                                                        <td>
+                                                                            <div class="progress progress-xs"
+                                                                                style="margin-top: 6px;">
+                                                                                <div class="progress-bar progress-bar-striped"
+                                                                                    style="width: 10%"></div>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td><span class="badge bg-danger"></span></td>
+                                                                        <td>퇴사자관련</td>
+                                                                        <td>김지윤 과장</td>
+                                                                        <td>01-05(화)</td>
+                                                                        <td>
+                                                                            <div class="progress progress-xs"
+                                                                                style="margin-top: 6px;">
+                                                                                <div class="progress-bar progress-bar-striped"
+                                                                                    style="width: 30%"></div>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <!-- /.card-body -->
+                                                        <div class="float-right">
+                                                            <div class="card-tools" style="margin: 0;">
+                                                                <a href="#" class="btn btn-tool" title="Previous"><i
+                                                                        class="fas fa-chevron-left"></i></a>
+                                                                <a href="#" class="btn btn-tool" title="Next"><i
+                                                                        class="fas fa-chevron-right"></i></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- / .내부 table card -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /.card -->
+                                    </div>
+                                </div>
+                                <!-- ./left-list -->
+                                <!-- right-list -->
+                                <div class="col-lg-6">
+                                    <div class="card card-info card-outline card-outline-tabs">
+                                        <div class="card-header p-0 border-bottom-0">
+                                            <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+                                                <li class="nav-item">
+                                                    <a class="nav-link active" id="custom-tabs-three-daily-tab"
+                                                        data-toggle="pill" href="#custom-tabs-three-daily" role="tab"
+                                                        aria-controls="custom-tabs-three-daily" aria-selected="true">일간
+                                                        업무 현황</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="custom-tabs-three-weekly-tab"
+                                                        data-toggle="pill" href="#custom-tabs-three-weekly" role="tab"
+                                                        aria-controls="custom-tabs-three-weekly"
+                                                        aria-selected="false">주간 업무 현황</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="tab-content" id="custom-tabs-three-tabContent">
+                                                <div class="tab-pane fade active show" id="custom-tabs-three-daily"
+                                                    role="tabpanel" aria-labelledby="custom-tabs-three-daily-tab">
+                                                    <!-- 내부 card -->
+                                                    <div class="">
+                                                        <!-- /.card-header -->
+                                                        <div class="card-body text-center" style="padding-bottom: 0;">
+                                                            <div class="progress vertical">
+                                                                <div class="progress-bar bg-success" role="progressbar"
+                                                                    aria-valuenow="40" aria-valuemin="0"
+                                                                    aria-valuemax="100" style="height: 40%">
+                                                                    <span class="sr-only">40%</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="progress vertical">
+                                                                <div class="progress-bar bg-info" role="progressbar"
+                                                                    aria-valuenow="20" aria-valuemin="0"
+                                                                    aria-valuemax="100" style="height: 20%">
+                                                                    <span class="sr-only">20%</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="progress vertical">
+                                                                <div class="progress-bar bg-danger" role="progressbar"
+                                                                    aria-valuenow="80" aria-valuemin="0"
+                                                                    aria-valuemax="100" style="height: 80%">
+                                                                    <span class="sr-only">80%</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="progress vertical">
+                                                                <div class="progress-bar bg-warning" role="progressbar"
+                                                                    aria-valuenow="60" aria-valuemin="0"
+                                                                    aria-valuemax="100" style="height: 60%">
+                                                                    <span class="sr-only">60%</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="text-center ">
+                                                            <span>대기</span>&nbsp;&nbsp;&nbsp;
+                                                            <span>진행</span>&nbsp;&nbsp;&nbsp;
+                                                            <span>지연</span>&nbsp;&nbsp;&nbsp;
+                                                            <span>완료</span>&nbsp;&nbsp;
+                                                        </div>
+
+                                                        <!-- /.card-body -->
+                                                    </div>
+                                                    <!-- /. 내부 card -->
+                                                </div>
+                                                <div class="tab-pane fade" id="custom-tabs-three-weekly" role="tabpanel"
+                                                    aria-labelledby="custom-tabs-three-weekly-tab">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="card-title">Condensed Full Width Table</h3>
+                                                        </div>
+                                                        <!-- /.card-header -->
+                                                        <div class="card-body p-0">
+                                                            <table class="table table-sm">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th style="width: 10px">#</th>
+                                                                        <th>Task</th>
+                                                                        <th>Progress</th>
+                                                                        <th style="width: 40px">Label</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>1.</td>
+                                                                        <td>Update software</td>
+                                                                        <td>
+                                                                            <div class="progress progress-xs">
+                                                                                <div class="progress-bar progress-bar-danger"
+                                                                                    style="width: 55%"></div>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td><span class="badge bg-danger">55%</span>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>2.</td>
+                                                                        <td>Clean database</td>
+                                                                        <td>
+                                                                            <div class="progress progress-xs">
+                                                                                <div class="progress-bar bg-warning"
+                                                                                    style="width: 70%"></div>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td><span class="badge bg-warning">70%</span>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>3.</td>
+                                                                        <td>Cron job running</td>
+                                                                        <td>
+                                                                            <div
+                                                                                class="progress progress-xs progress-striped active">
+                                                                                <div class="progress-bar bg-primary"
+                                                                                    style="width: 30%"></div>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td><span class="badge bg-primary">30%</span>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>4.</td>
+                                                                        <td>Fix and squish bugs</td>
+                                                                        <td>
+                                                                            <div
+                                                                                class="progress progress-xs progress-striped active">
+                                                                                <div class="progress-bar bg-success"
+                                                                                    style="width: 90%"></div>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td><span class="badge bg-success">90%</span>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <!-- /.card-body -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /.card -->
+                                    </div>
+                                </div>
+                                <!-- ./right-list -->
+                            </div>
+                            <!-- ./row -->
+                            <!-- ./compressed list -->
+
+                            <!-- row -->
+                            <div class="row">
+                                <!-- list -->
+                                <div class="col-lg-6">
+                                    <div class="card card-info card-outline">
+                                        <div class="card-header">
+                                            <h3 class="card-title">
+                                                <i class="fas fa-edit"></i>
+                                                최근 생성된 보고서
+                                            </h3>
+                                            <div class="float-right">
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-default btn-sm">
+                                                        <i class="fas fa-sync-alt"></i>
+                                                    </button>
+                                                </div>
+                                                <!-- /.btn-group -->
+                                            </div>
+                                            <!-- /.float-right -->
+                                        </div>
+                                        <div class="card-body">
+                                            <table class="table table-sm table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>보고일</th>
+                                                        <th>보고서</th>
+                                                        <th>제목</th>
+                                                        <th>보고자</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody style="font-size: 00.8em;">
+                                                    <tr>
+                                                        <td>1.</td>
+                                                        <td>01-04(월)</td>
+                                                        <td>실적보고</td>
+                                                        <td>제5회 실적보고</td>
+                                                        <td>김혜윤 차장</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>2.</td>
+                                                        <td>01-04(월)</td>
+                                                        <td>실적보고</td>
+                                                        <td>제5회 실적보고</td>
+                                                        <td>김혜윤 차장</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>3.</td>
+                                                        <td>01-04(월)</td>
+                                                        <td>실적보고</td>
+                                                        <td>제5회 실적보고</td>
+                                                        <td>김혜윤 차장</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>4.</td>
+                                                        <td>01-04(월)</td>
+                                                        <td>실적보고</td>
+                                                        <td>제5회 실적보고</td>
+                                                        <td>김혜윤 차장</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="card-body" style="padding-top: 0px;">
+                                            <div class="float-right">
+                                                <div class="card-tools">
+                                                    <a href="#" class="btn btn-tool" title="Previous"><i
+                                                            class="fas fa-chevron-left"></i></a>
+                                                    <a href="#" class="btn btn-tool" title="Next"><i
+                                                            class="fas fa-chevron-right"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /.card-body -->
+                                    </div>
+                                    <!-- /.card -->
+                                </div>
+                                <!-- ./list -->
+                                <!-- 메일 list -->
+                                <div class="col-lg-6">
+                                    <div class="card card-info card-outline">
+                                        <div class="card-header">
+                                            <h3 class="card-title">
+                                                <i class="fa fa-envelope"></i>
+                                                안읽은 메일함
+                                            </h3>
+                                            <div class="float-right">
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-default btn-sm">
+                                                        <i class="fas fa-sync-alt"></i>
+                                                    </button>
+                                                </div>
+                                                <!-- /.btn-group -->
+                                            </div>
+                                            <!-- /.float-right -->
+                                        </div>
+                                        <div class="card-body">
+                                            <table class="table table-sm table-hover" style="table-layout: fixed;">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 10%;">#</th>
+                                                        <th style="width: 25%;">수신일</th>
+                                                        <th class="text-truncate" style="width: 40%;">제목</th>
+                                                        <th style="width: 25%;">발신</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody style="font-size:00.8em;">
+                                                    <tr>
+                                                        <td>1.</td>
+                                                        <td class="mailbox-date">01-04(월)</td>
+                                                        <td class="mailbox-subject text-truncate">
+                                                            안읽음<b>여러분 내일은 피자 회식이 있습니다.</b>
+                                                        </td>
+                                                        <td class="mailbox-name">
+                                                            <a href="read-mail.html">김미희 대리</a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>1.</td>
+                                                        <td class="mailbox-date">01-04(월)</td>
+                                                        <td class="mailbox-subject text-truncate">
+                                                            안읽음<b>여러분 내일은 피자 회식이 있습니다.</b>
+                                                        </td>
+                                                        <td class="mailbox-name">
+                                                            <a href="read-mail.html">김미희 대리</a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>1.</td>
+                                                        <td class="mailbox-date">01-04(월)</td>
+                                                        <td class="mailbox-subject text-truncate">
+                                                            안읽음<b>여러분 내일은 피자 회식이 있습니다.</b>
+                                                        </td>
+                                                        <td class="mailbox-name">
+                                                            <a href="read-mail.html">김미희 대리</a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>1.</td>
+                                                        <td class="mailbox-date">01-04(월)</td>
+                                                        <td class="mailbox-subject text-truncate">
+                                                            안읽음<b>여러분 내일은 피자 회식이 있습니다.</b>
+                                                        </td>
+                                                        <td class="mailbox-name">
+                                                            <a href="read-mail.html">김미희 대리</a>
+                                                        </td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="card-body" style="padding-top: 0px;">
+                                            <div class="float-right">
+                                                <div class="card-tools">
+                                                    <a href="#" class="btn btn-tool" title="Previous"><i
+                                                            class="fas fa-chevron-left"></i></a>
+                                                    <a href="#" class="btn btn-tool" title="Next"><i
+                                                            class="fas fa-chevron-right"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /.card-body -->
+                                    </div>
+                                    <!-- /.card -->
+                                </div>
+                                <!-- ./   메일 list -->
+                            </div>
+                            <!-- ./row -->
+
+                            <!-- row -->
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <!-- 공지게시판 -->
+                                    <!-- 검색줄-->
+                                    <div class="card card-info card-outline">
+                                        <div class="card-header">
+                                            <h3 class="card-title">
+                                                <i class="fas fa-list"></i>
+                                                공지사항
+                                            </h3>
+                                            <div class="float-right">
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-default btn-sm">
+                                                        <i class="fas fa-sync-alt"></i>
+                                                    </button>
+                                                </div>
+                                                <!-- /.btn-group -->
+                                            </div>
+                                            <!-- /.float-right -->
+                                        </div>
+                                        <!-- /.card-header -->
+                                        <div class="card-body">
+                                            <!-- 게시판 테이블-->
+                                            <table class="table table-sm table-hover" style="table-layout: fixed;">
+                                                <thead>
+                                                    <th class="" style="width: 4%;">#</th>
+                                                    <th class="text-center" style="width: 40%;">제목</td>
+                                                    <th class="text-center" style="width: 12%;">첨부파일</th>
+                                                    <th class="text-center" style="width: 8%;">작성자</th>
+                                                    <th class="text-center" style="width: 12%;">작성일</th>
+                                                    <th class="text-center" style="width: 9%;">조회수</th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="">14.</td>
+                                                        <td class="text-truncate">게시판 목록 페이지입니다~ㅎㅎㅎㅎㅎ</td>
+                                                        <td class="text-center"><i class="fas fa-paperclip"></i></td>
+                                                        <td class="text-center">김지윤</td>
+                                                        <td class="text-center">2022.01.01.</td>
+                                                        <td class="text-center">1232</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="">13.</td>
+                                                        <td class="text-truncate">게시판 목록 페이지입니다~</td>
+                                                        <td class="text-center"></td>
+                                                        <td class="text-center">김지윤</td>
+                                                        <td class="text-center">2022.01.01.</td>
+                                                        <td class="text-center">12</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="">12.</td>
+                                                        <td class="text-truncate">게시판 목록 페이지입니다~</td>
+                                                        <td class="text-center"><i class="fas fa-paperclip"></i></td>
+                                                        <td class="text-center">김지윤</td>
+                                                        <td class="text-center">2022.01.01.</td>
+                                                        <td class="text-center">12</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="">11.</td>
+                                                        <td class="text-truncate">게시판 목록 페이지입니다~뭔가 좀
+                                                            이상행??sdfsdfdsffsdfdsfdsfds??</td>
+                                                        <td class="text-center"><i class="fas fa-paperclip"></i></td>
+                                                        <td class="text-center">김지윤</td>
+                                                        <td class="text-center">2022.01.01.</td>
+                                                        <td class="text-center">12</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="">10.</td>
+                                                        <td class="text-truncate" style="width: 40%;">게시판 목록 페이지입니다~왜 계속
+                                                            옆으로 늘어나냐?엉?하아?????!</td>
+                                                        <td class="text-center"></td>
+                                                        <td class="text-center">김지윤</td>
+                                                        <td class="text-center">2022.01.01.</td>
+                                                        <td class="text-center">12</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="">9.</td>
+                                                        <td class="text-truncate">게시판 목록 페이지입니다~</td>
+                                                        <td class="text-center"></td>
+                                                        <td class="text-center">김지윤</td>
+                                                        <td class="text-center">2022.01.01.</td>
+                                                        <td class="text-center">12</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <!-- /.table -->
+
+                                            <!-- /. 게시판 테이블 -->
+                                        </div>
+                                        <!-- /.card-body-->
+                                    </div>
+                                    <!-- card -->
+                                    <!-- ./ 공지게시판 -->
+                                </div>
+                            </div>
+                            <!-- ./row -->
+                        </div>
+                        <!-- /.마이페이지 우측 컨텐츠 -->
+                    </div>
+
+
+                    <!-- 마진을 위한 div -->
+                    <div style="height: 10px;"></div>
+
+
+
+                </div><!-- /.container-fluid -->
+            </section>
+            <!-- /.content -->
+</body>

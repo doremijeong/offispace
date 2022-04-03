@@ -1,0 +1,442 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<head></head>
+
+<body>
+
+	<!-- Content Header (Page header) -->
+	<div class="content-wrapper" style="min-height: 1602px;">
+		<!-- Content Header (Page header) -->
+		<section class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1>임시 보관함</h1>
+					</div>
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item"><a href="#">쪽지</a></li>
+							<li class="breadcrumb-item active">임시 보관함</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+
+
+		<!-- Main content -->
+		<section class="content">
+			<div class="container-fluid">
+				<!-- 마진을 위한 div -->
+				<div style="height: 3px;"></div>
+				<!-- 쪽지목록-->
+				<div class="column">
+
+					<!-- 검색줄-->
+					<div class="card card-info card-outline">
+						<div class="card-header">
+							<div class="float-left">
+								전체
+								<p class="text-danger" style="display: inline-block; margin: 0;">132</p>
+							</div>
+							<div class="card-tools col-sm-7">
+								<div class="input-group input-group-sm">
+									<select class="custom-select col-sm-2" id="inputGroupSelect01">
+										<option>15개씩</option>
+										<option>20개씩</option>
+										<option>30개씩</option>
+									</select> &nbsp; <select class="custom-select col-sm-2"
+										id="inputGroupSelect01">
+										<option>전체</option>
+										<option>개인</option>
+										<option>업무</option>
+									</select> &nbsp; <select class="custom-select col-sm-3"
+										id="inputGroupSelect01">
+										<option>제목</option>
+										<option>보낸사람</option>
+										<option>받는사람</option>
+									</select> &nbsp; <input type="text" class="form-control"
+										placeholder="검색">
+									<div class="input-group-append">
+										<div class="btn btn-primary">
+											<i class="fas fa-search"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- /.card-tools -->
+						</div>
+
+						<!-- /.card-header -->
+						<div class="card-body p-0">
+							<div class="mailbox-controls">
+								<!--전체 선택 체크박스-->
+								&nbsp;
+								<button type="button"
+									class="btn btn-default btn-sm checkbox-toggle">
+									<i class="far fa-square"></i>
+								</button>
+								<button type="button" class="btn btn-default btn-sm msg-modal"
+									data-toggle="modal" data-target="#modal-default">쪽지쓰기
+								</button>
+								<button type="button" class="btn btn-default btn-sm">
+									<i class="far fa-trash-alt"></i>
+								</button>
+							</div>
+
+
+							<!-- 쪽지 테이블-->
+							<div class="table-responsive mailbox-messages">
+								<table class="table table-hover table-sm">
+									<thead>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td>받는사람</td>
+										<td>내용</td>
+										<td>날짜</td>
+									</thead>
+									<tbody>
+										<tr>
+											<td>
+												<div class="icheck-primary">
+													<input type="checkbox" value="" id="check1"> <label
+														for="check1"></label>
+												</div>
+											</td>
+											<td></td>
+											<td></td>
+											<td class="mailbox-name"><a href="read-mail.html">알렉산더</a></td>
+											<td class="mailbox-subject"><a href=""
+												data-toggle="modal" data-target="#modal-default"> 이번 주
+													회식 장소 투표 </a></td>
+											<td class="mailbox-date">2022.01.01. 09:29</td>
+										</tr>
+										<tr>
+											<td>
+												<div class="icheck-primary">
+													<input type="checkbox" value="" id="check1"> <label
+														for="check1"></label>
+												</div>
+											</td>
+											<td></td>
+											<td></td>
+											<td class="mailbox-name"><a href="read-mail.html">Alexander
+													Pierce</a></td>
+											<td class="mailbox-subject">내가 보낸 쪽지 양식입니다.~~</td>
+											</a>
+											<td class="mailbox-date">2022.01.01. 09:28</td>
+										</tr>
+										<tr>
+											<td>
+												<div class="icheck-primary">
+													<input type="checkbox" value="" id="check1"> <label
+														for="check1"></label>
+												</div>
+											</td>
+											<td></td>
+											<td></td>
+											<td class="mailbox-name"><a href="read-mail.html">Alexander
+													Pierce</a></td>
+											<td class="mailbox-subject">AdminLTE 3.0 Issue - Trying
+												to find a solution to this...</td>
+
+											<td class="mailbox-date">2021.11.16. 09:28</td>
+										</tr>
+										<tr>
+											<td>
+												<div class="icheck-primary">
+													<input type="checkbox" value="" id="check1"> <label
+														for="check1"></label>
+												</div>
+											</td>
+											<td></td>
+											<td></td>
+											<td class="mailbox-name"><a href="read-mail.html">Alexander
+													Pierce</a></td>
+											<td class="mailbox-subject">AdminLTE 3.0 Issue - Trying
+												to find a solution to this...</td>
+
+											<td class="mailbox-date">2021.11.12. 09:28</td>
+										</tr>
+										<tr>
+											<td>
+												<div class="icheck-primary">
+													<input type="checkbox" value="" id="check1"> <label
+														for="check1"></label>
+												</div>
+											</td>
+											<td></td>
+											<td></td>
+											<td class="mailbox-name"><a href="read-mail.html">Alexander
+													Pierce</a></td>
+											<td class="mailbox-subject">AdminLTE 3.0 Issue - Trying
+												to find a solution to this...</td>
+
+											<td class="mailbox-date">2021.11.05. 09:28</td>
+										</tr>
+										<tr>
+											<td>
+												<div class="icheck-primary">
+													<input type="checkbox" value="" id="check1"> <label
+														for="check1"></label>
+												</div>
+											</td>
+											<td></td>
+											<td></td>
+											<td class="mailbox-name"><a href="read-mail.html">Alexander
+													Pierce</a></td>
+											<td class="mailbox-subject">AdminLTE 3.0 Issue - Trying
+												to find a solution to this...</td>
+
+											<td class="mailbox-date">2021.11.04. 09:28</td>
+										</tr>
+										<tr>
+											<td>
+												<div class="icheck-primary">
+													<input type="checkbox" value="" id="check1"> <label
+														for="check1"></label>
+												</div>
+											</td>
+											<td></td>
+											<td></td>
+											<td class="mailbox-name"><a href="read-mail.html">Alexander
+													Pierce</a></td>
+											<td class="mailbox-subject">AdminLTE 3.0 Issue - Trying
+												to find a solution to this...</td>
+
+											<td class="mailbox-date">2021.10.15. 09:28</td>
+										</tr>
+										<tr>
+											<td>
+												<div class="icheck-primary">
+													<input type="checkbox" value="" id="check1"> <label
+														for="check1"></label>
+												</div>
+											</td>
+											<td></td>
+											<td></td>
+											<td class="mailbox-name"><a href="read-mail.html">Alexander
+													Pierce</a></td>
+											<td class="mailbox-subject">AdminLTE 3.0 Issue - Trying
+												to find a solution to this...</td>
+
+											<td class="mailbox-date">2021.10.15. 09:28</td>
+										</tr>
+										<tr>
+											<td>
+												<div class="icheck-primary">
+													<input type="checkbox" value="" id="check1"> <label
+														for="check1"></label>
+												</div>
+											</td>
+											<td></td>
+											<td></td>
+											<td class="mailbox-name"><a href="read-mail.html">Alexander
+													Pierce</a></td>
+											<td class="mailbox-subject">AdminLTE 3.0 Issue - Trying
+												to find a solution to this...</td>
+
+											<td class="mailbox-date">2021.10.12. 09:28</td>
+										</tr>
+										<tr>
+											<td>
+												<div class="icheck-primary">
+													<input type="checkbox" value="" id="check1"> <label
+														for="check1"></label>
+												</div>
+											</td>
+											<td></td>
+											<td></td>
+											<td class="mailbox-name"><a href="read-mail.html">Alexander
+													Pierce</a></td>
+											<td class="mailbox-subject">AdminLTE 3.0 Issue - Trying
+												to find a solution to this...</td>
+
+											<td class="mailbox-date">2021.10.07. 09:28</td>
+										</tr>
+										<tr>
+											<td>
+												<div class="icheck-primary">
+													<input type="checkbox" value="" id="check1"> <label
+														for="check1"></label>
+												</div>
+											</td>
+											<td></td>
+											<td></td>
+											<td class="mailbox-name"><a href="read-mail.html">Alexander
+													Pierce</a></td>
+											<td class="mailbox-subject">AdminLTE 3.0 Issue - Trying
+												to find a solution to this...</td>
+
+											<td class="mailbox-date">2021.09.25. 09:28</td>
+										</tr>
+										<tr>
+											<td>
+												<div class="icheck-primary">
+													<input type="checkbox" value="" id="check1"> <label
+														for="check1"></label>
+												</div>
+											</td>
+											<td></td>
+											<td></td>
+											<td class="mailbox-name"><a href="read-mail.html">Alexander
+													Pierce</a></td>
+											<td class="mailbox-subject">AdminLTE 3.0 Issue - Trying
+												to find a solution to this...</td>
+
+											<td class="mailbox-date">2021.09.21. 09:28</td>
+										</tr>
+										<tr>
+											<td>
+												<div class="icheck-primary">
+													<input type="checkbox" value="" id="check1"> <label
+														for="check1"></label>
+												</div>
+											</td>
+											<td></td>
+											<td></td>
+											<td class="mailbox-name"><a href="read-mail.html">Alexander
+													Pierce</a></td>
+											<td class="mailbox-subject">AdminLTE 3.0 Issue - Trying
+												to find a solution to this...</td>
+
+											<td class="mailbox-date">2021.09.15. 09:28</td>
+										</tr>
+										<tr>
+											<td>
+												<div class="icheck-primary">
+													<input type="checkbox" value="" id="check1"> <label
+														for="check1"></label>
+												</div>
+											</td>
+											<td></td>
+											<td></td>
+											<td class="mailbox-name"><a href="read-mail.html">Alexander
+													Pierce</a></td>
+											<td class="mailbox-subject">AdminLTE 3.0 Issue - Trying
+												to find a solution to this...</td>
+
+											<td class="mailbox-date">2021.09.08. 09:28</td>
+										</tr>
+										<tr>
+											<td>
+												<div class="icheck-primary">
+													<input type="checkbox" value="" id="check1"> <label
+														for="check1"></label>
+												</div>
+											</td>
+											<td></td>
+											<td></td>
+											<td class="mailbox-name"><a href="read-mail.html">Alexander
+													Pierce</a></td>
+											<td class="mailbox-subject">AdminLTE 3.0 Issue - Trying
+												to find a solution to this...</td>
+
+											<td class="mailbox-date">2021.09.04. 09:28</td>
+										</tr>
+									</tbody>
+								</table>
+								<!-- /.table -->
+							</div>
+							<!-- /.mail-box-messages -->
+						</div>
+						<!-- /.card-body-->
+
+						<!--페이징-->
+						<div class="card-footer p-0 d-flex justify-content-center">
+							<ul class="pagination pagination-sm m-0">
+								<li class="page-item"><a class="page-link" href="#">«</a></li>
+								<li class="page-item"><a class="page-link" href="#">1</a></li>
+								<li class="page-item"><a class="page-link" href="#">2</a></li>
+								<li class="page-item"><a class="page-link" href="#">3</a></li>
+								<li class="page-item"><a class="page-link" href="#">4</a></li>
+								<li class="page-item"><a class="page-link" href="#">5</a></li>
+								<li class="page-item"><a class="page-link" href="#">6</a></li>
+								<li class="page-item"><a class="page-link" href="#">7</a></li>
+								<li class="page-item"><a class="page-link" href="#">8</a></li>
+								<li class="page-item"><a class="page-link" href="#">9</a></li>
+								<li class="page-item"><a class="page-link" href="#">10</a></li>
+								<li class="page-item"><a class="page-link" href="#">»</a></li>
+							</ul>
+						</div>
+						<!--페이징-->
+
+					</div>
+					<!-- card -->
+				</div>
+				<!-- ./column -->
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+		<!-- /.content -->
+	</div>
+	<!-- content-wrapper -->
+
+	<!-- Control Sidebar -->
+	<aside class="control-sidebar control-sidebar-light">
+		<!-- Control sidebar content goes here -->
+
+		<div class="card card-info card-outline">
+			<div class="card-body box-profile">
+				<div class="text-center">
+					<img class="profile-user-img img-fluid img-circle"
+						style="object-fit: cover; width: 128px; height: 128px;"
+						src="../images/01.jpg" alt="User profile picture">
+				</div>
+				<h3 class="profile-username text-center">임나리</h3>
+				<p class="text-muted text-center">총무부 부장</p>
+
+				<ul class="list-group list-group-unbordered mb-3">
+					<li class="list-group-item"></li>
+					<li class="list-group-item"><b>근태관리</b> </br> 2021년 12월 25 일 (토)
+						08:58:44</li>
+					<li class="list-group-item">
+						<h3>5h 40m</h3>
+
+						<div class="progress">
+							<div class="progress-bar bg-primary progress-bar-striped"
+								role="progressbar" aria-valuenow="40" aria-valuemin="0"
+								aria-valuemax="100" style="width: 40%">
+								<span class="sr-only">40% Complete (success)</span>
+							</div>
+						</div>
+					</li>
+
+					<li class="list-group-item">
+						<div class="card-outling card-info">
+							<select class="custom-select" style="text-align: center;">
+								<option>근무중</option>
+								<option>외근중</option>
+								<option>휴가중</option>
+								<option>자리비움</option>
+								<option>근무완료</option>
+							</select>
+
+						</div>
+
+					</li>
+				</ul>
+
+				<a href="#" class="btn btn-outline-primary btn-block"><b>출근하기</b></a>
+				<a href="#" class="btn btn-outline-primary btn-block"><b>퇴근하기</b></a>
+			</div>
+			<!-- /.card-body -->
+		</div>
+		<!-- /.card -->
+	</aside>
+	<!-- /.control-sidebar -->
+
+	<!-- Main Footer -->
+	<footer class="main-footer">
+		<!-- To the right -->
+		<div class="float-right d-none d-sm-inline">Anything you want</div>
+		<!-- Default to the left -->
+		<strong>Copyright &copy; 2014-2021 <a
+			href="https://adminlte.io">AdminLTE.io</a>.
+		</strong> All rights reserved.
+	</footer>
+	</div>
+	<!-- ./wrapper -->
+</body>

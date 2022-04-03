@@ -1,0 +1,39 @@
+package kr.co.offispace.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class ApprovalController {
+	
+	@RequestMapping("/approval")
+	public String approvalMain() {
+		String url = "/approval/main";
+		return url;
+	}
+	
+	@RequestMapping("/approval/detail")
+	public String approvalDetail() {
+		String url = "/approval/detail";
+		return url;
+	}
+	
+	@RequestMapping("/approval/detail2")
+	public String approvalDetail2() {
+		String url = "/approval/approval_detail";
+		return url;
+	}
+	
+	@RequestMapping("/approval/list_request")
+	public String approvalRequestList() {
+		String url = "/approval/list_request";
+		return url;
+	}
+	
+	@RequestMapping("/approval/insert")
+	public String approvalInsert() {
+		String url = "/approval/insert";
+		return url;
+	}
+	
+}

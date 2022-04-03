@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Employee-Mapper">
+
+	<select id="selectEmpCodeToRegister" resultType="str">
+		SELECT
+		'OP'||LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0)
+		FROM DUAL
+	</select>
+
+	<insert id="insertEmployee">
+		INSERT INTO EMPLOYEE
+					(EMP_CODE
+				    ,EMP_ID
+				    ,EMP_PASSWORD
+				    ,EMP_NAME
+				    ,EMP_HIRE_DT
+				    ,STATUS_CODE
+	                ,EMP_REGINUM
+				    ,EMP_ST_UPDATE_DT
+				    ,HEAD_OFFICE_CODE
+				    ,GROUP_CODE
+				    ,TEAM_CODE
+				    ,POSITION_CODE
+				    ,CHARGE_CODE
+				    ,AUTHORITY_CODE)
+
+			VALUES (#{empCode}
+	        		,#{empId}
+	        		,#{empPassword}
+	        		,#{empName}
+	        		,TO_DATE(#{empHireDt})
+	        		,'S101'
+	        		,#{empReginum}
+	        		,SYSDATE
+	        		,#{headOfficeCode}
+	        		,#{groupCode}
+	        		,#{teamCode}
+	        		,#{positionCode}
+	        		,#{chargeCode}
+	        		,#{authorityCode}
+	        		)
+	</insert>
+
+	<select id="selectEmployeeList" resultType="employee">
+		SELECT  EMP_CODE
+				,EMP_ID
+				,EMP_PASSWORD
+				,EMP_NAME
+				,EMP_TELEPHONE
+				,EMP_REGINUM
+				,EMP_EMAIL
+				,EMP_ADDRESS
+				,EMP_HIRE_DT
+				,STATUS_CODE
+				,EMP_ST_UPDATE_DT
+				,HEAD_OFFICE_CODE
+				,GROUP_CODE
+				,TEAM_CODE
+				,POSITION_CODE
+				,CHARGE_CODE
+				,AUTHORITY_CODE
+				,STATUS_VALUE
+				,HEAD_OFFICE_VALUE
+				,GROUP_VALUE
+				,TEAM_VALUE
+				,POSITION_VALUE
+				,CHARGE_VALUE
+				,AUTHORITY_VALUE
+		FROM EMPLOYEE_VIEW
+		ORDER BY EMP_NAME ASC
+	</select>
+
+	<sql id="search">
+		<if test="searchType == 'i'.toString()">
+			and emp_name like '%'||#{keyword}||'%'
+		</if>
+
+		<if test="searchType == 'p'.toString()">
+			and team_code like '%'||#{keyword}||'%'
+		</if>
+
+		<if test="searchType == 'e'.toString()">
+			and charge_code like '%'||#{keyword}||'%'
+		</if>
+
+		<if test="searchType == 'n'.toString()">
+			and emp_email like '%'||#{keyword}||'%'
+		</if>
+	</sql>
+
+	<select id="selectSearchEmployeeList" resultType="employee">
+		SELECT  EMP_CODE
+				,EMP_ID
+				,EMP_PASSWORD
+				,EMP_NAME
+				,EMP_TELEPHONE
+				,EMP_REGINUM
+				,EMP_EMAIL
+				,EMP_ADDRESS
+				,EMP_HIRE_DT
+				,STATUS_CODE
+				,EMP_ST_UPDATE_DT
+				,HEAD_OFFICE_CODE
+				,GROUP_CODE
+				,TEAM_CODE
+				,POSITION_CODE
+				,CHARGE_CODE
+				,AUTHORITY_CODE
+				,STATUS_VALUE
+				,HEAD_OFFICE_VALUE
+				,GROUP_VALUE
+				,TEAM_VALUE
+				,POSITION_VALUE
+				,CHARGE_VALUE
+				,AUTHORITY_VALUE
+		FROM EMPLOYEE_VIEW
+		where emp_code is not null
+		<include refid="search"/>
+		ORDER BY EMP_NAME ASC
+	</select>
+
+	<select id="selectSearchEmployeeListCount" resultType="int">
+		select
+		count(*)
+		FROM EMPLOYEE
+		where emp_code is not null
+		<include refid="search"/>
+		ORDER BY EMP_NAME ASC
+	</select>
+
+	<select id="selectEmployeeById" resultType="employee">
+
+		SELECT  EMP_CODE
+				,EMP_ID
+				,EMP_PASSWORD
+				,EMP_NAME
+				,EMP_TELEPHONE
+				,EMP_REGINUM
+				,EMP_EMAIL
+				,EMP_ADDRESS
+				,EMP_HIRE_DT
+				,STATUS_CODE
+				,EMP_ST_UPDATE_DT
+				,HEAD_OFFICE_CODE
+				,GROUP_CODE
+				,TEAM_CODE
+				,POSITION_CODE
+				,CHARGE_CODE
+				,AUTHORITY_CODE
+				,STATUS_VALUE
+				,HEAD_OFFICE_VALUE
+				,GROUP_VALUE
+				,TEAM_VALUE
+				,POSITION_VALUE
+				,CHARGE_VALUE
+				,AUTHORITY_VALUE
+		FROM EMPLOYEE_VIEW
+		WHERE EMP_ID = #{empId}
+
+	</select>
+
+	<select id="selectEmployeeByEmpCode" resultType="employee">
+
+		SELECT  EMP_CODE
+				,EMP_ID
+				,EMP_PASSWORD
+				,EMP_NAME
+				,EMP_TELEPHONE
+				,EMP_REGINUM
+				,EMP_EMAIL
+				,EMP_ADDRESS
+				,EMP_HIRE_DT
+				,STATUS_CODE
+				,EMP_ST_UPDATE_DT
+				,HEAD_OFFICE_CODE
+				,GROUP_CODE
+				,TEAM_CODE
+				,POSITION_CODE
+				,CHARGE_CODE
+				,AUTHORITY_CODE
+				,STATUS_VALUE
+				,HEAD_OFFICE_VALUE
+				,GROUP_VALUE
+				,TEAM_VALUE
+				,POSITION_VALUE
+				,CHARGE_VALUE
+				,AUTHORITY_VALUE
+		FROM EMPLOYEE_VIEW
+		WHERE EMP_CODE = #{empCode}
+
+	</select>
+
+
+	<update id="updateEmployeeFirst" parameterType="str">
+
+		UPDATE EMPLOYEE
+		SET EMP_ID = #{empId}
+		    ,EMP_PASSWORD = #{empPassword}
+		    ,EMP_ADDRESS = NVL(#{empAddress},'')
+			,EMP_TELEPHONE = NVL(#{empTelephone},'')
+			,EMP_EMAIL = NVL(#{empEmail},'')
+		WHERE EMP_CODE = #{empCode}
+
+	</update>
+
+	<select id="selectEmployeeListByComCode" resultType="employee">
+
+		SELECT
+		*
+		FROM EMPLOYEE_VIEW
+		WHERE TEAM_CODE = #{comCode}
+		ORDER BY POSITION_CODE DESC
+
+	</select>
+
+
+	<select id="selectEmpIdById" resultType="str">
+
+		SELECT EMP_ID
+		FROM EMPLOYEE
+		WHERE EMP_ID = #{empId}
+
+	</select>
+
+	<select id="selectEmployeeListByTeamCode" resultType="employee" parameterType="String">
+		SELECT
+			*
+		FROM
+			EMPLOYEE_VIEW
+		WHERE
+			TEAM_CODE=#{teamCode}
+		ORDER BY POSITION_CODE DESC
+			
+	</select>
+
+	<update id="updateEmp"  parameterType="employee">
+		UPDATE
+			EMPLOYEE
+		SET
+			EMP_ID = #{empId},
+			EMP_PASSWORD = #{empPassword},
+			EMP_TELEPHONE = #{empTelephone},
+			EMP_EMAIL = #{empEmail},
+			EMP_ADDRESS = #{empAddress}
+		WHERE
+			EMP_CODE = #{empCode}
+	</update>
+	
+	<select id="selectEmployeeAllList" resultType="str">
+		SELECT 
+			EMP_CODE 
+		FROM 
+			EMPLOYEE_VIEW
+		WHERE
+            EMP_ID NOT LIKE '%EMP%'
+	</select>
+
+    <!-- 같은 부서 EMP CODE만 가져오는 쿼리 -->
+	<select id="selectMyTeamEmployeeCodeList" resultType="str" parameterType="String">
+		SELECT
+			EMP_CODE
+		FROM
+			EMPLOYEE_VIEW
+		WHERE
+			TEAM_CODE=#{teamCode}
+		AND
+			EMP_ID NOT LIKE '%EMP%'
+	</select>
+
+</mapper>

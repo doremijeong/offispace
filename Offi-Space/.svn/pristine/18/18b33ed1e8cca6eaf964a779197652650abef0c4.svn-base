@@ -1,0 +1,663 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page trimDirectiveWhitespaces="true"%>
+
+<head></head>
+
+<title>조직도</title>
+
+<body>
+<!-- Content Header (Page header) -->
+            <!-- 마진을 위한 div -->
+            <div style="height: 20px;"></div>
+
+            
+            
+            
+            
+            
+            
+            
+              <section class="content">
+                <div class="container-fluid">
+            
+            
+            
+            
+                  <div class="row">
+                    <!-- left column -->
+                    <div class="col-md-4">
+                      <!-- general form elements -->
+                      <div class="card card-info" >
+                        <div class="card-header" >
+                          <h3 class="card-title">조직도 현황</h3>
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          <i class="fas fa-plus-square"></i>
+                        </div>
+            
+            
+                        <!-- /.card-header -->
+                        
+                          <div class="card-body" >
+                            
+                            <div class="form-group" >
+                              <select multiple="" class="form-control" style="height:658px">
+                                <option><b>1.경영혁신본부</b></option>
+                                <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1-1.인재개발그룹</option>
+                                <option style="background-color: aqua;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-인사팀</option>
+                                <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-교육운영팀</option>
+                                <option></option>
+                              
+                                <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1-2.기획조정그룹</option>
+                                <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-경영기획팀</option>
+                                <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-전략혁신팀</option>
+                                <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-경영평가팀</option>
+                                <option></option>
+            
+                                <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1-3.경영지원그룹</option>
+                                <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-총무팀</option>
+                                <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-구매조달팀</option>
+                                <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-재무팀</option>
+                                <option></option>
+            
+                                <option>2.개발사업본부</option>
+                                <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2-1.보안개발그룹</option>
+                                <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-보안개발1팀</option>
+                                <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-보안개발2팀</option>
+                                <option></option>
+            
+                                <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2-2.SW개발그룹</option>
+                                <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-SW개발1팀</option>
+                                <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-SW개발2팀</option>
+                                <option></option>
+            
+                                <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2-3.기술지원그룹</option>
+                                <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-IT지원팀</option>
+                                <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-기술지원팀</option>
+                                <option></option>
+            
+                                <option>3.영업전략본부</option>
+                                <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3-1.마케팅그룹</option>
+                                <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-홍보팀</option>
+                                <option></option>
+            
+                                <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3-2.영업그룹</option>
+                                <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-영업1팀</option>
+                                <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-영업2팀</option>
+                                <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-영업지원팀</option>
+                                <option></option>
+            
+                                <option>연구사업본부</option>
+                                <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ICT기술연구그룹</option>
+                                <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ICT기술1팀</option>
+                                <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ICT기술2팀</option>
+                                <option></option>
+            
+                                <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SI시스템연구그룹그룹</option>
+                                <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SI시스템1팀</option>
+                                <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SI시스템2팀</option>
+            
+            
+                              </select>
+                            </div>
+                        
+            
+                          </div>
+                          <!-- /.card-body -->
+            
+                          
+                        
+                      </div>
+                      <!-- /.card -->
+            
+                    
+            
+            
+                      
+                    </div>
+                    <!--/.col (left) -->
+                    <!-- right column -->
+                    <div class="col-md-8">
+                      <!-- general form elements disabled -->
+                      <div class="card card-info">
+                        <div class="card-header">
+                          <h3 class="card-title">팀 목록</h3>
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          <i class="fas fa-plus-square"></i>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                          
+            
+                          <table class="table table-sm">
+                            <thead>
+                              <tr>
+                                <th>번호</th>
+                                <th>직책</th>
+                                <th>성명</th>
+                                <th>담당업무</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr style="background-color: aqua;">
+                                <td>1.</td>
+                                <td>부장</td>
+                                <td>임나리</td>
+                                <td>사원관리</td>
+                              </tr>
+                              
+                              <tr>
+                                <td>2.</td>
+                                <td>차장</td>
+                                <td>김미희</td>
+                                <td>서류작업</td>
+                              </tr>
+            
+                              <tr>
+                                <td>3.</td>
+                                <td>파트장</td>
+                                <td>김혜윤</td>
+                                <td>주간업무보고</td>
+                              </tr>
+            
+                              <tr>
+                                <td>4.</td>
+                                <td>사원</td>
+                                <td>이미정</td>
+                                <td>일일업무</td>
+                              </tr>
+            
+                              <tr>
+                                <td>5.</td>
+                                <td>사원</td>
+                                <td>김지윤</td>
+                                <td>일일업무</td>
+                              </tr>
+            
+                              <tr>
+                                <td>6.</td>
+                                <td>사원</td>
+                                <td>류인성</td>
+                                <td>일일업무</td>
+                              </tr>
+            
+                              <tr>
+                                <td>7.</td>
+                                <td>사원</td>
+                                <td>이동근</td>
+                                <td>일일업무</td>
+                              </tr>
+                            </tbody>
+                          </table>
+            
+            
+            
+                        </div>
+                        <!-- /.card-body -->
+                      </div>
+                      <!-- /.card -->
+                      <!-- general form elements disabled -->
+                      <div class="card card-info">
+                        <div class="card-header">
+                          <h3 class="card-title">팀원 상세</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                          
+            
+            
+            
+            
+            
+            
+            
+                          <table class="table table-condensed">
+                            
+                            <tbody>
+                              <tr>
+                                <td rowspan="6">
+                                  <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                                    <div class="image">
+                                      <img src="../images/01.jpg" class="img-circle elevation-2" alt="User Image">
+                                    </div>
+                                  </div>
+                                <th>한글명</th>
+                                <td>임나리</td>
+                                <th>영문명</th>
+                                <td>Lim Na Ri</td>
+                              </tr>
+                              
+                              
+                              <tr>
+                                <th>부 서</th>
+                                <td>인사부</td>
+                                <th>직 종</th>
+                                <td>인사/행정</td>
+                              </tr>
+            
+                              <tr>
+                                <th>직책</th>
+                                <td>부장</td>
+                                <th>Email</th>
+                                <td>abc@naver.com</td>
+                              </tr>
+            
+                              <tr>
+                                <th>사내전화</th>
+                                <td>032-123-456</td>
+                                <th>사 번</th>
+                                <td>GW0078</td>
+                              </tr>
+            
+                              <tr>
+                                <th>회사FAX</th>
+                                <td>125684</td>
+                                <th>휴대전화</th>
+                                <td>010-1234-5678</td>
+                              </tr>
+            
+                              <tr>
+                                <th>담당 업무</th>
+                                <td colspan="4">인사부 총괄 관리 및 행정 업무 지도 담당</td>
+                              </tr>
+                            </tbody>
+                          </table>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+                        </div>
+                        <!-- /.card-body -->
+                      </div>
+                      <!-- /.card -->
+                    </div>
+                    <!--/.col (right) -->
+                  </div>
+                  <!-- /.row -->
+                </div><!-- /.container-fluid -->
+              </section>
+
+        </div>
+
+
+
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-light">
+            <!-- Control sidebar content goes here -->
+
+            <div class="card card-info card-outline">
+                <div class="card-body box-profile">
+                    <div class="text-center">
+                        <img class="profile-user-img img-fluid img-circle" style="object-fit: cover;
+                                                        width: 128px;
+                                                        height: 128px;" src="../images/01.jpg"
+                            alt="User profile picture">
+                    </div>
+                    <h3 class="profile-username text-center">임나리</h3>
+                    <p class="text-muted text-center">총무부 부장</p>
+
+                    <ul class="list-group list-group-unbordered mb-3">
+                        <li class="list-group-item">
+                            <div class="card-outling card-info">
+                                <select class="custom-select" style="text-align: center;">
+                                    <option>업무중</option>
+                                    <option>외근중</option>
+                                    <option>휴가중</option>
+                                    <option>자리비움</option>
+                                    <option>업무완료</option>
+                                </select>
+                            </div>                            
+                        </li>
+                        <li class="list-group-item">
+                            <b>근태관리</b>
+                            </br>
+                            <span class="text-muted" style="font-size: 0.8em;">2021년 12월 25일 (토)
+                                08:58:44</span>
+
+                        </li>
+                        <li class="list-group-item">
+                            <h3>5h 40m</h3>
+
+                            <div class="progress">
+                                <div class="progress-bar bg-primary progress-bar-striped" role="progressbar"
+                                    aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                                    <span class="sr-only">40% Complete (success)</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div style="padding-left: 10px; padding-right: 10px;">
+                                <div class="row" style="justify-content: space-between;">
+                                    <span>출근시간 :</span><span>08:10:25</span>
+                                </div>
+                                <div class="row" style="justify-content: space-between;">
+                                    <span>퇴근시간 :</span><span>미등록</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="card-outling card-info">
+                                <a href="#" class="btn btn-outline-primary btn-block"><b>퇴근하기</b></a>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class=""> 
+                                <h6><b>부서원 근무 현황</b></h6>
+                                <!-- /.card-header -->
+                                <div class="card-body table-responsive p-0" style="height: 300px; ">
+                                    <table class="table table-head-fixed text-nowrap">
+                                        <tr>
+                                            <td style="padding: 0;">
+                                                <div class="info-box dro" style="margin: 0px;">
+                                                    <a data-toggle="dropdown" href="#">
+                                                    <div class="image">
+                                                        <img src="../images/01.jpg" style="object-fit: cover;
+                                                        width: 50px;
+                                                        height: 50px;" class="img-size-50 mr-3 img-circle" alt="User Image">
+                                                    </div>
+                                                    </a>
+                                                    <div class="dropdown-menu" style="width: 231px; height :175px; padding: 0;  z-index: 9999;left:-20px;">
+                                                    <div class="card">
+                                                        <div class="card-header text-muted border-bottom-0"></div>
+                                                        <div class="card-body" style="padding:0;padding-left:30px;"> 
+                                                        <div class="row">
+                                                            <div class="col-lg-4 text-center">
+                                                            <img src="../images/01.jpg" style="object-fit: cover;
+                                                                width: 50px;
+                                                                height: 50px;" class="img-size-50 mr-3 img-circle" alt="User Image">
+                                                            </div>
+                                                            <div class="col-lg-8">
+                                                            <h2 class="lead"><b>임나리</b></h2>
+                                                                <p class="text-muted text-sm">총무부 부장</p>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /.row -->
+                                                        <div class="row">
+                                                            <ul class="ml-4 mb-0 fa-ul text-muted">
+                                                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-envelope"></i></span><b>Email</b>: admin@offispace.co.kr</li>
+                                                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span><b>Phone</b>: + 82 - 10 5978 5462</li>
+                                                            </ul>                                       
+                                                        </div>
+                                                        <!-- /.row -->
+                                                        </div>
+                                                        <!-- /.card-body -->
+                                                        <div class="card-footer">
+                                                        <div class="text-right">
+                                                            <a href="" class="dropdown-item btn btn-sm bg-teal" style="padding: 0;">
+                                                            <a href="javascript:alert('쪽지보내기');" class="btn btn-sm bg-teal">
+                                                                <i class="fas fa-comment-dots"></i> 쪽지하기
+                                                            </a>                                        
+                                                            </a>
+                                                        </div>
+                                                        </div>
+                                                        <!-- /.card footer -->
+                                                    </div>
+                                                    <!-- /.card -->
+                                                    </div>
+                                                    <!-- /. dropdown-menu -->                            
+                                                    <div class="info-box-content" style="height: 50px;">
+                                                    <span class="info-box-number text-center">임나리 대리</span>
+                                                    <span class="badge badge-primary">근무중</span>                                                   
+                                                    </div>
+                                                    <!-- /.info-box-content -->
+                                                </div>
+                                            </td> 
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 0;">
+                                                <div class="info-box" style="margin: 0px;">
+                                                    <a data-toggle="dropdown" href="#">
+                                                    <div class="image">
+                                                        <img src="../images/01.jpg" style="object-fit: cover;
+                                                        width: 50px;
+                                                        height: 50px;" class="img-size-50 mr-3 img-circle" alt="User Image">
+                                                    </div>
+                                                    </a>
+                                                    <div class="dropdown-menu" style="width: 231px; height :175px; padding: 0;">
+                                                    <div class="card bg-light d-flex flex-fill">
+                                                        <div class="card-header text-muted border-bottom-0"></div>
+                                                        <div class="card-body pt-0">
+                                                        <div class="row">
+                                                            <div class="col-lg-4 text-center">
+                                                            <img src="../images/01.jpg" style="object-fit: cover;
+                                                                width: 50px;
+                                                                height: 50px;" class="img-size-50 mr-3 img-circle" alt="User Image">
+                                                            </div>
+                                                            <div class="col-lg-8">
+                                                            <h2 class="lead"><b>임나리</b></h2>
+                                                                <p class="text-muted text-sm">총무부 부장</p>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /.row -->
+                                                        <div class="row">
+                                                            <ul class="ml-4 mb-0 fa-ul text-muted">
+                                                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-envelope"></i></span><b>Email</b>: admin@offispace.co.kr</li>
+                                                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span><b>Phone</b>: + 82 - 10 5978 5462</li>
+                                                            </ul>                                       
+                                                        </div>
+                                                        <!-- /.row -->
+                                                        </div>
+                                                        <!-- /.card-body -->
+                                                        <div class="card-footer">
+                                                        <div class="text-right">
+                                                            <a href="" class="dropdown-item btn btn-sm bg-teal" style="padding: 0;">
+                                                            <a href="javascript:alert('쪽지보내기');" class="btn btn-sm bg-teal">
+                                                                <i class="fas fa-comment-dots"></i> 쪽지하기
+                                                            </a>                                        
+                                                            </a>
+                                                        </div>
+                                                        </div>
+                                                        <!-- /.card footer -->
+                                                    </div>
+                                                    <!-- /.card -->
+                                                    </div>
+                                                    <!-- /. dropdown-menu -->                            
+                                                    <div class="info-box-content" style="height: 50px;">
+                                                    <span class="info-box-number text-center">임나리 대리</span>
+                                                    <span class="badge badge-primary">근무중</span>                                                   
+                                                    </div>
+                                                    <!-- /.info-box-content -->
+                                                </div>
+                                            </td> 
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 0;">
+                                                <div class="info-box" style="margin: 0px;">
+                                                    <a data-toggle="dropdown" href="#">
+                                                    <div class="image">
+                                                        <img src="../images/01.jpg" style="object-fit: cover;
+                                                        width: 50px;
+                                                        height: 50px;" class="img-size-50 mr-3 img-circle" alt="User Image">
+                                                    </div>
+                                                    </a>
+                                                    <div class="dropdown-menu" style="width: 231px; height :175px; padding: 0; z-index: 1040;">
+                                                    <div class="card bg-light d-flex flex-fill">
+                                                        <div class="card-header text-muted border-bottom-0"></div>
+                                                        <div class="card-body pt-0">
+                                                        <div class="row">
+                                                            <div class="col-lg-4 text-center">
+                                                            <img src="../images/01.jpg" style="object-fit: cover;
+                                                                width: 50px;
+                                                                height: 50px;" class="img-size-50 mr-3 img-circle" alt="User Image">
+                                                            </div>
+                                                            <div class="col-lg-8">
+                                                            <h2 class="lead"><b>임나리</b></h2>
+                                                                <p class="text-muted text-sm">총무부 부장</p>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /.row -->
+                                                        <div class="row">
+                                                            <ul class="ml-4 mb-0 fa-ul text-muted">
+                                                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-envelope"></i></span><b>Email</b>: admin@offispace.co.kr</li>
+                                                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span><b>Phone</b>: + 82 - 10 5978 5462</li>
+                                                            </ul>                                       
+                                                        </div>
+                                                        <!-- /.row -->
+                                                        </div>
+                                                        <!-- /.card-body -->
+                                                        <div class="card-footer">
+                                                        <div class="text-right">
+                                                            <a href="" class="dropdown-item btn btn-sm bg-teal" style="padding: 0;">
+                                                            <a href="javascript:alert('쪽지보내기');" class="btn btn-sm bg-teal">
+                                                                <i class="fas fa-comment-dots"></i> 쪽지하기
+                                                            </a>                                        
+                                                            </a>
+                                                        </div>
+                                                        </div>
+                                                        <!-- /.card footer -->
+                                                    </div>
+                                                    <!-- /.card -->
+                                                    </div>
+                                                    <!-- /. dropdown-menu -->                            
+                                                    <div class="info-box-content" style="height: 50px;">
+                                                    <span class="info-box-number text-center">임나리 대리</span>
+                                                    <span class="badge badge-primary">근무중</span>                                                   
+                                                    </div>
+                                                    <!-- /.info-box-content -->
+                                                </div>
+                                            </td> 
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 0;">
+                                                <div class="info-box" style="margin: 0px;">
+                                                    <a data-toggle="dropdown" href="#">
+                                                    <div class="image">
+                                                        <img src="../images/01.jpg" style="object-fit: cover;
+                                                        width: 50px;
+                                                        height: 50px;" class="img-size-50 mr-3 img-circle" alt="User Image">
+                                                    </div>
+                                                    </a>
+                                                    <div class="dropdown-menu" style="width: 231px; height :175px; padding: 0; z-index: 1040;">
+                                                    <div class="card bg-light d-flex flex-fill">
+                                                        <div class="card-header text-muted border-bottom-0"></div>
+                                                        <div class="card-body pt-0">
+                                                        <div class="row">
+                                                            <div class="col-lg-4 text-center">
+                                                            <img src="../images/01.jpg" style="object-fit: cover;
+                                                                width: 50px;
+                                                                height: 50px;" class="img-size-50 mr-3 img-circle" alt="User Image">
+                                                            </div>
+                                                            <div class="col-lg-8">
+                                                            <h2 class="lead"><b>임나리</b></h2>
+                                                                <p class="text-muted text-sm">총무부 부장</p>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /.row -->
+                                                        <div class="row">
+                                                            <ul class="ml-4 mb-0 fa-ul text-muted">
+                                                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-envelope"></i></span><b>Email</b>: admin@offispace.co.kr</li>
+                                                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span><b>Phone</b>: + 82 - 10 5978 5462</li>
+                                                            </ul>                                       
+                                                        </div>
+                                                        <!-- /.row -->
+                                                        </div>
+                                                        <!-- /.card-body -->
+                                                        <div class="card-footer">
+                                                        <div class="text-right">
+                                                            <a href="" class="dropdown-item btn btn-sm bg-teal" style="padding: 0;">
+                                                            <a href="javascript:alert('쪽지보내기');" class="btn btn-sm bg-teal">
+                                                                <i class="fas fa-comment-dots"></i> 쪽지하기
+                                                            </a>                                        
+                                                            </a>
+                                                        </div>
+                                                        </div>
+                                                        <!-- /.card footer -->
+                                                    </div>
+                                                    <!-- /.card -->
+                                                    </div>
+                                                    <!-- /. dropdown-menu -->                            
+                                                    <div class="info-box-content" style="height: 50px;">
+                                                    <span class="info-box-number text-center">임나리 대리</span>
+                                                    <span class="badge badge-primary">근무중</span>                                                   
+                                                    </div>
+                                                    <!-- /.info-box-content -->
+                                                </div>
+                                            </td> 
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 0;">
+                                                <div class="info-box" style="margin: 0px;">
+                                                    <a data-toggle="dropdown" href="#">
+                                                    <div class="image">
+                                                        <img src="../images/01.jpg" style="object-fit: cover;
+                                                        width: 50px;
+                                                        height: 50px;" class="img-size-50 mr-3 img-circle" alt="User Image">
+                                                    </div>
+                                                    </a>
+                                                    <div class="dropdown-menu" style="width: 231px; height :175px; padding: 0; z-index: 1040;">
+                                                    <div class="card bg-light d-flex flex-fill">
+                                                        <div class="card-header text-muted border-bottom-0"></div>
+                                                        <div class="card-body pt-0">
+                                                        <div class="row">
+                                                            <div class="col-lg-4 text-center">
+                                                            <img src="../images/01.jpg" style="object-fit: cover;
+                                                                width: 50px;
+                                                                height: 50px;" class="img-size-50 mr-3 img-circle" alt="User Image">
+                                                            </div>
+                                                            <div class="col-lg-8">
+                                                            <h2 class="lead"><b>임나리</b></h2>
+                                                                <p class="text-muted text-sm">총무부 부장</p>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /.row -->
+                                                        <div class="row">
+                                                            <ul class="ml-4 mb-0 fa-ul text-muted">
+                                                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-envelope"></i></span><b>Email</b>: admin@offispace.co.kr</li>
+                                                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span><b>Phone</b>: + 82 - 10 5978 5462</li>
+                                                            </ul>                                       
+                                                        </div>
+                                                        <!-- /.row -->
+                                                        </div>
+                                                        <!-- /.card-body -->
+                                                        <div class="card-footer">
+                                                        <div class="text-right">
+                                                            <a href="" class="dropdown-item btn btn-sm bg-teal" style="padding: 0;">
+                                                            <a href="javascript:alert('쪽지보내기');" class="btn btn-sm bg-teal">
+                                                                <i class="fas fa-comment-dots"></i> 쪽지하기
+                                                            </a>                                        
+                                                            </a>
+                                                        </div>
+                                                        </div>
+                                                        <!-- /.card footer -->
+                                                    </div>
+                                                    <!-- /.card -->
+                                                    </div>
+                                                    <!-- /. dropdown-menu -->                            
+                                                    <div class="info-box-content" style="height: 50px;">
+                                                    <span class="info-box-number text-center">임나리 대리</span>
+                                                    <span class="badge badge-primary">근무중</span>                                                   
+                                                    </div>
+                                                    <!-- /.info-box-content -->
+                                                </div>
+                                            </td> 
+                                        </tr>
+                                
+
+                                    </table>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>                            
+                        </li>
+                    </ul>
+                    
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </aside>
+        <!-- /.control-sidebar -->
+
+</body>

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TeamNotice-Mapper">
+
+	<sql id="search">
+		<if test="searchType == 'title'.toString()">
+			AND TEAMNOTICE_TITLE LIKE '%'||#{keyword}||'%'
+		</if>
+		<if test="searchType == 'content'.toString()">
+			AND TEAMNOTICE_CONTENT LIKE '%'||#{keyword}||'%'
+		</if>
+		<if test="searchType == 'writer'.toString()">
+			AND TEAMNOTICE_WRITER = (SELECT
+										EMP_CODE
+									FROM
+										EMPLOYEE
+									WHERE
+										EMP_NAME LIKE '%'||#{keyword}||'%')
+		</if>
+			<if test="searchType == 'tc'.toString()">
+			AND
+			(
+				TEAMNOTICE_TITLE LIKE '%'||#{keyword}||'%'
+			OR
+				TEAMNOTICE_CONTENT LIKE '%'||#{keyword}||'%'
+			)
+		</if>
+	</sql>
+
+
+	<!-- 시퀀스 가져오기 -->
+	<select id="selectTeamNoticeCode" resultType="str">
+		SELECT 'TN'||LPAD(TEAMNOTICE_SEQ.NEXTVAL,4,0) FROM DUAL
+	</select>
+
+
+	<!-- 부서공지 등록 -->
+	<insert id="insertTeamNotice" parameterType="teamNotice">
+		INSERT INTO
+			TEAMNOTICE
+		(
+			TEAMNOTICE_CODE
+			, TEAMNOTICE_TITLE
+			, TEAMNOTICE_CONTENT
+			, TEAMNOTICE_WRITER
+			, TEAMNOTICE_TEAMCODE
+			, TEAMNOTICE_DATE
+			, TEAMNOTICE_SDATE
+			, TEAMNOTICE_EDATE
+			, TEAMNOTICE_IMPORTANCE
+		)
+		VALUES(
+			#{teamNoticeCode}
+			, #{teamNoticeTitle}
+			, #{teamNoticeContent}
+			, #{teamNoticeWriter}
+			, #{teamNoticeTeamcode}
+			, SYSDATE
+			, #{teamNoticeSdate}
+			, #{teamNoticeEdate}
+			, #{teamNoticeImportance}
+		)
+	</insert>
+
+
+	<select id="selectTeamNoticeList" resultType="teamNotice">
+	<![CDATA[
+		SELECT
+				TEAMNOTICE_CODE
+	    , TEAMNOTICE_TITLE
+	    , TEAMNOTICE_CONTENT
+	    , TEAMNOTICE_WRITER
+	    , TEAMNOTICE_TEAMCODE
+	    , TEAMNOTICE_DATE
+	    , TEAMNOTICE_UPDATE
+	    , TEAMNOTICE_SDATE
+	    , TEAMNOTICE_EDATE
+	    , TEAMNOTICE_IMPORTANCE
+	    , TEAMNOTICE_VIEWCNT
+    FROM
+    	TEAMNOTICE
+    WHERE
+    	TEAMNOTICE_SDATE <= SYSDATE
+   	AND
+    	(TEAMNOTICE_EDATE >= SYSDATE
+    OR
+    	TEAMNOTICE_EDATE IS NULL)
+    AND
+   	 TEAMNOTICE_TEAMCODE = #{teamCode}
+   ]]>
+   	<include refid="search"></include>
+		ORDER BY
+			TEAMNOTICE_DATE DESC
+	</select>
+
+
+	<select id="selectTeamNoticeImptList" resultType="teamNotice">
+	<![CDATA[
+		SELECT
+				TEAMNOTICE_CODE
+	    , TEAMNOTICE_TITLE
+	    , TEAMNOTICE_CONTENT
+	    , TEAMNOTICE_WRITER
+	    , TEAMNOTICE_TEAMCODE
+	    , TEAMNOTICE_DATE
+	    , TEAMNOTICE_UPDATE
+	    , TEAMNOTICE_SDATE
+	    , TEAMNOTICE_EDATE
+	    , TEAMNOTICE_IMPORTANCE
+	    , TEAMNOTICE_VIEWCNT
+    FROM
+    	TEAMNOTICE
+    WHERE
+    	TEAMNOTICE_SDATE <= SYSDATE
+   	AND
+    	(TEAMNOTICE_EDATE >= SYSDATE
+    OR
+    	TEAMNOTICE_EDATE IS NULL)
+    AND
+   	 TEAMNOTICE_TEAMCODE = #{teamCode}
+   	AND
+   	 TEAMNOTICE_IMPORTANCE = 'Y'
+   ]]>
+   	<include refid="search"></include>
+		ORDER BY
+			TEAMNOTICE_DATE DESC
+	</select>
+
+
+	<select id="selectTeamNoticeListCount" resultType="int">
+	<![CDATA[
+		SELECT
+			COUNT(*)
+		FROM
+			TEAMNOTICE
+		WHERE
+    	TEAMNOTICE_SDATE <= SYSDATE
+   	AND
+    	(TEAMNOTICE_EDATE >= SYSDATE
+    OR
+    	TEAMNOTICE_EDATE IS NULL)
+    AND
+   	 TEAMNOTICE_TEAMCODE = #{teamCode}
+	]]>
+		<include refid="search"></include>
+		ORDER BY
+			TEAMNOTICE_DATE DESC
+	</select>
+
+
+	<select id="selectTeamNoticeByCode" resultType="teamNotice">
+		SELECT
+				TEAMNOTICE_CODE
+	    , TEAMNOTICE_TITLE
+	    , TEAMNOTICE_CONTENT
+	    , TEAMNOTICE_WRITER
+	    , TEAMNOTICE_TEAMCODE
+	    , TEAMNOTICE_DATE
+	    , TEAMNOTICE_UPDATE
+	    , TEAMNOTICE_SDATE
+	    , TEAMNOTICE_EDATE
+	    , TEAMNOTICE_IMPORTANCE
+	    , TEAMNOTICE_VIEWCNT
+    FROM
+    	TEAMNOTICE
+    WHERE
+   	 TEAMNOTICE_CODE = #{teamNoticeCode}
+	</select>
+
+
+	<!-- 부서 공지 수정 -->
+	<update id="updateTeamNotice" parameterType="teamNotice">
+		UPDATE
+			TEAMNOTICE
+		SET
+			TEAMNOTICE_TITLE = #{teamNoticeTitle},
+			TEAMNOTICE_CONTENT = #{teamNoticeContent},
+			TEAMNOTICE_UPDATE = SYSDATE,
+			TEAMNOTICE_SDATE = #{teamNoticeSdate},
+			TEAMNOTICE_EDATE = #{teamNoticeEdate},
+			TEAMNOTICE_IMPORTANCE = #{teamNoticeImportance}
+		WHERE
+			TEAMNOTICE_CODE = #{teamNoticeCode}
+	</update>
+
+
+	<!-- 부서 공지 삭제 -->
+	<update id="deleteTeamNotice" parameterType="str">
+		DELETE
+		FROM
+			TEAMNOTICE
+		WHERE
+			TEAMNOTICE_CODE = #{teamNoticeCode}
+	</update>
+
+	<!-- 공지 조회수 수정 -->
+	<update id="increaseViewCnt" parameterType="str">
+		UPDATE
+			TEAMNOTICE
+		SET
+			TEAMNOTICE_VIEWCNT = TEAMNOTICE_VIEWCNT + 1
+		WHERE
+			TEAMNOTICE_CODE = #{teamNoticeCode}
+	</update>
+
+
+</mapper>

@@ -1,0 +1,38 @@
+package kr.co.offispace.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class MailController {
+	
+	@RequestMapping("/mail")
+	public String mailMain() {
+		String url="mail/main";
+		return url;
+	}
+	
+	@RequestMapping("/mailWrite")
+	public String writeMail() {
+		String url="mail/writeForm";
+		return url;
+	}
+	
+	@RequestMapping("/login")
+	public String login() {
+		String url="login/main";
+		return url;
+	}
+	
+		@RequestMapping("/mailWriteToMe")
+	public String writeMailToMe() {
+		String url="mail/writeToMeForm";
+		return url;
+	}
+	
+	@RequestMapping("/readMail")
+	public String readMail() {
+		String url="mail/detail";
+		return url;
+	}
+}
